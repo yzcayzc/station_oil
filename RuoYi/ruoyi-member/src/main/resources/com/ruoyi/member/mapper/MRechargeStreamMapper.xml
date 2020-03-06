@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MRechargeStreamMapper">
+    
+    <resultMap type="MRechargeStream" id="MRechargeStreamResult">
+        <result property="rechargeStreamId"    column="recharge_stream_id"    />
+        <result property="time"    column="time"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="rechargeAmount"    column="recharge_amount"    />
+        <result property="operator"    column="operator"    />
+        <result property="recharge"    column="recharge"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectMRechargeStreamVo">
+        select recharge_stream_id, time, station_name, recharge_amount, operator, recharge, status from m_recharge_stream
+    </sql>
+
+    <select id="selectMRechargeStreamList" parameterType="MRechargeStream" resultMap="MRechargeStreamResult">
+        <include refid="selectMRechargeStreamVo"/>
+        <where>  
+            <if test="time != null "> and time = #{time}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="rechargeAmount != null "> and recharge_amount = #{rechargeAmount}</if>
+            <if test="operator != null  and operator != ''"> and operator = #{operator}</if>
+            <if test="recharge != null "> and recharge = #{recharge}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectMRechargeStreamById" parameterType="Long" resultMap="MRechargeStreamResult">
+        <include refid="selectMRechargeStreamVo"/>
+        where recharge_stream_id = #{rechargeStreamId}
+    </select>
+        
+    <insert id="insertMRechargeStream" parameterType="MRechargeStream" useGeneratedKeys="true" keyProperty="rechargeStreamId">
+        insert into m_recharge_stream
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="time != null ">time,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="rechargeAmount != null ">recharge_amount,</if>
+            <if test="operator != null  and operator != ''">operator,</if>
+            <if test="recharge != null ">recharge,</if>
+            <if test="status != null  and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="time != null ">#{time},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="rechargeAmount != null ">#{rechargeAmount},</if>
+            <if test="operator != null  and operator != ''">#{operator},</if>
+            <if test="recharge != null ">#{recharge},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMRechargeStream" parameterType="MRechargeStream">
+        update m_recharge_stream
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="time != null ">time = #{time},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="rechargeAmount != null ">recharge_amount = #{rechargeAmount},</if>
+            <if test="operator != null  and operator != ''">operator = #{operator},</if>
+            <if test="recharge != null ">recharge = #{recharge},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+        </trim>
+        where recharge_stream_id = #{rechargeStreamId}
+    </update>
+
+    <delete id="deleteMRechargeStreamById" parameterType="Long">
+        delete from m_recharge_stream where recharge_stream_id = #{rechargeStreamId}
+    </delete>
+
+    <delete id="deleteMRechargeStreamByIds" parameterType="String">
+        delete from m_recharge_stream where recharge_stream_id in 
+        <foreach item="rechargeStreamId" collection="array" open="(" separator="," close=")">
+            #{rechargeStreamId}
+        </foreach>
+    </delete>
+    
+</mapper>

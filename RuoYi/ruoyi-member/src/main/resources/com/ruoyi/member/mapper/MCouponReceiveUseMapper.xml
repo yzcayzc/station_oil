@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MCouponReceiveUseMapper">
+    
+    <resultMap type="MCouponReceiveUse" id="MCouponReceiveUseResult">
+        <result property="couponReceiveUseId"    column="coupon_receive_use_id"    />
+        <result property="time"    column="time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="title"    column="title"    />
+        <result property="type"    column="type"    />
+        <result property="voucherValue"    column="voucher_value"    />
+        <result property="requirement"    column="requirement"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectMCouponReceiveUseVo">
+        select coupon_receive_use_id, time, start_time, end_time, title, type, voucher_value, requirement, status from m_coupon_receive_use
+    </sql>
+
+    <select id="selectMCouponReceiveUseList" parameterType="MCouponReceiveUse" resultMap="MCouponReceiveUseResult">
+        <include refid="selectMCouponReceiveUseVo"/>
+        <where>  
+            <if test="time != null "> and time = #{time}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="voucherValue != null "> and voucher_value = #{voucherValue}</if>
+            <if test="requirement != null  and requirement != ''"> and requirement = #{requirement}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectMCouponReceiveUseById" parameterType="Long" resultMap="MCouponReceiveUseResult">
+        <include refid="selectMCouponReceiveUseVo"/>
+        where coupon_receive_use_id = #{couponReceiveUseId}
+    </select>
+        
+    <insert id="insertMCouponReceiveUse" parameterType="MCouponReceiveUse" useGeneratedKeys="true" keyProperty="couponReceiveUseId">
+        insert into m_coupon_receive_use
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="time != null ">time,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="type != null  and type != ''">type,</if>
+            <if test="voucherValue != null ">voucher_value,</if>
+            <if test="requirement != null  and requirement != ''">requirement,</if>
+            <if test="status != null  and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="time != null ">#{time},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="type != null  and type != ''">#{type},</if>
+            <if test="voucherValue != null ">#{voucherValue},</if>
+            <if test="requirement != null  and requirement != ''">#{requirement},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMCouponReceiveUse" parameterType="MCouponReceiveUse">
+        update m_coupon_receive_use
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="time != null ">time = #{time},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="type != null  and type != ''">type = #{type},</if>
+            <if test="voucherValue != null ">voucher_value = #{voucherValue},</if>
+            <if test="requirement != null  and requirement != ''">requirement = #{requirement},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+        </trim>
+        where coupon_receive_use_id = #{couponReceiveUseId}
+    </update>
+
+    <delete id="deleteMCouponReceiveUseById" parameterType="Long">
+        delete from m_coupon_receive_use where coupon_receive_use_id = #{couponReceiveUseId}
+    </delete>
+
+    <delete id="deleteMCouponReceiveUseByIds" parameterType="String">
+        delete from m_coupon_receive_use where coupon_receive_use_id in 
+        <foreach item="couponReceiveUseId" collection="array" open="(" separator="," close=")">
+            #{couponReceiveUseId}
+        </foreach>
+    </delete>
+    
+</mapper>

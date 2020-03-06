@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.ElectronicCouponsMapper">
+    
+    <resultMap type="ElectronicCoupons" id="ElectronicCouponsResult">
+        <result property="couponsId"    column="coupons_id"    />
+        <result property="number"    column="number"    />
+        <result property="couponsAmount"    column="coupons_amount"    />
+        <result property="rechargeAmount"    column="recharge_amount"    />
+        <result property="fullAmount"    column="full_amount"    />
+        <result property="specialActivity"    column="special_activity"    />
+    </resultMap>
+
+    <sql id="selectElectronicCouponsVo">
+        select coupons_id, number, coupons_amount, recharge_amount, full_amount, special_activity from electronic_coupons
+    </sql>
+
+    <select id="selectElectronicCouponsList" parameterType="ElectronicCoupons" resultMap="ElectronicCouponsResult">
+        <include refid="selectElectronicCouponsVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="couponsAmount != null  and couponsAmount != ''"> and coupons_amount = #{couponsAmount}</if>
+            <if test="rechargeAmount != null "> and recharge_amount = #{rechargeAmount}</if>
+            <if test="fullAmount != null  and fullAmount != ''"> and full_amount = #{fullAmount}</if>
+            <if test="specialActivity != null  and specialActivity != ''"> and special_activity = #{specialActivity}</if>
+        </where>
+    </select>
+    
+    <select id="selectElectronicCouponsById" parameterType="Long" resultMap="ElectronicCouponsResult">
+        <include refid="selectElectronicCouponsVo"/>
+        where coupons_id = #{couponsId}
+    </select>
+        
+    <insert id="insertElectronicCoupons" parameterType="ElectronicCoupons">
+        insert into electronic_coupons
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponsId != null ">coupons_id,</if>
+            <if test="number != null ">number,</if>
+            <if test="couponsAmount != null  and couponsAmount != ''">coupons_amount,</if>
+            <if test="rechargeAmount != null ">recharge_amount,</if>
+            <if test="fullAmount != null  and fullAmount != ''">full_amount,</if>
+            <if test="specialActivity != null  and specialActivity != ''">special_activity,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponsId != null ">#{couponsId},</if>
+            <if test="number != null ">#{number},</if>
+            <if test="couponsAmount != null  and couponsAmount != ''">#{couponsAmount},</if>
+            <if test="rechargeAmount != null ">#{rechargeAmount},</if>
+            <if test="fullAmount != null  and fullAmount != ''">#{fullAmount},</if>
+            <if test="specialActivity != null  and specialActivity != ''">#{specialActivity},</if>
+         </trim>
+    </insert>
+
+    <update id="updateElectronicCoupons" parameterType="ElectronicCoupons">
+        update electronic_coupons
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="couponsAmount != null  and couponsAmount != ''">coupons_amount = #{couponsAmount},</if>
+            <if test="rechargeAmount != null ">recharge_amount = #{rechargeAmount},</if>
+            <if test="fullAmount != null  and fullAmount != ''">full_amount = #{fullAmount},</if>
+            <if test="specialActivity != null  and specialActivity != ''">special_activity = #{specialActivity},</if>
+        </trim>
+        where coupons_id = #{couponsId}
+    </update>
+
+    <delete id="deleteElectronicCouponsById" parameterType="Long">
+        delete from electronic_coupons where coupons_id = #{couponsId}
+    </delete>
+
+    <delete id="deleteElectronicCouponsByIds" parameterType="String">
+        delete from electronic_coupons where coupons_id in 
+        <foreach item="couponsId" collection="array" open="(" separator="," close=")">
+            #{couponsId}
+        </foreach>
+    </delete>
+    
+</mapper>

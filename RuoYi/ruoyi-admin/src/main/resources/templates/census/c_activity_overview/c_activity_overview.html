@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('活动总览列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>序号：</p>
+                                <input type="text" name="number"/>
+                            </li>
+                            <li>
+                                <p>加油站：</p>
+                                <input type="text" name="stationName"/>
+                            </li>
+                            <li>
+                                <p>活动主题：</p>
+                                <input type="text" name="activityTheme"/>
+                            </li>
+                            <li class="select-time">
+                                <p>日期：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+                            </li>
+                            <li>
+                                <p>充值：</p>
+                                <input type="text" name="recharge"/>
+                            </li>
+                            <li>
+                                <p>消费：</p>
+                                <input type="text" name="consumption"/>
+                            </li>
+                            <li>
+                                <p>优惠抵抗：</p>
+                                <input type="text" name="preferentialDeduction"/>
+                            </li>
+                            <li>
+                                <p>收益：</p>
+                                <input type="text" name="profit"/>
+                            </li>
+                            <li>
+                                <p>新增会员：</p>
+                                <input type="text" name="newMember"/>
+                            </li>
+                            <li>
+                                <p>积分净值：</p>
+                                <input type="text" name="integralNetValue"/>
+                            </li>
+                            <li>
+                                <p>电子优惠券发放：</p>
+                                <input type="text" name="eCouponIssuance"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="census:c_activity_overview:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="census:c_activity_overview:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="census:c_activity_overview:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="census:c_activity_overview:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('census:c_activity_overview:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('census:c_activity_overview:remove')}]];
+        var prefix = ctx + "census/c_activity_overview";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "活动总览",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'activity', 
+                    title : 'id',
+                    visible: false
+                },
+                {
+                    field : 'number', 
+                    title : '序号'
+                },
+                {
+                    field : 'stationName', 
+                    title : '加油站'
+                },
+                {
+                    field : 'activityTheme', 
+                    title : '活动主题'
+                },
+                {
+                    field : 'time', 
+                    title : '日期'
+                },
+                {
+                    field : 'recharge', 
+                    title : '充值'
+                },
+                {
+                    field : 'consumption', 
+                    title : '消费'
+                },
+                {
+                    field : 'preferentialDeduction', 
+                    title : '优惠抵抗'
+                },
+                {
+                    field : 'profit', 
+                    title : '收益'
+                },
+                {
+                    field : 'newMember', 
+                    title : '新增会员'
+                },
+                {
+                    field : 'integralNetValue', 
+                    title : '积分净值'
+                },
+                {
+                    field : 'eCouponIssuance', 
+                    title : '电子优惠券发放'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.activity + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.activity + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.station.mapper.SOldOilpriceMapper">
+    
+    <resultMap type="SOldOilprice" id="SOldOilpriceResult">
+        <result property="oldOilId"    column="old_oil_id"    />
+        <result property="name"    column="name"    />
+        <result property="oils"    column="oils"    />
+        <result property="oilNumber"    column="oil_number"    />
+        <result property="price"    column="price"    />
+        <result property="queryTime"    column="query_time"    />
+    </resultMap>
+
+    <sql id="selectSOldOilpriceVo">
+        select old_oil_id, name, oils, oil_number, price, query_time from s_old_oilprice
+    </sql>
+
+    <select id="selectSOldOilpriceList" parameterType="SOldOilprice" resultMap="SOldOilpriceResult">
+        <include refid="selectSOldOilpriceVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="oils != null  and oils != ''"> and oils = #{oils}</if>
+            <if test="oilNumber != null  and oilNumber != ''"> and oil_number = #{oilNumber}</if>
+            <if test="price != null  and price != ''"> and price = #{price}</if>
+            <if test="queryTime != null "> and query_time = #{queryTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSOldOilpriceById" parameterType="Long" resultMap="SOldOilpriceResult">
+        <include refid="selectSOldOilpriceVo"/>
+        where old_oil_id = #{oldOilId}
+    </select>
+        
+    <insert id="insertSOldOilprice" parameterType="SOldOilprice" useGeneratedKeys="true" keyProperty="oldOilId">
+        insert into s_old_oilprice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="oils != null  and oils != ''">oils,</if>
+            <if test="oilNumber != null  and oilNumber != ''">oil_number,</if>
+            <if test="price != null  and price != ''">price,</if>
+            <if test="queryTime != null ">query_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="oils != null  and oils != ''">#{oils},</if>
+            <if test="oilNumber != null  and oilNumber != ''">#{oilNumber},</if>
+            <if test="price != null  and price != ''">#{price},</if>
+            <if test="queryTime != null ">#{queryTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSOldOilprice" parameterType="SOldOilprice">
+        update s_old_oilprice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="oils != null  and oils != ''">oils = #{oils},</if>
+            <if test="oilNumber != null  and oilNumber != ''">oil_number = #{oilNumber},</if>
+            <if test="price != null  and price != ''">price = #{price},</if>
+            <if test="queryTime != null ">query_time = #{queryTime},</if>
+        </trim>
+        where old_oil_id = #{oldOilId}
+    </update>
+
+    <delete id="deleteSOldOilpriceById" parameterType="Long">
+        delete from s_old_oilprice where old_oil_id = #{oldOilId}
+    </delete>
+
+    <delete id="deleteSOldOilpriceByIds" parameterType="String">
+        delete from s_old_oilprice where old_oil_id in 
+        <foreach item="oldOilId" collection="array" open="(" separator="," close=")">
+            #{oldOilId}
+        </foreach>
+    </delete>
+    
+</mapper>

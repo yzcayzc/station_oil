@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CPreferentialInformationMapper">
+    
+    <resultMap type="CPreferentialInformation" id="CPreferentialInformationResult">
+        <result property="preferentialId"    column="preferential_id"    />
+        <result property="consumer"    column="consumer"    />
+        <result property="transactionTime"    column="transaction_time"    />
+        <result property="recharge"    column="recharge"    />
+        <result property="consumptionVolume"    column="consumption_volume"    />
+        <result property="money"    column="money"    />
+        <result property="rebate"    column="rebate"    />
+        <result property="coupon"    column="coupon"    />
+        <result property="generalCertificate"    column="general_certificate"    />
+        <result property="cashCoupon"    column="cash_coupon"    />
+        <result property="discountCoupon"    column="discount_coupon"    />
+        <result property="cGeneralCertificate"    column="c_general_certificate"    />
+        <result property="cCashCoupon"    column="c_cash_coupon"    />
+        <result property="cCoupon"    column="c_coupon"    />
+    </resultMap>
+
+    <sql id="selectCPreferentialInformationVo">
+        select preferential_id, consumer, transaction_time, recharge, consumption_volume, money, rebate, coupon, general_certificate, cash_coupon, discount_coupon, c_general_certificate, c_cash_coupon, c_coupon from c_preferential_information
+    </sql>
+
+    <select id="selectCPreferentialInformationList" parameterType="CPreferentialInformation" resultMap="CPreferentialInformationResult">
+        <include refid="selectCPreferentialInformationVo"/>
+        <where>  
+            <if test="consumer != null  and consumer != ''"> and consumer = #{consumer}</if>
+            <if test="transactionTime != null "> and transaction_time = #{transactionTime}</if>
+            <if test="recharge != null "> and recharge = #{recharge}</if>
+            <if test="consumptionVolume != null "> and consumption_volume = #{consumptionVolume}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="rebate != null "> and rebate = #{rebate}</if>
+            <if test="coupon != null "> and coupon = #{coupon}</if>
+            <if test="generalCertificate != null "> and general_certificate = #{generalCertificate}</if>
+            <if test="cashCoupon != null "> and cash_coupon = #{cashCoupon}</if>
+            <if test="discountCoupon != null "> and discount_coupon = #{discountCoupon}</if>
+            <if test="cGeneralCertificate != null "> and c_general_certificate = #{cGeneralCertificate}</if>
+            <if test="cCashCoupon != null "> and c_cash_coupon = #{cCashCoupon}</if>
+            <if test="cCoupon != null "> and c_coupon = #{cCoupon}</if>
+        </where>
+    </select>
+    
+    <select id="selectCPreferentialInformationById" parameterType="Long" resultMap="CPreferentialInformationResult">
+        <include refid="selectCPreferentialInformationVo"/>
+        where preferential_id = #{preferentialId}
+    </select>
+        
+    <insert id="insertCPreferentialInformation" parameterType="CPreferentialInformation" useGeneratedKeys="true" keyProperty="preferentialId">
+        insert into c_preferential_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="consumer != null  and consumer != ''">consumer,</if>
+            <if test="transactionTime != null ">transaction_time,</if>
+            <if test="recharge != null ">recharge,</if>
+            <if test="consumptionVolume != null ">consumption_volume,</if>
+            <if test="money != null ">money,</if>
+            <if test="rebate != null ">rebate,</if>
+            <if test="coupon != null ">coupon,</if>
+            <if test="generalCertificate != null ">general_certificate,</if>
+            <if test="cashCoupon != null ">cash_coupon,</if>
+            <if test="discountCoupon != null ">discount_coupon,</if>
+            <if test="cGeneralCertificate != null ">c_general_certificate,</if>
+            <if test="cCashCoupon != null ">c_cash_coupon,</if>
+            <if test="cCoupon != null ">c_coupon,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="consumer != null  and consumer != ''">#{consumer},</if>
+            <if test="transactionTime != null ">#{transactionTime},</if>
+            <if test="recharge != null ">#{recharge},</if>
+            <if test="consumptionVolume != null ">#{consumptionVolume},</if>
+            <if test="money != null ">#{money},</if>
+            <if test="rebate != null ">#{rebate},</if>
+            <if test="coupon != null ">#{coupon},</if>
+            <if test="generalCertificate != null ">#{generalCertificate},</if>
+            <if test="cashCoupon != null ">#{cashCoupon},</if>
+            <if test="discountCoupon != null ">#{discountCoupon},</if>
+            <if test="cGeneralCertificate != null ">#{cGeneralCertificate},</if>
+            <if test="cCashCoupon != null ">#{cCashCoupon},</if>
+            <if test="cCoupon != null ">#{cCoupon},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCPreferentialInformation" parameterType="CPreferentialInformation">
+        update c_preferential_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="consumer != null  and consumer != ''">consumer = #{consumer},</if>
+            <if test="transactionTime != null ">transaction_time = #{transactionTime},</if>
+            <if test="recharge != null ">recharge = #{recharge},</if>
+            <if test="consumptionVolume != null ">consumption_volume = #{consumptionVolume},</if>
+            <if test="money != null ">money = #{money},</if>
+            <if test="rebate != null ">rebate = #{rebate},</if>
+            <if test="coupon != null ">coupon = #{coupon},</if>
+            <if test="generalCertificate != null ">general_certificate = #{generalCertificate},</if>
+            <if test="cashCoupon != null ">cash_coupon = #{cashCoupon},</if>
+            <if test="discountCoupon != null ">discount_coupon = #{discountCoupon},</if>
+            <if test="cGeneralCertificate != null ">c_general_certificate = #{cGeneralCertificate},</if>
+            <if test="cCashCoupon != null ">c_cash_coupon = #{cCashCoupon},</if>
+            <if test="cCoupon != null ">c_coupon = #{cCoupon},</if>
+        </trim>
+        where preferential_id = #{preferentialId}
+    </update>
+
+    <delete id="deleteCPreferentialInformationById" parameterType="Long">
+        delete from c_preferential_information where preferential_id = #{preferentialId}
+    </delete>
+
+    <delete id="deleteCPreferentialInformationByIds" parameterType="String">
+        delete from c_preferential_information where preferential_id in 
+        <foreach item="preferentialId" collection="array" open="(" separator="," close=")">
+            #{preferentialId}
+        </foreach>
+    </delete>
+    
+</mapper>

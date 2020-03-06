@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MIntegralMapper">
+    
+    <resultMap type="MIntegral" id="MIntegralResult">
+        <result property="integral"    column="integral"    />
+        <result property="number"    column="number"    />
+        <result property="activityTime"    column="activity_time"    />
+        <result property="integralDetails"    column="integral_details"    />
+        <result property="residualIntegral"    column="residual_integral"    />
+        <result property="integralState"    column="integral_state"    />
+    </resultMap>
+
+    <sql id="selectMIntegralVo">
+        select integral, number, activity_time, integral_details, residual_integral, integral_state from m_integral
+    </sql>
+
+    <select id="selectMIntegralList" parameterType="MIntegral" resultMap="MIntegralResult">
+        <include refid="selectMIntegralVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="activityTime != null "> and activity_time = #{activityTime}</if>
+            <if test="integralDetails != null  and integralDetails != ''"> and integral_details = #{integralDetails}</if>
+            <if test="residualIntegral != null "> and residual_integral = #{residualIntegral}</if>
+            <if test="integralState != null  and integralState != ''"> and integral_state = #{integralState}</if>
+        </where>
+    </select>
+    
+    <select id="selectMIntegralById" parameterType="Long" resultMap="MIntegralResult">
+        <include refid="selectMIntegralVo"/>
+        where integral = #{integral}
+    </select>
+        
+    <insert id="insertMIntegral" parameterType="MIntegral" useGeneratedKeys="true" keyProperty="integral">
+        insert into m_integral
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="activityTime != null ">activity_time,</if>
+            <if test="integralDetails != null  and integralDetails != ''">integral_details,</if>
+            <if test="residualIntegral != null ">residual_integral,</if>
+            <if test="integralState != null  and integralState != ''">integral_state,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="activityTime != null ">#{activityTime},</if>
+            <if test="integralDetails != null  and integralDetails != ''">#{integralDetails},</if>
+            <if test="residualIntegral != null ">#{residualIntegral},</if>
+            <if test="integralState != null  and integralState != ''">#{integralState},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMIntegral" parameterType="MIntegral">
+        update m_integral
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="activityTime != null ">activity_time = #{activityTime},</if>
+            <if test="integralDetails != null  and integralDetails != ''">integral_details = #{integralDetails},</if>
+            <if test="residualIntegral != null ">residual_integral = #{residualIntegral},</if>
+            <if test="integralState != null  and integralState != ''">integral_state = #{integralState},</if>
+        </trim>
+        where integral = #{integral}
+    </update>
+
+    <delete id="deleteMIntegralById" parameterType="Long">
+        delete from m_integral where integral = #{integral}
+    </delete>
+
+    <delete id="deleteMIntegralByIds" parameterType="String">
+        delete from m_integral where integral in 
+        <foreach item="integral" collection="array" open="(" separator="," close=")">
+            #{integral}
+        </foreach>
+    </delete>
+    
+</mapper>

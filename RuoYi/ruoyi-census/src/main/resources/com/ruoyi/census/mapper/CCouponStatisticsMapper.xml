@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CCouponStatisticsMapper">
+    
+    <resultMap type="CCouponStatistics" id="CCouponStatisticsResult">
+        <result property="couponStatisticsId"    column="coupon_statistics_id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="couponType"    column="coupon_type"    />
+        <result property="couponMoney"    column="coupon_money"    />
+        <result property="couponUse"    column="coupon_use"    />
+        <result property="receiveTime"    column="receive_time"    />
+        <result property="useTime"    column="use_time"    />
+        <result property="phone"    column="phone"    />
+    </resultMap>
+
+    <sql id="selectCCouponStatisticsVo">
+        select coupon_statistics_id, number, name, station_name, coupon_type, coupon_money, coupon_use, receive_time, use_time, phone from c_coupon_statistics
+    </sql>
+
+    <select id="selectCCouponStatisticsList" parameterType="CCouponStatistics" resultMap="CCouponStatisticsResult">
+        <include refid="selectCCouponStatisticsVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="couponType != null  and couponType != ''"> and coupon_type = #{couponType}</if>
+            <if test="couponMoney != null "> and coupon_money = #{couponMoney}</if>
+            <if test="couponUse != null  and couponUse != ''"> and coupon_use = #{couponUse}</if>
+            <if test="receiveTime != null "> and receive_time = #{receiveTime}</if>
+            <if test="useTime != null "> and use_time = #{useTime}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+        </where>
+    </select>
+    
+    <select id="selectCCouponStatisticsById" parameterType="Long" resultMap="CCouponStatisticsResult">
+        <include refid="selectCCouponStatisticsVo"/>
+        where coupon_statistics_id = #{couponStatisticsId}
+    </select>
+        
+    <insert id="insertCCouponStatistics" parameterType="CCouponStatistics" useGeneratedKeys="true" keyProperty="couponStatisticsId">
+        insert into c_coupon_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="couponType != null  and couponType != ''">coupon_type,</if>
+            <if test="couponMoney != null ">coupon_money,</if>
+            <if test="couponUse != null  and couponUse != ''">coupon_use,</if>
+            <if test="receiveTime != null ">receive_time,</if>
+            <if test="useTime != null ">use_time,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="couponType != null  and couponType != ''">#{couponType},</if>
+            <if test="couponMoney != null ">#{couponMoney},</if>
+            <if test="couponUse != null  and couponUse != ''">#{couponUse},</if>
+            <if test="receiveTime != null ">#{receiveTime},</if>
+            <if test="useTime != null ">#{useTime},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCCouponStatistics" parameterType="CCouponStatistics">
+        update c_coupon_statistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="couponType != null  and couponType != ''">coupon_type = #{couponType},</if>
+            <if test="couponMoney != null ">coupon_money = #{couponMoney},</if>
+            <if test="couponUse != null  and couponUse != ''">coupon_use = #{couponUse},</if>
+            <if test="receiveTime != null ">receive_time = #{receiveTime},</if>
+            <if test="useTime != null ">use_time = #{useTime},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+        </trim>
+        where coupon_statistics_id = #{couponStatisticsId}
+    </update>
+
+    <delete id="deleteCCouponStatisticsById" parameterType="Long">
+        delete from c_coupon_statistics where coupon_statistics_id = #{couponStatisticsId}
+    </delete>
+
+    <delete id="deleteCCouponStatisticsByIds" parameterType="String">
+        delete from c_coupon_statistics where coupon_statistics_id in 
+        <foreach item="couponStatisticsId" collection="array" open="(" separator="," close=")">
+            #{couponStatisticsId}
+        </foreach>
+    </delete>
+    
+</mapper>

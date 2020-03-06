@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.station.mapper.SEssentialInformationMapper">
+    
+    <resultMap type="SEssentialInformation" id="SEssentialInformationResult">
+        <result property="sEssentialInformationId"    column="s_essential_information_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="stationNickname"    column="station_nickname"    />
+        <result property="personLiable"    column="person_liable"    />
+        <result property="phone"    column="phone"    />
+        <result property="adress"    column="adress"    />
+        <result property="categoryParent"    column="category_parent"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectSEssentialInformationVo">
+        select s_essential_information_id, station_name, station_nickname, person_liable, phone, adress, category_parent, create_time from s_essential_information
+    </sql>
+
+    <select id="selectSEssentialInformationList" parameterType="SEssentialInformation" resultMap="SEssentialInformationResult">
+        <include refid="selectSEssentialInformationVo"/>
+        <where>  
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="stationNickname != null  and stationNickname != ''"> and station_nickname like concat('%', #{stationNickname}, '%')</if>
+            <if test="personLiable != null  and personLiable != ''"> and person_liable = #{personLiable}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="adress != null  and adress != ''"> and adress = #{adress}</if>
+            <if test="categoryParent != null  and categoryParent != ''"> and category_parent = #{categoryParent}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSEssentialInformationById" parameterType="Long" resultMap="SEssentialInformationResult">
+        <include refid="selectSEssentialInformationVo"/>
+        where s_essential_information_id = #{sEssentialInformationId}
+    </select>
+        
+    <insert id="insertSEssentialInformation" parameterType="SEssentialInformation" useGeneratedKeys="true" keyProperty="sEssentialInformationId">
+        insert into s_essential_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="stationNickname != null  and stationNickname != ''">station_nickname,</if>
+            <if test="personLiable != null  and personLiable != ''">person_liable,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="adress != null  and adress != ''">adress,</if>
+            <if test="categoryParent != null  and categoryParent != ''">category_parent,</if>
+            <if test="createTime != null ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="stationNickname != null  and stationNickname != ''">#{stationNickname},</if>
+            <if test="personLiable != null  and personLiable != ''">#{personLiable},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="adress != null  and adress != ''">#{adress},</if>
+            <if test="categoryParent != null  and categoryParent != ''">#{categoryParent},</if>
+            <if test="createTime != null ">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSEssentialInformation" parameterType="SEssentialInformation">
+        update s_essential_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="stationNickname != null  and stationNickname != ''">station_nickname = #{stationNickname},</if>
+            <if test="personLiable != null  and personLiable != ''">person_liable = #{personLiable},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="adress != null  and adress != ''">adress = #{adress},</if>
+            <if test="categoryParent != null  and categoryParent != ''">category_parent = #{categoryParent},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+        </trim>
+        where s_essential_information_id = #{sEssentialInformationId}
+    </update>
+
+    <delete id="deleteSEssentialInformationById" parameterType="Long">
+        delete from s_essential_information where s_essential_information_id = #{sEssentialInformationId}
+    </delete>
+
+    <delete id="deleteSEssentialInformationByIds" parameterType="String">
+        delete from s_essential_information where s_essential_information_id in 
+        <foreach item="sEssentialInformationId" collection="array" open="(" separator="," close=")">
+            #{sEssentialInformationId}
+        </foreach>
+    </delete>
+    
+</mapper>

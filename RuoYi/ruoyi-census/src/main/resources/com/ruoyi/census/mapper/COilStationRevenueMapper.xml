@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.COilStationRevenueMapper">
+    
+    <resultMap type="COilStationRevenue" id="COilStationRevenueResult">
+        <result property="revenueId"    column="revenue_id"    />
+        <result property="name"    column="name"    />
+        <result property="number"    column="number"    />
+        <result property="station"    column="station"    />
+        <result property="time"    column="time"    />
+        <result property="recharge"    column="recharge"    />
+        <result property="consumption"    column="consumption"    />
+        <result property="rebate"    column="rebate"    />
+        <result property="coupon"    column="coupon"    />
+        <result property="generalCertificate"    column="general_certificate"    />
+        <result property="cashCoupon"    column="cash_coupon"    />
+        <result property="discountCoupon"    column="discount_coupon"    />
+        <result property="couponDeduction"    column="coupon_deduction"    />
+        <result property="give"    column="give"    />
+        <result property="deduction"    column="deduction"    />
+        <result property="integral"    column="integral"    />
+        <result property="cGeneralCertificate"    column="c_general_certificate"    />
+        <result property="cCashCoupon"    column="c_cash_coupon"    />
+        <result property="cCoupon"    column="c_coupon"    />
+        <result property="phone"    column="phone"    />
+    </resultMap>
+
+    <sql id="selectCOilStationRevenueVo">
+        select revenue_id, name, number, station, time, recharge, consumption, rebate, coupon, general_certificate, cash_coupon, discount_coupon, coupon_deduction, give, deduction, integral, c_general_certificate, c_cash_coupon, c_coupon, phone from c_oil_station_revenue
+    </sql>
+
+    <select id="selectCOilStationRevenueList" parameterType="COilStationRevenue" resultMap="COilStationRevenueResult">
+        <include refid="selectCOilStationRevenueVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="number != null "> and number = #{number}</if>
+            <if test="station != null  and station != ''"> and station = #{station}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="recharge != null "> and recharge = #{recharge}</if>
+            <if test="consumption != null "> and consumption = #{consumption}</if>
+            <if test="rebate != null "> and rebate = #{rebate}</if>
+            <if test="coupon != null "> and coupon = #{coupon}</if>
+            <if test="generalCertificate != null "> and general_certificate = #{generalCertificate}</if>
+            <if test="cashCoupon != null "> and cash_coupon = #{cashCoupon}</if>
+            <if test="discountCoupon != null "> and discount_coupon = #{discountCoupon}</if>
+            <if test="couponDeduction != null "> and coupon_deduction = #{couponDeduction}</if>
+            <if test="give != null "> and give = #{give}</if>
+            <if test="deduction != null "> and deduction = #{deduction}</if>
+            <if test="integral != null "> and integral = #{integral}</if>
+            <if test="cGeneralCertificate != null "> and c_general_certificate = #{cGeneralCertificate}</if>
+            <if test="cCashCoupon != null "> and c_cash_coupon = #{cCashCoupon}</if>
+            <if test="cCoupon != null "> and c_coupon = #{cCoupon}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+        </where>
+    </select>
+    
+    <select id="selectCOilStationRevenueById" parameterType="Long" resultMap="COilStationRevenueResult">
+        <include refid="selectCOilStationRevenueVo"/>
+        where revenue_id = #{revenueId}
+    </select>
+        
+    <insert id="insertCOilStationRevenue" parameterType="COilStationRevenue" useGeneratedKeys="true" keyProperty="revenueId">
+        insert into c_oil_station_revenue
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="number != null ">number,</if>
+            <if test="station != null  and station != ''">station,</if>
+            <if test="time != null ">time,</if>
+            <if test="recharge != null ">recharge,</if>
+            <if test="consumption != null ">consumption,</if>
+            <if test="rebate != null ">rebate,</if>
+            <if test="coupon != null ">coupon,</if>
+            <if test="generalCertificate != null ">general_certificate,</if>
+            <if test="cashCoupon != null ">cash_coupon,</if>
+            <if test="discountCoupon != null ">discount_coupon,</if>
+            <if test="couponDeduction != null ">coupon_deduction,</if>
+            <if test="give != null ">give,</if>
+            <if test="deduction != null ">deduction,</if>
+            <if test="integral != null ">integral,</if>
+            <if test="cGeneralCertificate != null ">c_general_certificate,</if>
+            <if test="cCashCoupon != null ">c_cash_coupon,</if>
+            <if test="cCoupon != null ">c_coupon,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="number != null ">#{number},</if>
+            <if test="station != null  and station != ''">#{station},</if>
+            <if test="time != null ">#{time},</if>
+            <if test="recharge != null ">#{recharge},</if>
+            <if test="consumption != null ">#{consumption},</if>
+            <if test="rebate != null ">#{rebate},</if>
+            <if test="coupon != null ">#{coupon},</if>
+            <if test="generalCertificate != null ">#{generalCertificate},</if>
+            <if test="cashCoupon != null ">#{cashCoupon},</if>
+            <if test="discountCoupon != null ">#{discountCoupon},</if>
+            <if test="couponDeduction != null ">#{couponDeduction},</if>
+            <if test="give != null ">#{give},</if>
+            <if test="deduction != null ">#{deduction},</if>
+            <if test="integral != null ">#{integral},</if>
+            <if test="cGeneralCertificate != null ">#{cGeneralCertificate},</if>
+            <if test="cCashCoupon != null ">#{cCashCoupon},</if>
+            <if test="cCoupon != null ">#{cCoupon},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCOilStationRevenue" parameterType="COilStationRevenue">
+        update c_oil_station_revenue
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="number != null ">number = #{number},</if>
+            <if test="station != null  and station != ''">station = #{station},</if>
+            <if test="time != null ">time = #{time},</if>
+            <if test="recharge != null ">recharge = #{recharge},</if>
+            <if test="consumption != null ">consumption = #{consumption},</if>
+            <if test="rebate != null ">rebate = #{rebate},</if>
+            <if test="coupon != null ">coupon = #{coupon},</if>
+            <if test="generalCertificate != null ">general_certificate = #{generalCertificate},</if>
+            <if test="cashCoupon != null ">cash_coupon = #{cashCoupon},</if>
+            <if test="discountCoupon != null ">discount_coupon = #{discountCoupon},</if>
+            <if test="couponDeduction != null ">coupon_deduction = #{couponDeduction},</if>
+            <if test="give != null ">give = #{give},</if>
+            <if test="deduction != null ">deduction = #{deduction},</if>
+            <if test="integral != null ">integral = #{integral},</if>
+            <if test="cGeneralCertificate != null ">c_general_certificate = #{cGeneralCertificate},</if>
+            <if test="cCashCoupon != null ">c_cash_coupon = #{cCashCoupon},</if>
+            <if test="cCoupon != null ">c_coupon = #{cCoupon},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+        </trim>
+        where revenue_id = #{revenueId}
+    </update>
+
+    <delete id="deleteCOilStationRevenueById" parameterType="Long">
+        delete from c_oil_station_revenue where revenue_id = #{revenueId}
+    </delete>
+
+    <delete id="deleteCOilStationRevenueByIds" parameterType="String">
+        delete from c_oil_station_revenue where revenue_id in 
+        <foreach item="revenueId" collection="array" open="(" separator="," close=")">
+            #{revenueId}
+        </foreach>
+    </delete>
+    
+</mapper>

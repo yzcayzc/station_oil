@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.recharge.mapper.RRechargeListMapper">
+    
+    <resultMap type="RRechargeList" id="RRechargeListResult">
+        <result property="rechargeId"    column="recharge_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="address"    column="address"    />
+        <result property="rechargeUser"    column="recharge_user"    />
+        <result property="phone"    column="phone"    />
+        <result property="rechargeAmount"    column="recharge_amount"    />
+        <result property="surplusAmount"    column="surplus_amount"    />
+        <result property="paymentMethod"    column="payment_method"    />
+        <result property="time"    column="time"    />
+        <result property="status"    column="status"    />
+        <result property="bonusPoints"    column="bonus_points"    />
+        <result property="gift"    column="gift"    />
+        <result property="orderNumber"    column="order_number"    />
+    </resultMap>
+
+    <sql id="selectRRechargeListVo">
+        select recharge_id, station_name, address, recharge_user, phone, recharge_amount, surplus_amount, payment_method, time, status, bonus_points, gift, order_number from r_recharge_list
+    </sql>
+
+    <select id="selectRRechargeListList" parameterType="RRechargeList" resultMap="RRechargeListResult">
+        <include refid="selectRRechargeListVo"/>
+        <where>  
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="rechargeUser != null  and rechargeUser != ''"> and recharge_user = #{rechargeUser}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="rechargeAmount != null "> and recharge_amount = #{rechargeAmount}</if>
+            <if test="surplusAmount != null "> and surplus_amount = #{surplusAmount}</if>
+            <if test="paymentMethod != null  and paymentMethod != ''"> and payment_method = #{paymentMethod}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="bonusPoints != null "> and bonus_points = #{bonusPoints}</if>
+            <if test="gift != null  and gift != ''"> and gift = #{gift}</if>
+            <if test="orderNumber != null "> and order_number = #{orderNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectRRechargeListById" parameterType="Long" resultMap="RRechargeListResult">
+        <include refid="selectRRechargeListVo"/>
+        where recharge_id = #{rechargeId}
+    </select>
+        
+    <insert id="insertRRechargeList" parameterType="RRechargeList" useGeneratedKeys="true" keyProperty="rechargeId">
+        insert into r_recharge_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="rechargeUser != null  and rechargeUser != ''">recharge_user,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="rechargeAmount != null ">recharge_amount,</if>
+            <if test="surplusAmount != null ">surplus_amount,</if>
+            <if test="paymentMethod != null  and paymentMethod != ''">payment_method,</if>
+            <if test="time != null ">time,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="bonusPoints != null ">bonus_points,</if>
+            <if test="gift != null  and gift != ''">gift,</if>
+            <if test="orderNumber != null ">order_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="rechargeUser != null  and rechargeUser != ''">#{rechargeUser},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="rechargeAmount != null ">#{rechargeAmount},</if>
+            <if test="surplusAmount != null ">#{surplusAmount},</if>
+            <if test="paymentMethod != null  and paymentMethod != ''">#{paymentMethod},</if>
+            <if test="time != null ">#{time},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="bonusPoints != null ">#{bonusPoints},</if>
+            <if test="gift != null  and gift != ''">#{gift},</if>
+            <if test="orderNumber != null ">#{orderNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRRechargeList" parameterType="RRechargeList">
+        update r_recharge_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="rechargeUser != null  and rechargeUser != ''">recharge_user = #{rechargeUser},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="rechargeAmount != null ">recharge_amount = #{rechargeAmount},</if>
+            <if test="surplusAmount != null ">surplus_amount = #{surplusAmount},</if>
+            <if test="paymentMethod != null  and paymentMethod != ''">payment_method = #{paymentMethod},</if>
+            <if test="time != null ">time = #{time},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="bonusPoints != null ">bonus_points = #{bonusPoints},</if>
+            <if test="gift != null  and gift != ''">gift = #{gift},</if>
+            <if test="orderNumber != null ">order_number = #{orderNumber},</if>
+        </trim>
+        where recharge_id = #{rechargeId}
+    </update>
+
+    <delete id="deleteRRechargeListById" parameterType="Long">
+        delete from r_recharge_list where recharge_id = #{rechargeId}
+    </delete>
+
+    <delete id="deleteRRechargeListByIds" parameterType="String">
+        delete from r_recharge_list where recharge_id in 
+        <foreach item="rechargeId" collection="array" open="(" separator="," close=")">
+            #{rechargeId}
+        </foreach>
+    </delete>
+    
+</mapper>

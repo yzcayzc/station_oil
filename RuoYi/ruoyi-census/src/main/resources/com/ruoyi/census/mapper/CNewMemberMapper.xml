@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CNewMemberMapper">
+    
+    <resultMap type="CNewMember" id="CNewMemberResult">
+        <result property="memberId"    column="member_id"    />
+        <result property="number"    column="number"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="name"    column="name"    />
+        <result property="phone"    column="phone"    />
+        <result property="totalRecharge"    column="total_recharge"    />
+        <result property="totalConsumption"    column="total_consumption"    />
+        <result property="balance"    column="balance"    />
+        <result property="firstConsumptionTime"    column="first_consumption_time"    />
+        <result property="memberRegistrationTime"    column="member_registration_time"    />
+    </resultMap>
+
+    <sql id="selectCNewMemberVo">
+        select member_id, number, station_name, name, phone, total_recharge, total_consumption, balance, first_consumption_time, member_registration_time from c_new_member
+    </sql>
+
+    <select id="selectCNewMemberList" parameterType="CNewMember" resultMap="CNewMemberResult">
+        <include refid="selectCNewMemberVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="totalRecharge != null "> and total_recharge = #{totalRecharge}</if>
+            <if test="totalConsumption != null "> and total_consumption = #{totalConsumption}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="firstConsumptionTime != null "> and first_consumption_time = #{firstConsumptionTime}</if>
+            <if test="memberRegistrationTime != null "> and member_registration_time = #{memberRegistrationTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCNewMemberById" parameterType="Long" resultMap="CNewMemberResult">
+        <include refid="selectCNewMemberVo"/>
+        where member_id = #{memberId}
+    </select>
+        
+    <insert id="insertCNewMember" parameterType="CNewMember" useGeneratedKeys="true" keyProperty="memberId">
+        insert into c_new_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="totalRecharge != null ">total_recharge,</if>
+            <if test="totalConsumption != null ">total_consumption,</if>
+            <if test="balance != null ">balance,</if>
+            <if test="firstConsumptionTime != null ">first_consumption_time,</if>
+            <if test="memberRegistrationTime != null ">member_registration_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="totalRecharge != null ">#{totalRecharge},</if>
+            <if test="totalConsumption != null ">#{totalConsumption},</if>
+            <if test="balance != null ">#{balance},</if>
+            <if test="firstConsumptionTime != null ">#{firstConsumptionTime},</if>
+            <if test="memberRegistrationTime != null ">#{memberRegistrationTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCNewMember" parameterType="CNewMember">
+        update c_new_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="totalRecharge != null ">total_recharge = #{totalRecharge},</if>
+            <if test="totalConsumption != null ">total_consumption = #{totalConsumption},</if>
+            <if test="balance != null ">balance = #{balance},</if>
+            <if test="firstConsumptionTime != null ">first_consumption_time = #{firstConsumptionTime},</if>
+            <if test="memberRegistrationTime != null ">member_registration_time = #{memberRegistrationTime},</if>
+        </trim>
+        where member_id = #{memberId}
+    </update>
+
+    <delete id="deleteCNewMemberById" parameterType="Long">
+        delete from c_new_member where member_id = #{memberId}
+    </delete>
+
+    <delete id="deleteCNewMemberByIds" parameterType="String">
+        delete from c_new_member where member_id in 
+        <foreach item="memberId" collection="array" open="(" separator="," close=")">
+            #{memberId}
+        </foreach>
+    </delete>
+    
+</mapper>

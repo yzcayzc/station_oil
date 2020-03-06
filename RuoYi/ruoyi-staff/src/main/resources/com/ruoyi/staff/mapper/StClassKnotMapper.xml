@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.staff.mapper.StClassKnotMapper">
+    
+    <resultMap type="StClassKnot" id="StClassKnotResult">
+        <result property="classKnotId"    column="class_knot_id"    />
+        <result property="number"    column="number"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="loginName"    column="login_name"    />
+        <result property="workShift"    column="work_shift"    />
+        <result property="closingTime"    column="closing_time"    />
+        <result property="income"    column="income"    />
+        <result property="transactionNumber"    column="transaction_number"    />
+        <result property="amountReceivable"    column="amount_receivable"    />
+        <result property="preferentialAmount"    column="preferential_amount"    />
+        <result property="cashAmount"    column="cash_amount"    />
+    </resultMap>
+
+    <sql id="selectStClassKnotVo">
+        select class_knot_id, number, station_name, login_name, work_shift, closing_time, income, transaction_number, amount_receivable, preferential_amount, cash_amount from st_class_knot
+    </sql>
+
+    <select id="selectStClassKnotList" parameterType="StClassKnot" resultMap="StClassKnotResult">
+        <include refid="selectStClassKnotVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="loginName != null  and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
+            <if test="workShift != null "> and work_shift = #{workShift}</if>
+            <if test="closingTime != null "> and closing_time = #{closingTime}</if>
+            <if test="income != null "> and income = #{income}</if>
+            <if test="transactionNumber != null "> and transaction_number = #{transactionNumber}</if>
+            <if test="amountReceivable != null "> and amount_receivable = #{amountReceivable}</if>
+            <if test="preferentialAmount != null "> and preferential_amount = #{preferentialAmount}</if>
+            <if test="cashAmount != null "> and cash_amount = #{cashAmount}</if>
+        </where>
+    </select>
+    
+    <select id="selectStClassKnotById" parameterType="Long" resultMap="StClassKnotResult">
+        <include refid="selectStClassKnotVo"/>
+        where class_knot_id = #{classKnotId}
+    </select>
+        
+    <insert id="insertStClassKnot" parameterType="StClassKnot" useGeneratedKeys="true" keyProperty="classKnotId">
+        insert into st_class_knot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="loginName != null  and loginName != ''">login_name,</if>
+            <if test="workShift != null ">work_shift,</if>
+            <if test="closingTime != null ">closing_time,</if>
+            <if test="income != null ">income,</if>
+            <if test="transactionNumber != null ">transaction_number,</if>
+            <if test="amountReceivable != null ">amount_receivable,</if>
+            <if test="preferentialAmount != null ">preferential_amount,</if>
+            <if test="cashAmount != null ">cash_amount,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="loginName != null  and loginName != ''">#{loginName},</if>
+            <if test="workShift != null ">#{workShift},</if>
+            <if test="closingTime != null ">#{closingTime},</if>
+            <if test="income != null ">#{income},</if>
+            <if test="transactionNumber != null ">#{transactionNumber},</if>
+            <if test="amountReceivable != null ">#{amountReceivable},</if>
+            <if test="preferentialAmount != null ">#{preferentialAmount},</if>
+            <if test="cashAmount != null ">#{cashAmount},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStClassKnot" parameterType="StClassKnot">
+        update st_class_knot
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="loginName != null  and loginName != ''">login_name = #{loginName},</if>
+            <if test="workShift != null ">work_shift = #{workShift},</if>
+            <if test="closingTime != null ">closing_time = #{closingTime},</if>
+            <if test="income != null ">income = #{income},</if>
+            <if test="transactionNumber != null ">transaction_number = #{transactionNumber},</if>
+            <if test="amountReceivable != null ">amount_receivable = #{amountReceivable},</if>
+            <if test="preferentialAmount != null ">preferential_amount = #{preferentialAmount},</if>
+            <if test="cashAmount != null ">cash_amount = #{cashAmount},</if>
+        </trim>
+        where class_knot_id = #{classKnotId}
+    </update>
+
+    <delete id="deleteStClassKnotById" parameterType="Long">
+        delete from st_class_knot where class_knot_id = #{classKnotId}
+    </delete>
+
+    <delete id="deleteStClassKnotByIds" parameterType="String">
+        delete from st_class_knot where class_knot_id in 
+        <foreach item="classKnotId" collection="array" open="(" separator="," close=")">
+            #{classKnotId}
+        </foreach>
+    </delete>
+    
+</mapper>

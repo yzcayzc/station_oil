@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.staff.mapper.StTransactionDetailsMapper">
+    
+    <resultMap type="StTransactionDetails" id="StTransactionDetailsResult">
+        <result property="transactionDetailsId"    column="transaction_details_id"    />
+        <result property="number"    column="number"    />
+        <result property="orderNumber"    column="order_number"    />
+        <result property="paymentTime"    column="payment_time"    />
+        <result property="consumer"    column="consumer"    />
+        <result property="paymentMethod"    column="payment_method"    />
+        <result property="paymentAmount"    column="payment_amount"    />
+        <result property="preferentialWay"    column="preferential_way"    />
+        <result property="preferentialAmount"    column="preferential_amount"    />
+        <result property="receivable"    column="receivable"    />
+        <result property="netReceipts"    column="net_receipts"    />
+        <result property="integral"    column="integral"    />
+    </resultMap>
+
+    <sql id="selectStTransactionDetailsVo">
+        select transaction_details_id, number, order_number, payment_time, consumer, payment_method, payment_amount, preferential_way, preferential_amount, receivable, net_receipts, integral from st_transaction_details
+    </sql>
+
+    <select id="selectStTransactionDetailsList" parameterType="StTransactionDetails" resultMap="StTransactionDetailsResult">
+        <include refid="selectStTransactionDetailsVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="orderNumber != null "> and order_number = #{orderNumber}</if>
+            <if test="paymentTime != null "> and payment_time = #{paymentTime}</if>
+            <if test="consumer != null  and consumer != ''"> and consumer = #{consumer}</if>
+            <if test="paymentMethod != null  and paymentMethod != ''"> and payment_method = #{paymentMethod}</if>
+            <if test="paymentAmount != null "> and payment_amount = #{paymentAmount}</if>
+            <if test="preferentialWay != null  and preferentialWay != ''"> and preferential_way = #{preferentialWay}</if>
+            <if test="preferentialAmount != null "> and preferential_amount = #{preferentialAmount}</if>
+            <if test="receivable != null "> and receivable = #{receivable}</if>
+            <if test="netReceipts != null "> and net_receipts = #{netReceipts}</if>
+            <if test="integral != null "> and integral = #{integral}</if>
+        </where>
+    </select>
+    
+    <select id="selectStTransactionDetailsById" parameterType="Long" resultMap="StTransactionDetailsResult">
+        <include refid="selectStTransactionDetailsVo"/>
+        where transaction_details_id = #{transactionDetailsId}
+    </select>
+        
+    <insert id="insertStTransactionDetails" parameterType="StTransactionDetails" useGeneratedKeys="true" keyProperty="transactionDetailsId">
+        insert into st_transaction_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="orderNumber != null ">order_number,</if>
+            <if test="paymentTime != null ">payment_time,</if>
+            <if test="consumer != null  and consumer != ''">consumer,</if>
+            <if test="paymentMethod != null  and paymentMethod != ''">payment_method,</if>
+            <if test="paymentAmount != null ">payment_amount,</if>
+            <if test="preferentialWay != null  and preferentialWay != ''">preferential_way,</if>
+            <if test="preferentialAmount != null ">preferential_amount,</if>
+            <if test="receivable != null ">receivable,</if>
+            <if test="netReceipts != null ">net_receipts,</if>
+            <if test="integral != null ">integral,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="orderNumber != null ">#{orderNumber},</if>
+            <if test="paymentTime != null ">#{paymentTime},</if>
+            <if test="consumer != null  and consumer != ''">#{consumer},</if>
+            <if test="paymentMethod != null  and paymentMethod != ''">#{paymentMethod},</if>
+            <if test="paymentAmount != null ">#{paymentAmount},</if>
+            <if test="preferentialWay != null  and preferentialWay != ''">#{preferentialWay},</if>
+            <if test="preferentialAmount != null ">#{preferentialAmount},</if>
+            <if test="receivable != null ">#{receivable},</if>
+            <if test="netReceipts != null ">#{netReceipts},</if>
+            <if test="integral != null ">#{integral},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStTransactionDetails" parameterType="StTransactionDetails">
+        update st_transaction_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="orderNumber != null ">order_number = #{orderNumber},</if>
+            <if test="paymentTime != null ">payment_time = #{paymentTime},</if>
+            <if test="consumer != null  and consumer != ''">consumer = #{consumer},</if>
+            <if test="paymentMethod != null  and paymentMethod != ''">payment_method = #{paymentMethod},</if>
+            <if test="paymentAmount != null ">payment_amount = #{paymentAmount},</if>
+            <if test="preferentialWay != null  and preferentialWay != ''">preferential_way = #{preferentialWay},</if>
+            <if test="preferentialAmount != null ">preferential_amount = #{preferentialAmount},</if>
+            <if test="receivable != null ">receivable = #{receivable},</if>
+            <if test="netReceipts != null ">net_receipts = #{netReceipts},</if>
+            <if test="integral != null ">integral = #{integral},</if>
+        </trim>
+        where transaction_details_id = #{transactionDetailsId}
+    </update>
+
+    <delete id="deleteStTransactionDetailsById" parameterType="Long">
+        delete from st_transaction_details where transaction_details_id = #{transactionDetailsId}
+    </delete>
+
+    <delete id="deleteStTransactionDetailsByIds" parameterType="String">
+        delete from st_transaction_details where transaction_details_id in 
+        <foreach item="transactionDetailsId" collection="array" open="(" separator="," close=")">
+            #{transactionDetailsId}
+        </foreach>
+    </delete>
+    
+</mapper>

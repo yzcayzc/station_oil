@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.PaperCouponsMapper">
+    
+    <resultMap type="PaperCoupons" id="PaperCouponsResult">
+        <result property="couponsId"    column="coupons_id"    />
+        <result property="numberId"    column="number_id"    />
+        <result property="couponsAmount"    column="coupons_amount"    />
+        <result property="number"    column="number"    />
+        <result property="couponRange"    column="coupon_range"    />
+        <result property="startNumber"    column="start_number"    />
+        <result property="endNumber"    column="end_number"    />
+    </resultMap>
+
+    <sql id="selectPaperCouponsVo">
+        select coupons_id, number_id, coupons_amount, number, coupon_range, start_number, end_number from paper_coupons
+    </sql>
+
+    <select id="selectPaperCouponsList" parameterType="PaperCoupons" resultMap="PaperCouponsResult">
+        <include refid="selectPaperCouponsVo"/>
+        <where>  
+            <if test="numberId != null "> and number_id = #{numberId}</if>
+            <if test="couponsAmount != null  and couponsAmount != ''"> and coupons_amount = #{couponsAmount}</if>
+            <if test="number != null "> and number = #{number}</if>
+            <if test="couponRange != null  and couponRange != ''"> and coupon_range = #{couponRange}</if>
+            <if test="startNumber != null "> and start_number = #{startNumber}</if>
+            <if test="endNumber != null "> and end_number = #{endNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectPaperCouponsById" parameterType="Long" resultMap="PaperCouponsResult">
+        <include refid="selectPaperCouponsVo"/>
+        where coupons_id = #{couponsId}
+    </select>
+        
+    <insert id="insertPaperCoupons" parameterType="PaperCoupons">
+        insert into paper_coupons
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponsId != null ">coupons_id,</if>
+            <if test="numberId != null ">number_id,</if>
+            <if test="couponsAmount != null  and couponsAmount != ''">coupons_amount,</if>
+            <if test="number != null ">number,</if>
+            <if test="couponRange != null  and couponRange != ''">coupon_range,</if>
+            <if test="startNumber != null ">start_number,</if>
+            <if test="endNumber != null ">end_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponsId != null ">#{couponsId},</if>
+            <if test="numberId != null ">#{numberId},</if>
+            <if test="couponsAmount != null  and couponsAmount != ''">#{couponsAmount},</if>
+            <if test="number != null ">#{number},</if>
+            <if test="couponRange != null  and couponRange != ''">#{couponRange},</if>
+            <if test="startNumber != null ">#{startNumber},</if>
+            <if test="endNumber != null ">#{endNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePaperCoupons" parameterType="PaperCoupons">
+        update paper_coupons
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="numberId != null ">number_id = #{numberId},</if>
+            <if test="couponsAmount != null  and couponsAmount != ''">coupons_amount = #{couponsAmount},</if>
+            <if test="number != null ">number = #{number},</if>
+            <if test="couponRange != null  and couponRange != ''">coupon_range = #{couponRange},</if>
+            <if test="startNumber != null ">start_number = #{startNumber},</if>
+            <if test="endNumber != null ">end_number = #{endNumber},</if>
+        </trim>
+        where coupons_id = #{couponsId}
+    </update>
+
+    <delete id="deletePaperCouponsById" parameterType="Long">
+        delete from paper_coupons where coupons_id = #{couponsId}
+    </delete>
+
+    <delete id="deletePaperCouponsByIds" parameterType="String">
+        delete from paper_coupons where coupons_id in 
+        <foreach item="couponsId" collection="array" open="(" separator="," close=")">
+            #{couponsId}
+        </foreach>
+    </delete>
+    
+</mapper>

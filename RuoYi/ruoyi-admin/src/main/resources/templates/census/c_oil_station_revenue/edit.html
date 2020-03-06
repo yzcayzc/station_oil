@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改油站收入')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-c_oil_station_revenue-edit" th:object="${cOilStationRevenue}">
+            <input name="revenueId" th:field="*{revenueId}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">姓名：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:field="*{name}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">序号：</label>
+                <div class="col-sm-8">
+                    <input name="number" th:field="*{number}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">油站：</label>
+                <div class="col-sm-8">
+                    <input name="station" th:field="*{station}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input name="time" th:value="${#dates.format(cOilStationRevenue.time, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">充值：</label>
+                <div class="col-sm-8">
+                    <input name="recharge" th:field="*{recharge}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">消费：</label>
+                <div class="col-sm-8">
+                    <input name="consumption" th:field="*{consumption}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">返利：</label>
+                <div class="col-sm-8">
+                    <input name="rebate" th:field="*{rebate}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">抵扣券：</label>
+                <div class="col-sm-8">
+                    <input name="coupon" th:field="*{coupon}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">通用券：</label>
+                <div class="col-sm-8">
+                    <input name="generalCertificate" th:field="*{generalCertificate}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">现金券：</label>
+                <div class="col-sm-8">
+                    <input name="cashCoupon" th:field="*{cashCoupon}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">折扣券：</label>
+                <div class="col-sm-8">
+                    <input name="discountCoupon" th:field="*{discountCoupon}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">金额：</label>
+                <div class="col-sm-8">
+                    <input name="couponDeduction" th:field="*{couponDeduction}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">赠送：</label>
+                <div class="col-sm-8">
+                    <input name="give" th:field="*{give}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">抵扣：</label>
+                <div class="col-sm-8">
+                    <input name="deduction" th:field="*{deduction}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">积分余额：</label>
+                <div class="col-sm-8">
+                    <input name="integral" th:field="*{integral}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">通用券领取：</label>
+                <div class="col-sm-8">
+                    <input name="cGeneralCertificate" th:field="*{cGeneralCertificate}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">现金券领取：</label>
+                <div class="col-sm-8">
+                    <input name="cCashCoupon" th:field="*{cCashCoupon}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">折扣券领取：</label>
+                <div class="col-sm-8">
+                    <input name="cCoupon" th:field="*{cCoupon}" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">联系方式：</label>
+                <div class="col-sm-8">
+                    <input name="phone" th:field="*{phone}" class="form-control" type="text" required>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "census/c_oil_station_revenue";
+        $("#form-c_oil_station_revenue-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-c_oil_station_revenue-edit').serialize());
+            }
+        }
+
+        $("input[name='time']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

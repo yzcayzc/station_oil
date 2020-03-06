@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.systematic.mapper.SyCouponCenterMapper">
+    
+    <resultMap type="SyCouponCenter" id="SyCouponCenterResult">
+        <result property="couponId"    column="coupon_id"    />
+        <result property="number"    column="number"    />
+        <result property="publishingUnit"    column="publishing_unit"    />
+        <result property="title"    column="title"    />
+        <result property="contentDescription"    column="content_description"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="activity"    column="activity"    />
+    </resultMap>
+
+    <sql id="selectSyCouponCenterVo">
+        select coupon_id, number, publishing_unit, title, content_description, start_time, end_time, station_name, activity from sy_coupon_center
+    </sql>
+
+    <select id="selectSyCouponCenterList" parameterType="SyCouponCenter" resultMap="SyCouponCenterResult">
+        <include refid="selectSyCouponCenterVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="publishingUnit != null  and publishingUnit != ''"> and publishing_unit = #{publishingUnit}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="contentDescription != null  and contentDescription != ''"> and content_description = #{contentDescription}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="activity != null  and activity != ''"> and activity = #{activity}</if>
+        </where>
+    </select>
+    
+    <select id="selectSyCouponCenterById" parameterType="Long" resultMap="SyCouponCenterResult">
+        <include refid="selectSyCouponCenterVo"/>
+        where coupon_id = #{couponId}
+    </select>
+        
+    <insert id="insertSyCouponCenter" parameterType="SyCouponCenter" useGeneratedKeys="true" keyProperty="couponId">
+        insert into sy_coupon_center
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="publishingUnit != null  and publishingUnit != ''">publishing_unit,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="contentDescription != null  and contentDescription != ''">content_description,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="activity != null  and activity != ''">activity,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="publishingUnit != null  and publishingUnit != ''">#{publishingUnit},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="contentDescription != null  and contentDescription != ''">#{contentDescription},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="activity != null  and activity != ''">#{activity},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSyCouponCenter" parameterType="SyCouponCenter">
+        update sy_coupon_center
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="publishingUnit != null  and publishingUnit != ''">publishing_unit = #{publishingUnit},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="contentDescription != null  and contentDescription != ''">content_description = #{contentDescription},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="activity != null  and activity != ''">activity = #{activity},</if>
+        </trim>
+        where coupon_id = #{couponId}
+    </update>
+
+    <delete id="deleteSyCouponCenterById" parameterType="Long">
+        delete from sy_coupon_center where coupon_id = #{couponId}
+    </delete>
+
+    <delete id="deleteSyCouponCenterByIds" parameterType="String">
+        delete from sy_coupon_center where coupon_id in 
+        <foreach item="couponId" collection="array" open="(" separator="," close=")">
+            #{couponId}
+        </foreach>
+    </delete>
+    
+</mapper>

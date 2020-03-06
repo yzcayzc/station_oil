@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CEmployeeFeeReportMapper">
+    
+    <resultMap type="CEmployeeFeeReport" id="CEmployeeFeeReportResult">
+        <result property="feeId"    column="fee_id"    />
+        <result property="number"    column="number"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="employee"    column="employee"    />
+        <result property="feeTime"    column="fee_time"    />
+        <result property="electronicWallet"    column="electronic_wallet"    />
+        <result property="wechat"    column="wechat"    />
+        <result property="alipay"    column="alipay"    />
+        <result property="cash"    column="cash"    />
+        <result property="subtotalPayment"    column="subtotal_payment"    />
+        <result property="rebate"    column="rebate"    />
+        <result property="generalCertificate"    column="general_certificate"    />
+        <result property="cashCoupon"    column="cash_coupon"    />
+        <result property="discountCoupon"    column="discount_coupon"    />
+        <result property="paperCoupon"    column="paper_coupon"    />
+        <result property="discountSubtotal"    column="discount_subtotal"    />
+        <result property="total"    column="total"    />
+    </resultMap>
+
+    <sql id="selectCEmployeeFeeReportVo">
+        select fee_id, number, station_name, employee, fee_time, electronic_wallet, wechat, alipay, cash, subtotal_payment, rebate, general_certificate, cash_coupon, discount_coupon, paper_coupon, discount_subtotal, total from c_employee_fee_report
+    </sql>
+
+    <select id="selectCEmployeeFeeReportList" parameterType="CEmployeeFeeReport" resultMap="CEmployeeFeeReportResult">
+        <include refid="selectCEmployeeFeeReportVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="employee != null  and employee != ''"> and employee = #{employee}</if>
+            <if test="feeTime != null "> and fee_time = #{feeTime}</if>
+            <if test="electronicWallet != null "> and electronic_wallet = #{electronicWallet}</if>
+            <if test="wechat != null "> and wechat = #{wechat}</if>
+            <if test="alipay != null "> and alipay = #{alipay}</if>
+            <if test="cash != null "> and cash = #{cash}</if>
+            <if test="subtotalPayment != null "> and subtotal_payment = #{subtotalPayment}</if>
+            <if test="rebate != null "> and rebate = #{rebate}</if>
+            <if test="generalCertificate != null "> and general_certificate = #{generalCertificate}</if>
+            <if test="cashCoupon != null "> and cash_coupon = #{cashCoupon}</if>
+            <if test="discountCoupon != null "> and discount_coupon = #{discountCoupon}</if>
+            <if test="paperCoupon != null "> and paper_coupon = #{paperCoupon}</if>
+            <if test="discountSubtotal != null "> and discount_subtotal = #{discountSubtotal}</if>
+            <if test="total != null "> and total = #{total}</if>
+        </where>
+    </select>
+    
+    <select id="selectCEmployeeFeeReportById" parameterType="Long" resultMap="CEmployeeFeeReportResult">
+        <include refid="selectCEmployeeFeeReportVo"/>
+        where fee_id = #{feeId}
+    </select>
+        
+    <insert id="insertCEmployeeFeeReport" parameterType="CEmployeeFeeReport">
+        insert into c_employee_fee_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="feeId != null ">fee_id,</if>
+            <if test="number != null ">number,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="employee != null  and employee != ''">employee,</if>
+            <if test="feeTime != null ">fee_time,</if>
+            <if test="electronicWallet != null ">electronic_wallet,</if>
+            <if test="wechat != null ">wechat,</if>
+            <if test="alipay != null ">alipay,</if>
+            <if test="cash != null ">cash,</if>
+            <if test="subtotalPayment != null ">subtotal_payment,</if>
+            <if test="rebate != null ">rebate,</if>
+            <if test="generalCertificate != null ">general_certificate,</if>
+            <if test="cashCoupon != null ">cash_coupon,</if>
+            <if test="discountCoupon != null ">discount_coupon,</if>
+            <if test="paperCoupon != null ">paper_coupon,</if>
+            <if test="discountSubtotal != null ">discount_subtotal,</if>
+            <if test="total != null ">total,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="feeId != null ">#{feeId},</if>
+            <if test="number != null ">#{number},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="employee != null  and employee != ''">#{employee},</if>
+            <if test="feeTime != null ">#{feeTime},</if>
+            <if test="electronicWallet != null ">#{electronicWallet},</if>
+            <if test="wechat != null ">#{wechat},</if>
+            <if test="alipay != null ">#{alipay},</if>
+            <if test="cash != null ">#{cash},</if>
+            <if test="subtotalPayment != null ">#{subtotalPayment},</if>
+            <if test="rebate != null ">#{rebate},</if>
+            <if test="generalCertificate != null ">#{generalCertificate},</if>
+            <if test="cashCoupon != null ">#{cashCoupon},</if>
+            <if test="discountCoupon != null ">#{discountCoupon},</if>
+            <if test="paperCoupon != null ">#{paperCoupon},</if>
+            <if test="discountSubtotal != null ">#{discountSubtotal},</if>
+            <if test="total != null ">#{total},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCEmployeeFeeReport" parameterType="CEmployeeFeeReport">
+        update c_employee_fee_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="employee != null  and employee != ''">employee = #{employee},</if>
+            <if test="feeTime != null ">fee_time = #{feeTime},</if>
+            <if test="electronicWallet != null ">electronic_wallet = #{electronicWallet},</if>
+            <if test="wechat != null ">wechat = #{wechat},</if>
+            <if test="alipay != null ">alipay = #{alipay},</if>
+            <if test="cash != null ">cash = #{cash},</if>
+            <if test="subtotalPayment != null ">subtotal_payment = #{subtotalPayment},</if>
+            <if test="rebate != null ">rebate = #{rebate},</if>
+            <if test="generalCertificate != null ">general_certificate = #{generalCertificate},</if>
+            <if test="cashCoupon != null ">cash_coupon = #{cashCoupon},</if>
+            <if test="discountCoupon != null ">discount_coupon = #{discountCoupon},</if>
+            <if test="paperCoupon != null ">paper_coupon = #{paperCoupon},</if>
+            <if test="discountSubtotal != null ">discount_subtotal = #{discountSubtotal},</if>
+            <if test="total != null ">total = #{total},</if>
+        </trim>
+        where fee_id = #{feeId}
+    </update>
+
+    <delete id="deleteCEmployeeFeeReportById" parameterType="Long">
+        delete from c_employee_fee_report where fee_id = #{feeId}
+    </delete>
+
+    <delete id="deleteCEmployeeFeeReportByIds" parameterType="String">
+        delete from c_employee_fee_report where fee_id in 
+        <foreach item="feeId" collection="array" open="(" separator="," close=")">
+            #{feeId}
+        </foreach>
+    </delete>
+    
+</mapper>

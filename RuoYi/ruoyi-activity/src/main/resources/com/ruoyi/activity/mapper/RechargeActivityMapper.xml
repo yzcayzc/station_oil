@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.RechargeActivityMapper">
+    
+    <resultMap type="RechargeActivity" id="RechargeActivityResult">
+        <result property="activityId"    column="activity_id"    />
+        <result property="number"    column="number"    />
+        <result property="rechargeAmount"    column="recharge_amount"    />
+        <result property="rebate"    column="rebate"    />
+        <result property="gift"    column="gift"    />
+    </resultMap>
+
+    <sql id="selectRechargeActivityVo">
+        select activity_id, number, recharge_amount, rebate, gift from recharge_activity
+    </sql>
+
+    <select id="selectRechargeActivityList" parameterType="RechargeActivity" resultMap="RechargeActivityResult">
+        <include refid="selectRechargeActivityVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="rechargeAmount != null  and rechargeAmount != ''"> and recharge_amount = #{rechargeAmount}</if>
+            <if test="rebate != null  and rebate != ''"> and rebate = #{rebate}</if>
+            <if test="gift != null  and gift != ''"> and gift = #{gift}</if>
+        </where>
+    </select>
+    
+    <select id="selectRechargeActivityById" parameterType="Long" resultMap="RechargeActivityResult">
+        <include refid="selectRechargeActivityVo"/>
+        where activity_id = #{activityId}
+    </select>
+        
+    <insert id="insertRechargeActivity" parameterType="RechargeActivity" useGeneratedKeys="true" keyProperty="activityId">
+        insert into recharge_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="rechargeAmount != null  and rechargeAmount != ''">recharge_amount,</if>
+            <if test="rebate != null  and rebate != ''">rebate,</if>
+            <if test="gift != null  and gift != ''">gift,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="rechargeAmount != null  and rechargeAmount != ''">#{rechargeAmount},</if>
+            <if test="rebate != null  and rebate != ''">#{rebate},</if>
+            <if test="gift != null  and gift != ''">#{gift},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRechargeActivity" parameterType="RechargeActivity">
+        update recharge_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="rechargeAmount != null  and rechargeAmount != ''">recharge_amount = #{rechargeAmount},</if>
+            <if test="rebate != null  and rebate != ''">rebate = #{rebate},</if>
+            <if test="gift != null  and gift != ''">gift = #{gift},</if>
+        </trim>
+        where activity_id = #{activityId}
+    </update>
+
+    <delete id="deleteRechargeActivityById" parameterType="Long">
+        delete from recharge_activity where activity_id = #{activityId}
+    </delete>
+
+    <delete id="deleteRechargeActivityByIds" parameterType="String">
+        delete from recharge_activity where activity_id in 
+        <foreach item="activityId" collection="array" open="(" separator="," close=")">
+            #{activityId}
+        </foreach>
+    </delete>
+    
+</mapper>

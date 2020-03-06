@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('历史油价列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>加油站名：</p>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <p>油品：</p>
+                                <input type="text" name="oils"/>
+                            </li>
+                            <li>
+                                <p>油号：</p>
+                                <input type="text" name="oilNumber"/>
+                            </li>
+                            <li>
+                                <p>油价：</p>
+                                <input type="text" name="price"/>
+                            </li>
+                            <li class="select-time">
+                                <p>查询日期：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginQueryTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endQueryTime]"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="station:s_old_oilprice:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="station:s_old_oilprice:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="station:s_old_oilprice:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="station:s_old_oilprice:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('station:s_old_oilprice:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('station:s_old_oilprice:remove')}]];
+        var prefix = ctx + "station/s_old_oilprice";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "历史油价",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'oldOilId', 
+                    title : '历史油价id',
+                    visible: false
+                },
+                {
+                    field : 'name', 
+                    title : '加油站名'
+                },
+                {
+                    field : 'oils', 
+                    title : '油品'
+                },
+                {
+                    field : 'oilNumber', 
+                    title : '油号'
+                },
+                {
+                    field : 'price', 
+                    title : '油价'
+                },
+                {
+                    field : 'queryTime', 
+                    title : '查询日期'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.oldOilId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.oldOilId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

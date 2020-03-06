@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MCommodityExchangeMapper">
+    
+    <resultMap type="MCommodityExchange" id="MCommodityExchangeResult">
+        <result property="commodityExchangeId"    column="commodity_exchange_id"    />
+        <result property="commodityNumber"    column="commodity_number"    />
+        <result property="tradeName"    column="trade_name"    />
+        <result property="exchangeTime"    column="exchange_time"    />
+        <result property="conditionT"    column="condition_t"    />
+        <result property="residualIntegral"    column="residual_integral"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectMCommodityExchangeVo">
+        select commodity_exchange_id, commodity_number, trade_name, exchange_time, condition_t, residual_integral, status from m_commodity_exchange
+    </sql>
+
+    <select id="selectMCommodityExchangeList" parameterType="MCommodityExchange" resultMap="MCommodityExchangeResult">
+        <include refid="selectMCommodityExchangeVo"/>
+        <where>  
+            <if test="commodityNumber != null "> and commodity_number = #{commodityNumber}</if>
+            <if test="tradeName != null  and tradeName != ''"> and trade_name like concat('%', #{tradeName}, '%')</if>
+            <if test="exchangeTime != null "> and exchange_time = #{exchangeTime}</if>
+            <if test="conditionT != null  and conditionT != ''"> and condition_t = #{conditionT}</if>
+            <if test="residualIntegral != null "> and residual_integral = #{residualIntegral}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectMCommodityExchangeById" parameterType="Long" resultMap="MCommodityExchangeResult">
+        <include refid="selectMCommodityExchangeVo"/>
+        where commodity_exchange_id = #{commodityExchangeId}
+    </select>
+        
+    <insert id="insertMCommodityExchange" parameterType="MCommodityExchange" useGeneratedKeys="true" keyProperty="commodityExchangeId">
+        insert into m_commodity_exchange
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commodityNumber != null ">commodity_number,</if>
+            <if test="tradeName != null  and tradeName != ''">trade_name,</if>
+            <if test="exchangeTime != null ">exchange_time,</if>
+            <if test="conditionT != null  and conditionT != ''">condition_t,</if>
+            <if test="residualIntegral != null ">residual_integral,</if>
+            <if test="status != null  and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commodityNumber != null ">#{commodityNumber},</if>
+            <if test="tradeName != null  and tradeName != ''">#{tradeName},</if>
+            <if test="exchangeTime != null ">#{exchangeTime},</if>
+            <if test="conditionT != null  and conditionT != ''">#{conditionT},</if>
+            <if test="residualIntegral != null ">#{residualIntegral},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMCommodityExchange" parameterType="MCommodityExchange">
+        update m_commodity_exchange
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commodityNumber != null ">commodity_number = #{commodityNumber},</if>
+            <if test="tradeName != null  and tradeName != ''">trade_name = #{tradeName},</if>
+            <if test="exchangeTime != null ">exchange_time = #{exchangeTime},</if>
+            <if test="conditionT != null  and conditionT != ''">condition_t = #{conditionT},</if>
+            <if test="residualIntegral != null ">residual_integral = #{residualIntegral},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+        </trim>
+        where commodity_exchange_id = #{commodityExchangeId}
+    </update>
+
+    <delete id="deleteMCommodityExchangeById" parameterType="Long">
+        delete from m_commodity_exchange where commodity_exchange_id = #{commodityExchangeId}
+    </delete>
+
+    <delete id="deleteMCommodityExchangeByIds" parameterType="String">
+        delete from m_commodity_exchange where commodity_exchange_id in 
+        <foreach item="commodityExchangeId" collection="array" open="(" separator="," close=")">
+            #{commodityExchangeId}
+        </foreach>
+    </delete>
+    
+</mapper>

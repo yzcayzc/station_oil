@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('优惠信息表列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>消费者：</p>
+                                <input type="text" name="consumer"/>
+                            </li>
+                            <li class="select-time">
+                                <p>加以日期：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTransactionTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTransactionTime]"/>
+                            </li>
+                            <li>
+                                <p>充值额：</p>
+                                <input type="text" name="recharge"/>
+                            </li>
+                            <li>
+                                <p>消费额：</p>
+                                <input type="text" name="consumptionVolume"/>
+                            </li>
+                            <li>
+                                <p>金额：</p>
+                                <input type="text" name="money"/>
+                            </li>
+                            <li>
+                                <p>返利：</p>
+                                <input type="text" name="rebate"/>
+                            </li>
+                            <li>
+                                <p>抵扣券：</p>
+                                <input type="text" name="coupon"/>
+                            </li>
+                            <li>
+                                <p>通用券：</p>
+                                <input type="text" name="generalCertificate"/>
+                            </li>
+                            <li>
+                                <p>现金券：</p>
+                                <input type="text" name="cashCoupon"/>
+                            </li>
+                            <li>
+                                <p>折扣券：</p>
+                                <input type="text" name="discountCoupon"/>
+                            </li>
+                            <li>
+                                <p>通用券领取：</p>
+                                <input type="text" name="cGeneralCertificate"/>
+                            </li>
+                            <li>
+                                <p>现金券领取：</p>
+                                <input type="text" name="cCashCoupon"/>
+                            </li>
+                            <li>
+                                <p>折扣券领取：</p>
+                                <input type="text" name="cCoupon"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="census:c_preferential_information:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="census:c_preferential_information:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="census:c_preferential_information:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="census:c_preferential_information:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('census:c_preferential_information:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('census:c_preferential_information:remove')}]];
+        var prefix = ctx + "census/c_preferential_information";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "优惠信息表",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'preferentialId', 
+                    title : 'id',
+                    visible: false
+                },
+                {
+                    field : 'consumer', 
+                    title : '消费者'
+                },
+                {
+                    field : 'transactionTime', 
+                    title : '加以日期'
+                },
+                {
+                    field : 'recharge', 
+                    title : '充值额'
+                },
+                {
+                    field : 'consumptionVolume', 
+                    title : '消费额'
+                },
+                {
+                    field : 'money', 
+                    title : '金额'
+                },
+                {
+                    field : 'rebate', 
+                    title : '返利'
+                },
+                {
+                    field : 'coupon', 
+                    title : '抵扣券'
+                },
+                {
+                    field : 'generalCertificate', 
+                    title : '通用券'
+                },
+                {
+                    field : 'cashCoupon', 
+                    title : '现金券'
+                },
+                {
+                    field : 'discountCoupon', 
+                    title : '折扣券'
+                },
+                {
+                    field : 'cGeneralCertificate', 
+                    title : '通用券领取'
+                },
+                {
+                    field : 'cCashCoupon', 
+                    title : '现金券领取'
+                },
+                {
+                    field : 'cCoupon', 
+                    title : '折扣券领取'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.preferentialId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.preferentialId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

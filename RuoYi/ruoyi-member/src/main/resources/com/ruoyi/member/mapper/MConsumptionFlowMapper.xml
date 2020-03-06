@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MConsumptionFlowMapper">
+    
+    <resultMap type="MConsumptionFlow" id="MConsumptionFlowResult">
+        <result property="flowId"    column="flow_id"    />
+        <result property="time"    column="time"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="oils"    column="oils"    />
+        <result property="oilNumber"    column="oil_number"    />
+        <result property="operator"    column="operator"    />
+        <result property="monetary"    column="monetary"    />
+        <result property="balance"    column="balance"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectMConsumptionFlowVo">
+        select flow_id, time, station_name, oils, oil_number, operator, monetary, balance, status from m_consumption_flow
+    </sql>
+
+    <select id="selectMConsumptionFlowList" parameterType="MConsumptionFlow" resultMap="MConsumptionFlowResult">
+        <include refid="selectMConsumptionFlowVo"/>
+        <where>  
+            <if test="time != null "> and time = #{time}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="oils != null  and oils != ''"> and oils = #{oils}</if>
+            <if test="oilNumber != null  and oilNumber != ''"> and oil_number = #{oilNumber}</if>
+            <if test="operator != null  and operator != ''"> and operator = #{operator}</if>
+            <if test="monetary != null "> and monetary = #{monetary}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectMConsumptionFlowById" parameterType="Long" resultMap="MConsumptionFlowResult">
+        <include refid="selectMConsumptionFlowVo"/>
+        where flow_id = #{flowId}
+    </select>
+        
+    <insert id="insertMConsumptionFlow" parameterType="MConsumptionFlow" useGeneratedKeys="true" keyProperty="flowId">
+        insert into m_consumption_flow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="time != null ">time,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="oils != null  and oils != ''">oils,</if>
+            <if test="oilNumber != null  and oilNumber != ''">oil_number,</if>
+            <if test="operator != null  and operator != ''">operator,</if>
+            <if test="monetary != null ">monetary,</if>
+            <if test="balance != null ">balance,</if>
+            <if test="status != null  and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="time != null ">#{time},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="oils != null  and oils != ''">#{oils},</if>
+            <if test="oilNumber != null  and oilNumber != ''">#{oilNumber},</if>
+            <if test="operator != null  and operator != ''">#{operator},</if>
+            <if test="monetary != null ">#{monetary},</if>
+            <if test="balance != null ">#{balance},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMConsumptionFlow" parameterType="MConsumptionFlow">
+        update m_consumption_flow
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="time != null ">time = #{time},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="oils != null  and oils != ''">oils = #{oils},</if>
+            <if test="oilNumber != null  and oilNumber != ''">oil_number = #{oilNumber},</if>
+            <if test="operator != null  and operator != ''">operator = #{operator},</if>
+            <if test="monetary != null ">monetary = #{monetary},</if>
+            <if test="balance != null ">balance = #{balance},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+        </trim>
+        where flow_id = #{flowId}
+    </update>
+
+    <delete id="deleteMConsumptionFlowById" parameterType="Long">
+        delete from m_consumption_flow where flow_id = #{flowId}
+    </delete>
+
+    <delete id="deleteMConsumptionFlowByIds" parameterType="String">
+        delete from m_consumption_flow where flow_id in 
+        <foreach item="flowId" collection="array" open="(" separator="," close=")">
+            #{flowId}
+        </foreach>
+    </delete>
+    
+</mapper>

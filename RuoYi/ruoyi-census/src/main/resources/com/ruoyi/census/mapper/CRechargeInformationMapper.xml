@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CRechargeInformationMapper">
+    
+    <resultMap type="CRechargeInformation" id="CRechargeInformationResult">
+        <result property="rechargeId"    column="recharge_id"    />
+        <result property="number"    column="number"    />
+        <result property="member"    column="member"    />
+        <result property="rechargeAmount"    column="recharge_amount"    />
+        <result property="rechargeTime"    column="recharge_time"    />
+        <result property="phone"    column="phone"    />
+        <result property="address"    column="address"    />
+        <result property="memberTime"    column="member_time"    />
+    </resultMap>
+
+    <sql id="selectCRechargeInformationVo">
+        select recharge_id, number, member, recharge_amount, recharge_time, phone, address, member_time from c_recharge_information
+    </sql>
+
+    <select id="selectCRechargeInformationList" parameterType="CRechargeInformation" resultMap="CRechargeInformationResult">
+        <include refid="selectCRechargeInformationVo"/>
+        <where>  
+            <if test="rechargeId != null "> and recharge_id = #{rechargeId}</if>
+            <if test="number != null "> and number = #{number}</if>
+            <if test="member != null  and member != ''"> and member = #{member}</if>
+            <if test="rechargeAmount != null "> and recharge_amount = #{rechargeAmount}</if>
+            <if test="rechargeTime != null "> and recharge_time = #{rechargeTime}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="memberTime != null "> and member_time = #{memberTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCRechargeInformationById" parameterType="Long" resultMap="CRechargeInformationResult">
+        <include refid="selectCRechargeInformationVo"/>
+        where recharge_id = #{rechargeId}
+    </select>
+        
+    <insert id="insertCRechargeInformation" parameterType="CRechargeInformation">
+        insert into c_recharge_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rechargeId != null ">recharge_id,</if>
+            <if test="number != null ">number,</if>
+            <if test="member != null  and member != ''">member,</if>
+            <if test="rechargeAmount != null ">recharge_amount,</if>
+            <if test="rechargeTime != null ">recharge_time,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="memberTime != null ">member_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rechargeId != null ">#{rechargeId},</if>
+            <if test="number != null ">#{number},</if>
+            <if test="member != null  and member != ''">#{member},</if>
+            <if test="rechargeAmount != null ">#{rechargeAmount},</if>
+            <if test="rechargeTime != null ">#{rechargeTime},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="memberTime != null ">#{memberTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCRechargeInformation" parameterType="CRechargeInformation">
+        update c_recharge_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="member != null  and member != ''">member = #{member},</if>
+            <if test="rechargeAmount != null ">recharge_amount = #{rechargeAmount},</if>
+            <if test="rechargeTime != null ">recharge_time = #{rechargeTime},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="memberTime != null ">member_time = #{memberTime},</if>
+        </trim>
+        where recharge_id = #{rechargeId}
+    </update>
+
+    <delete id="deleteCRechargeInformationById" parameterType="Long">
+        delete from c_recharge_information where recharge_id = #{rechargeId}
+    </delete>
+
+    <delete id="deleteCRechargeInformationByIds" parameterType="String">
+        delete from c_recharge_information where recharge_id in 
+        <foreach item="rechargeId" collection="array" open="(" separator="," close=")">
+            #{rechargeId}
+        </foreach>
+    </delete>
+    
+</mapper>

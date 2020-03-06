@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('会员列表列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>编号：</p>
+                                <input type="text" name="memberNumber"/>
+                            </li>
+                            <li>
+                                <p>手机号：</p>
+                                <input type="text" name="phone"/>
+                            </li>
+                            <li>
+                                <p>加油站名称：</p>
+                                <input type="text" name="stationName"/>
+                            </li>
+                            <li>
+                                <p>用户名：</p>
+                                <input type="text" name="userName"/>
+                            </li>
+                            <li>
+                                <p>身份：</p>
+                                <input type="text" name="identity"/>
+                            </li>
+                            <li>
+                                <p>余额：</p>
+                                <input type="text" name="balance"/>
+                            </li>
+                            <li>
+                                <p>总充值额度：</p>
+                                <input type="text" name="totalRechargeLimit"/>
+                            </li>
+                            <li class="select-time">
+                                <p>注册时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginRegistrationTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endRegistrationTime]"/>
+                            </li>
+                            <li>
+                                <p>状态：</p>
+                                <select name="status" th:with="type=${@dict.getType('sys_notice_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="member:m_member_list:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="member:m_member_list:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="member:m_member_list:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="member:m_member_list:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('member:m_member_list:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('member:m_member_list:remove')}]];
+        var statusDatas = [[${@dict.getType('sys_notice_status')}]];
+        var prefix = ctx + "member/m_member_list";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "会员列表",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'memberId', 
+                    title : 'id',
+                    visible: false
+                },
+                {
+                    field : 'memberNumber', 
+                    title : '编号'
+                },
+                {
+                    field : 'phone', 
+                    title : '手机号'
+                },
+                {
+                    field : 'stationName', 
+                    title : '加油站名称'
+                },
+                {
+                    field : 'userName', 
+                    title : '用户名'
+                },
+                {
+                    field : 'identity', 
+                    title : '身份'
+                },
+                {
+                    field : 'balance', 
+                    title : '余额'
+                },
+                {
+                    field : 'totalRechargeLimit', 
+                    title : '总充值额度'
+                },
+                {
+                    field : 'registrationTime', 
+                    title : '注册时间'
+                },
+                {
+                    field : 'status', 
+                    title : '状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(statusDatas, value);
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.memberId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.memberId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

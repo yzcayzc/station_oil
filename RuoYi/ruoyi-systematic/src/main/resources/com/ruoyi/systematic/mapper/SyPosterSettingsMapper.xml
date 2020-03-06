@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.systematic.mapper.SyPosterSettingsMapper">
+    
+    <resultMap type="SyPosterSettings" id="SyPosterSettingsResult">
+        <result property="posterSettingsId"    column="poster_settings_id"    />
+        <result property="number"    column="number"    />
+        <result property="image"    column="image"    />
+        <result property="title"    column="title"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectSyPosterSettingsVo">
+        select poster_settings_id, number, image, title, status from sy_poster_settings
+    </sql>
+
+    <select id="selectSyPosterSettingsList" parameterType="SyPosterSettings" resultMap="SyPosterSettingsResult">
+        <include refid="selectSyPosterSettingsVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectSyPosterSettingsById" parameterType="Long" resultMap="SyPosterSettingsResult">
+        <include refid="selectSyPosterSettingsVo"/>
+        where poster_settings_id = #{posterSettingsId}
+    </select>
+        
+    <insert id="insertSyPosterSettings" parameterType="SyPosterSettings">
+        insert into sy_poster_settings
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="posterSettingsId != null ">poster_settings_id,</if>
+            <if test="number != null ">number,</if>
+            <if test="image != null  and image != ''">image,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="status != null  and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="posterSettingsId != null ">#{posterSettingsId},</if>
+            <if test="number != null ">#{number},</if>
+            <if test="image != null  and image != ''">#{image},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSyPosterSettings" parameterType="SyPosterSettings">
+        update sy_poster_settings
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="image != null  and image != ''">image = #{image},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+        </trim>
+        where poster_settings_id = #{posterSettingsId}
+    </update>
+
+    <delete id="deleteSyPosterSettingsById" parameterType="Long">
+        delete from sy_poster_settings where poster_settings_id = #{posterSettingsId}
+    </delete>
+
+    <delete id="deleteSyPosterSettingsByIds" parameterType="String">
+        delete from sy_poster_settings where poster_settings_id in 
+        <foreach item="posterSettingsId" collection="array" open="(" separator="," close=")">
+            #{posterSettingsId}
+        </foreach>
+    </delete>
+    
+</mapper>

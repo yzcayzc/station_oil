@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MElectronicWalletMapper">
+    
+    <resultMap type="MElectronicWallet" id="MElectronicWalletResult">
+        <result property="electronicWalletId"    column="electronic_wallet_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="address"    column="address"    />
+        <result property="name"    column="name"    />
+        <result property="card"    column="card"    />
+        <result property="cardOpen"    column="card_open"    />
+        <result property="balance"    column="balance"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectMElectronicWalletVo">
+        select electronic_wallet_id, station_name, address, name, card, card_open, balance, status from m_electronic_wallet
+    </sql>
+
+    <select id="selectMElectronicWalletList" parameterType="MElectronicWallet" resultMap="MElectronicWalletResult">
+        <include refid="selectMElectronicWalletVo"/>
+        <where>  
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="card != null "> and card = #{card}</if>
+            <if test="cardOpen != null "> and card_open = #{cardOpen}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectMElectronicWalletById" parameterType="Long" resultMap="MElectronicWalletResult">
+        <include refid="selectMElectronicWalletVo"/>
+        where electronic_wallet_id = #{electronicWalletId}
+    </select>
+        
+    <insert id="insertMElectronicWallet" parameterType="MElectronicWallet">
+        insert into m_electronic_wallet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="electronicWalletId != null ">electronic_wallet_id,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="card != null ">card,</if>
+            <if test="cardOpen != null ">card_open,</if>
+            <if test="balance != null ">balance,</if>
+            <if test="status != null  and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="electronicWalletId != null ">#{electronicWalletId},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="card != null ">#{card},</if>
+            <if test="cardOpen != null ">#{cardOpen},</if>
+            <if test="balance != null ">#{balance},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMElectronicWallet" parameterType="MElectronicWallet">
+        update m_electronic_wallet
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="card != null ">card = #{card},</if>
+            <if test="cardOpen != null ">card_open = #{cardOpen},</if>
+            <if test="balance != null ">balance = #{balance},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+        </trim>
+        where electronic_wallet_id = #{electronicWalletId}
+    </update>
+
+    <delete id="deleteMElectronicWalletById" parameterType="Long">
+        delete from m_electronic_wallet where electronic_wallet_id = #{electronicWalletId}
+    </delete>
+
+    <delete id="deleteMElectronicWalletByIds" parameterType="String">
+        delete from m_electronic_wallet where electronic_wallet_id in 
+        <foreach item="electronicWalletId" collection="array" open="(" separator="," close=")">
+            #{electronicWalletId}
+        </foreach>
+    </delete>
+    
+</mapper>

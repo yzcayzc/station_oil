@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('班结列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>序号：</p>
+                                <input type="text" name="number"/>
+                            </li>
+                            <li>
+                                <p>员工：</p>
+                                <input type="text" name="stationName"/>
+                            </li>
+                            <li>
+                                <p>登录名：</p>
+                                <input type="text" name="loginName"/>
+                            </li>
+                            <li class="select-time">
+                                <p>上班时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginWorkShift]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endWorkShift]"/>
+                            </li>
+                            <li class="select-time">
+                                <p>下班时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginClosingTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endClosingTime]"/>
+                            </li>
+                            <li>
+                                <p>收入：</p>
+                                <input type="text" name="income"/>
+                            </li>
+                            <li>
+                                <p>交易笔数：</p>
+                                <input type="text" name="transactionNumber"/>
+                            </li>
+                            <li>
+                                <p>应收金额：</p>
+                                <input type="text" name="amountReceivable"/>
+                            </li>
+                            <li>
+                                <p>优惠金额：</p>
+                                <input type="text" name="preferentialAmount"/>
+                            </li>
+                            <li>
+                                <p>现金金额：</p>
+                                <input type="text" name="cashAmount"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="staff:st_class_knot:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="staff:st_class_knot:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="staff:st_class_knot:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="staff:st_class_knot:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('staff:st_class_knot:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('staff:st_class_knot:remove')}]];
+        var prefix = ctx + "staff/st_class_knot";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "班结",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'classKnotId', 
+                    title : '班结id',
+                    visible: false
+                },
+                {
+                    field : 'number', 
+                    title : '序号'
+                },
+                {
+                    field : 'stationName', 
+                    title : '员工'
+                },
+                {
+                    field : 'loginName', 
+                    title : '登录名'
+                },
+                {
+                    field : 'workShift', 
+                    title : '上班时间'
+                },
+                {
+                    field : 'closingTime', 
+                    title : '下班时间'
+                },
+                {
+                    field : 'income', 
+                    title : '收入'
+                },
+                {
+                    field : 'transactionNumber', 
+                    title : '交易笔数'
+                },
+                {
+                    field : 'amountReceivable', 
+                    title : '应收金额'
+                },
+                {
+                    field : 'preferentialAmount', 
+                    title : '优惠金额'
+                },
+                {
+                    field : 'cashAmount', 
+                    title : '现金金额'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.classKnotId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.classKnotId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

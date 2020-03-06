@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CIntegralInformationMapper">
+    
+    <resultMap type="CIntegralInformation" id="CIntegralInformationResult">
+        <result property="integral"    column="integral"    />
+        <result property="number"    column="number"    />
+        <result property="consumer"    column="consumer"    />
+        <result property="give"    column="give"    />
+        <result property="deduction"    column="deduction"    />
+        <result property="balance"    column="balance"    />
+        <result property="time"    column="time"    />
+        <result property="phone"    column="phone"    />
+        <result property="address"    column="address"    />
+    </resultMap>
+
+    <sql id="selectCIntegralInformationVo">
+        select integral, number, consumer, give, deduction, balance, time, phone, address from c_integral_information
+    </sql>
+
+    <select id="selectCIntegralInformationList" parameterType="CIntegralInformation" resultMap="CIntegralInformationResult">
+        <include refid="selectCIntegralInformationVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="consumer != null  and consumer != ''"> and consumer = #{consumer}</if>
+            <if test="give != null "> and give = #{give}</if>
+            <if test="deduction != null "> and deduction = #{deduction}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+        </where>
+    </select>
+    
+    <select id="selectCIntegralInformationById" parameterType="Long" resultMap="CIntegralInformationResult">
+        <include refid="selectCIntegralInformationVo"/>
+        where integral = #{integral}
+    </select>
+        
+    <insert id="insertCIntegralInformation" parameterType="CIntegralInformation" useGeneratedKeys="true" keyProperty="integral">
+        insert into c_integral_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="consumer != null  and consumer != ''">consumer,</if>
+            <if test="give != null ">give,</if>
+            <if test="deduction != null ">deduction,</if>
+            <if test="balance != null ">balance,</if>
+            <if test="time != null ">time,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="address != null  and address != ''">address,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="consumer != null  and consumer != ''">#{consumer},</if>
+            <if test="give != null ">#{give},</if>
+            <if test="deduction != null ">#{deduction},</if>
+            <if test="balance != null ">#{balance},</if>
+            <if test="time != null ">#{time},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCIntegralInformation" parameterType="CIntegralInformation">
+        update c_integral_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="consumer != null  and consumer != ''">consumer = #{consumer},</if>
+            <if test="give != null ">give = #{give},</if>
+            <if test="deduction != null ">deduction = #{deduction},</if>
+            <if test="balance != null ">balance = #{balance},</if>
+            <if test="time != null ">time = #{time},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+        </trim>
+        where integral = #{integral}
+    </update>
+
+    <delete id="deleteCIntegralInformationById" parameterType="Long">
+        delete from c_integral_information where integral = #{integral}
+    </delete>
+
+    <delete id="deleteCIntegralInformationByIds" parameterType="String">
+        delete from c_integral_information where integral in 
+        <foreach item="integral" collection="array" open="(" separator="," close=")">
+            #{integral}
+        </foreach>
+    </delete>
+    
+</mapper>

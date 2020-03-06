@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.IPointsMallManagementMapper">
+    
+    <resultMap type="IPointsMallManagement" id="IPointsMallManagementResult">
+        <result property="goodsId"    column="goods_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="goodsImage"    column="goods_image"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="specifications"    column="specifications"    />
+        <result property="unit"    column="unit"    />
+        <result property="integralExchangeRules"    column="integral_exchange_rules"    />
+        <result property="moneyExchangeRules"    column="money_exchange_rules"    />
+        <result property="productIntroduction"    column="product_introduction"    />
+        <result property="ruleDescription"    column="rule_description"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="stock"    column="stock"    />
+    </resultMap>
+
+    <sql id="selectIPointsMallManagementVo">
+        select goods_id, station_name, goods_image, goods_name, specifications, unit, integral_exchange_rules, money_exchange_rules, product_introduction, rule_description, start_time, end_time, stock from i_points_mall_management
+    </sql>
+
+    <select id="selectIPointsMallManagementList" parameterType="IPointsMallManagement" resultMap="IPointsMallManagementResult">
+        <include refid="selectIPointsMallManagementVo"/>
+        <where>  
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="goodsImage != null  and goodsImage != ''"> and goods_image = #{goodsImage}</if>
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="specifications != null  and specifications != ''"> and specifications = #{specifications}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="integralExchangeRules != null "> and integral_exchange_rules = #{integralExchangeRules}</if>
+            <if test="moneyExchangeRules != null "> and money_exchange_rules = #{moneyExchangeRules}</if>
+            <if test="productIntroduction != null  and productIntroduction != ''"> and product_introduction = #{productIntroduction}</if>
+            <if test="ruleDescription != null  and ruleDescription != ''"> and rule_description = #{ruleDescription}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="stock != null "> and stock = #{stock}</if>
+        </where>
+    </select>
+    
+    <select id="selectIPointsMallManagementById" parameterType="Long" resultMap="IPointsMallManagementResult">
+        <include refid="selectIPointsMallManagementVo"/>
+        where goods_id = #{goodsId}
+    </select>
+        
+    <insert id="insertIPointsMallManagement" parameterType="IPointsMallManagement" useGeneratedKeys="true" keyProperty="goodsId">
+        insert into i_points_mall_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="goodsImage != null  and goodsImage != ''">goods_image,</if>
+            <if test="goodsName != null  and goodsName != ''">goods_name,</if>
+            <if test="specifications != null  and specifications != ''">specifications,</if>
+            <if test="unit != null  and unit != ''">unit,</if>
+            <if test="integralExchangeRules != null ">integral_exchange_rules,</if>
+            <if test="moneyExchangeRules != null ">money_exchange_rules,</if>
+            <if test="productIntroduction != null  and productIntroduction != ''">product_introduction,</if>
+            <if test="ruleDescription != null  and ruleDescription != ''">rule_description,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="stock != null ">stock,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="goodsImage != null  and goodsImage != ''">#{goodsImage},</if>
+            <if test="goodsName != null  and goodsName != ''">#{goodsName},</if>
+            <if test="specifications != null  and specifications != ''">#{specifications},</if>
+            <if test="unit != null  and unit != ''">#{unit},</if>
+            <if test="integralExchangeRules != null ">#{integralExchangeRules},</if>
+            <if test="moneyExchangeRules != null ">#{moneyExchangeRules},</if>
+            <if test="productIntroduction != null  and productIntroduction != ''">#{productIntroduction},</if>
+            <if test="ruleDescription != null  and ruleDescription != ''">#{ruleDescription},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="stock != null ">#{stock},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIPointsMallManagement" parameterType="IPointsMallManagement">
+        update i_points_mall_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="goodsImage != null  and goodsImage != ''">goods_image = #{goodsImage},</if>
+            <if test="goodsName != null  and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="specifications != null  and specifications != ''">specifications = #{specifications},</if>
+            <if test="unit != null  and unit != ''">unit = #{unit},</if>
+            <if test="integralExchangeRules != null ">integral_exchange_rules = #{integralExchangeRules},</if>
+            <if test="moneyExchangeRules != null ">money_exchange_rules = #{moneyExchangeRules},</if>
+            <if test="productIntroduction != null  and productIntroduction != ''">product_introduction = #{productIntroduction},</if>
+            <if test="ruleDescription != null  and ruleDescription != ''">rule_description = #{ruleDescription},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="stock != null ">stock = #{stock},</if>
+        </trim>
+        where goods_id = #{goodsId}
+    </update>
+
+    <delete id="deleteIPointsMallManagementById" parameterType="Long">
+        delete from i_points_mall_management where goods_id = #{goodsId}
+    </delete>
+
+    <delete id="deleteIPointsMallManagementByIds" parameterType="String">
+        delete from i_points_mall_management where goods_id in 
+        <foreach item="goodsId" collection="array" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </delete>
+    
+</mapper>

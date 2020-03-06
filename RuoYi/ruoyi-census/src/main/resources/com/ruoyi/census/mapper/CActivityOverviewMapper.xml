@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CActivityOverviewMapper">
+    
+    <resultMap type="CActivityOverview" id="CActivityOverviewResult">
+        <result property="activity"    column="activity"    />
+        <result property="number"    column="number"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="activityTheme"    column="activity_theme"    />
+        <result property="time"    column="time"    />
+        <result property="recharge"    column="recharge"    />
+        <result property="consumption"    column="consumption"    />
+        <result property="preferentialDeduction"    column="preferential_deduction"    />
+        <result property="profit"    column="profit"    />
+        <result property="newMember"    column="new_member"    />
+        <result property="integralNetValue"    column="integral_net_value"    />
+        <result property="eCouponIssuance"    column="e_coupon_issuance"    />
+    </resultMap>
+
+    <sql id="selectCActivityOverviewVo">
+        select activity, number, station_name, activity_theme, time, recharge, consumption, preferential_deduction, profit, new_member, integral_net_value, e_coupon_issuance from c_activity_overview
+    </sql>
+
+    <select id="selectCActivityOverviewList" parameterType="CActivityOverview" resultMap="CActivityOverviewResult">
+        <include refid="selectCActivityOverviewVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="activityTheme != null  and activityTheme != ''"> and activity_theme = #{activityTheme}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="recharge != null "> and recharge = #{recharge}</if>
+            <if test="consumption != null "> and consumption = #{consumption}</if>
+            <if test="preferentialDeduction != null "> and preferential_deduction = #{preferentialDeduction}</if>
+            <if test="profit != null "> and profit = #{profit}</if>
+            <if test="newMember != null "> and new_member = #{newMember}</if>
+            <if test="integralNetValue != null "> and integral_net_value = #{integralNetValue}</if>
+            <if test="eCouponIssuance != null "> and e_coupon_issuance = #{eCouponIssuance}</if>
+        </where>
+    </select>
+    
+    <select id="selectCActivityOverviewById" parameterType="Long" resultMap="CActivityOverviewResult">
+        <include refid="selectCActivityOverviewVo"/>
+        where activity = #{activity}
+    </select>
+        
+    <insert id="insertCActivityOverview" parameterType="CActivityOverview" useGeneratedKeys="true" keyProperty="activity">
+        insert into c_activity_overview
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="activityTheme != null  and activityTheme != ''">activity_theme,</if>
+            <if test="time != null ">time,</if>
+            <if test="recharge != null ">recharge,</if>
+            <if test="consumption != null ">consumption,</if>
+            <if test="preferentialDeduction != null ">preferential_deduction,</if>
+            <if test="profit != null ">profit,</if>
+            <if test="newMember != null ">new_member,</if>
+            <if test="integralNetValue != null ">integral_net_value,</if>
+            <if test="eCouponIssuance != null ">e_coupon_issuance,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="activityTheme != null  and activityTheme != ''">#{activityTheme},</if>
+            <if test="time != null ">#{time},</if>
+            <if test="recharge != null ">#{recharge},</if>
+            <if test="consumption != null ">#{consumption},</if>
+            <if test="preferentialDeduction != null ">#{preferentialDeduction},</if>
+            <if test="profit != null ">#{profit},</if>
+            <if test="newMember != null ">#{newMember},</if>
+            <if test="integralNetValue != null ">#{integralNetValue},</if>
+            <if test="eCouponIssuance != null ">#{eCouponIssuance},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCActivityOverview" parameterType="CActivityOverview">
+        update c_activity_overview
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="activityTheme != null  and activityTheme != ''">activity_theme = #{activityTheme},</if>
+            <if test="time != null ">time = #{time},</if>
+            <if test="recharge != null ">recharge = #{recharge},</if>
+            <if test="consumption != null ">consumption = #{consumption},</if>
+            <if test="preferentialDeduction != null ">preferential_deduction = #{preferentialDeduction},</if>
+            <if test="profit != null ">profit = #{profit},</if>
+            <if test="newMember != null ">new_member = #{newMember},</if>
+            <if test="integralNetValue != null ">integral_net_value = #{integralNetValue},</if>
+            <if test="eCouponIssuance != null ">e_coupon_issuance = #{eCouponIssuance},</if>
+        </trim>
+        where activity = #{activity}
+    </update>
+
+    <delete id="deleteCActivityOverviewById" parameterType="Long">
+        delete from c_activity_overview where activity = #{activity}
+    </delete>
+
+    <delete id="deleteCActivityOverviewByIds" parameterType="String">
+        delete from c_activity_overview where activity in 
+        <foreach item="activity" collection="array" open="(" separator="," close=")">
+            #{activity}
+        </foreach>
+    </delete>
+    
+</mapper>

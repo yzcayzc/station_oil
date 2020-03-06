@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.systematic.mapper.SyHistoryCardMapper">
+    
+    <resultMap type="SyHistoryCard" id="SyHistoryCardResult">
+        <result property="card"    column="card"    />
+        <result property="number"    column="number"    />
+        <result property="cardType"    column="card_type"    />
+        <result property="publishingUnit"    column="publishing_unit"    />
+        <result property="title"    column="title"    />
+        <result property="contentDescription"    column="content_description"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="operator"    column="operator"    />
+        <result property="operation"    column="operation"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectSyHistoryCardVo">
+        select card, number, card_type, publishing_unit, title, content_description, start_time, end_time, operator, operation, create_time from sy_history_card
+    </sql>
+
+    <select id="selectSyHistoryCardList" parameterType="SyHistoryCard" resultMap="SyHistoryCardResult">
+        <include refid="selectSyHistoryCardVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="cardType != null  and cardType != ''"> and card_type = #{cardType}</if>
+            <if test="publishingUnit != null  and publishingUnit != ''"> and publishing_unit = #{publishingUnit}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="contentDescription != null  and contentDescription != ''"> and content_description = #{contentDescription}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="operator != null  and operator != ''"> and operator = #{operator}</if>
+            <if test="operation != null  and operation != ''"> and operation = #{operation}</if>
+        </where>
+    </select>
+    
+    <select id="selectSyHistoryCardById" parameterType="Long" resultMap="SyHistoryCardResult">
+        <include refid="selectSyHistoryCardVo"/>
+        where card = #{card}
+    </select>
+        
+    <insert id="insertSyHistoryCard" parameterType="SyHistoryCard" useGeneratedKeys="true" keyProperty="card">
+        insert into sy_history_card
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="cardType != null  and cardType != ''">card_type,</if>
+            <if test="publishingUnit != null  and publishingUnit != ''">publishing_unit,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="contentDescription != null  and contentDescription != ''">content_description,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="operator != null  and operator != ''">operator,</if>
+            <if test="operation != null  and operation != ''">operation,</if>
+            <if test="createTime != null ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="cardType != null  and cardType != ''">#{cardType},</if>
+            <if test="publishingUnit != null  and publishingUnit != ''">#{publishingUnit},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="contentDescription != null  and contentDescription != ''">#{contentDescription},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="operator != null  and operator != ''">#{operator},</if>
+            <if test="operation != null  and operation != ''">#{operation},</if>
+            <if test="createTime != null ">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSyHistoryCard" parameterType="SyHistoryCard">
+        update sy_history_card
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="cardType != null  and cardType != ''">card_type = #{cardType},</if>
+            <if test="publishingUnit != null  and publishingUnit != ''">publishing_unit = #{publishingUnit},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="contentDescription != null  and contentDescription != ''">content_description = #{contentDescription},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="operator != null  and operator != ''">operator = #{operator},</if>
+            <if test="operation != null  and operation != ''">operation = #{operation},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+        </trim>
+        where card = #{card}
+    </update>
+
+    <delete id="deleteSyHistoryCardById" parameterType="Long">
+        delete from sy_history_card where card = #{card}
+    </delete>
+
+    <delete id="deleteSyHistoryCardByIds" parameterType="String">
+        delete from sy_history_card where card in 
+        <foreach item="card" collection="array" open="(" separator="," close=")">
+            #{card}
+        </foreach>
+    </delete>
+    
+</mapper>

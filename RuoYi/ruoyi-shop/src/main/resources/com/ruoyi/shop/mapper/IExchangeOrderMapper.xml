@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.shop.mapper.IExchangeOrderMapper">
+    
+    <resultMap type="IExchangeOrder" id="IExchangeOrderResult">
+        <result property="exchangeOrderId"    column="exchange_order_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="changer"    column="changer"    />
+        <result property="phone"    column="phone"    />
+        <result property="tradeName"    column="trade_name"    />
+        <result property="exchangeNumber"    column="exchange_number"    />
+        <result property="exchangeRule"    column="exchange_rule"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectIExchangeOrderVo">
+        select exchange_order_id, station_name, changer, phone, trade_name, exchange_number, exchange_rule, end_time, status from i_exchange_order
+    </sql>
+
+    <select id="selectIExchangeOrderList" parameterType="IExchangeOrder" resultMap="IExchangeOrderResult">
+        <include refid="selectIExchangeOrderVo"/>
+        <where>  
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="changer != null  and changer != ''"> and changer = #{changer}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="tradeName != null  and tradeName != ''"> and trade_name like concat('%', #{tradeName}, '%')</if>
+            <if test="exchangeNumber != null  and exchangeNumber != ''"> and exchange_number = #{exchangeNumber}</if>
+            <if test="exchangeRule != null  and exchangeRule != ''"> and exchange_rule = #{exchangeRule}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectIExchangeOrderById" parameterType="Long" resultMap="IExchangeOrderResult">
+        <include refid="selectIExchangeOrderVo"/>
+        where exchange_order_id = #{exchangeOrderId}
+    </select>
+        
+    <insert id="insertIExchangeOrder" parameterType="IExchangeOrder" useGeneratedKeys="true" keyProperty="exchangeOrderId">
+        insert into i_exchange_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="changer != null  and changer != ''">changer,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="tradeName != null  and tradeName != ''">trade_name,</if>
+            <if test="exchangeNumber != null  and exchangeNumber != ''">exchange_number,</if>
+            <if test="exchangeRule != null  and exchangeRule != ''">exchange_rule,</if>
+            <if test="endTime != null ">end_time,</if>
+            <if test="status != null  and status != ''">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="changer != null  and changer != ''">#{changer},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="tradeName != null  and tradeName != ''">#{tradeName},</if>
+            <if test="exchangeNumber != null  and exchangeNumber != ''">#{exchangeNumber},</if>
+            <if test="exchangeRule != null  and exchangeRule != ''">#{exchangeRule},</if>
+            <if test="endTime != null ">#{endTime},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIExchangeOrder" parameterType="IExchangeOrder">
+        update i_exchange_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="changer != null  and changer != ''">changer = #{changer},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="tradeName != null  and tradeName != ''">trade_name = #{tradeName},</if>
+            <if test="exchangeNumber != null  and exchangeNumber != ''">exchange_number = #{exchangeNumber},</if>
+            <if test="exchangeRule != null  and exchangeRule != ''">exchange_rule = #{exchangeRule},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+        </trim>
+        where exchange_order_id = #{exchangeOrderId}
+    </update>
+
+    <delete id="deleteIExchangeOrderById" parameterType="Long">
+        delete from i_exchange_order where exchange_order_id = #{exchangeOrderId}
+    </delete>
+
+    <delete id="deleteIExchangeOrderByIds" parameterType="String">
+        delete from i_exchange_order where exchange_order_id in 
+        <foreach item="exchangeOrderId" collection="array" open="(" separator="," close=")">
+            #{exchangeOrderId}
+        </foreach>
+    </delete>
+    
+</mapper>

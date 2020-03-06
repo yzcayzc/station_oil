@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.station.mapper.SOilGunMapper">
+    
+    <resultMap type="SOilGun" id="SOilGunResult">
+        <result property="oilGunId"    column="oil_gun_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="gunId"    column="gun_id"    />
+        <result property="oils"    column="oils"    />
+        <result property="oilNumber"    column="oil_number"    />
+        <result property="status"    column="status"    />
+        <result property="addPeopre"    column="add_peopre"    />
+    </resultMap>
+
+    <sql id="selectSOilGunVo">
+        select oil_gun_id, station_name, gun_id, oils, oil_number, status, add_peopre from s_oil_gun
+    </sql>
+
+    <select id="selectSOilGunList" parameterType="SOilGun" resultMap="SOilGunResult">
+        <include refid="selectSOilGunVo"/>
+        <where>  
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="gunId != null "> and gun_id = #{gunId}</if>
+            <if test="oils != null  and oils != ''"> and oils = #{oils}</if>
+            <if test="oilNumber != null  and oilNumber != ''"> and oil_number = #{oilNumber}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="addPeopre != null  and addPeopre != ''"> and add_peopre = #{addPeopre}</if>
+        </where>
+    </select>
+    
+    <select id="selectSOilGunById" parameterType="Long" resultMap="SOilGunResult">
+        <include refid="selectSOilGunVo"/>
+        where oil_gun_id = #{oilGunId}
+    </select>
+        
+    <insert id="insertSOilGun" parameterType="SOilGun" useGeneratedKeys="true" keyProperty="oilGunId">
+        insert into s_oil_gun
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="gunId != null ">gun_id,</if>
+            <if test="oils != null  and oils != ''">oils,</if>
+            <if test="oilNumber != null  and oilNumber != ''">oil_number,</if>
+            <if test="status != null ">status,</if>
+            <if test="addPeopre != null  and addPeopre != ''">add_peopre,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="gunId != null ">#{gunId},</if>
+            <if test="oils != null  and oils != ''">#{oils},</if>
+            <if test="oilNumber != null  and oilNumber != ''">#{oilNumber},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="addPeopre != null  and addPeopre != ''">#{addPeopre},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSOilGun" parameterType="SOilGun">
+        update s_oil_gun
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="gunId != null ">gun_id = #{gunId},</if>
+            <if test="oils != null  and oils != ''">oils = #{oils},</if>
+            <if test="oilNumber != null  and oilNumber != ''">oil_number = #{oilNumber},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="addPeopre != null  and addPeopre != ''">add_peopre = #{addPeopre},</if>
+        </trim>
+        where oil_gun_id = #{oilGunId}
+    </update>
+
+    <delete id="deleteSOilGunById" parameterType="Long">
+        delete from s_oil_gun where oil_gun_id = #{oilGunId}
+    </delete>
+
+    <delete id="deleteSOilGunByIds" parameterType="String">
+        delete from s_oil_gun where oil_gun_id in 
+        <foreach item="oilGunId" collection="array" open="(" separator="," close=")">
+            #{oilGunId}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MPersonalDataMapper">
+    
+    <resultMap type="MPersonalData" id="MPersonalDataResult">
+        <result property="dataId"    column="data_id"    />
+        <result property="petName"    column="pet_name"    />
+        <result property="name"    column="name"    />
+        <result property="birth"    column="birth"    />
+        <result property="sex"    column="sex"    />
+        <result property="occupation"    column="occupation"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="phone"    column="phone"    />
+        <result property="workUnit"    column="work_unit"    />
+        <result property="address"    column="address"    />
+        <result property="integralBalance"    column="integral_balance"    />
+        <result property="walletBalance"    column="wallet_balance"    />
+        <result property="carBrand"    column="car_brand"    />
+        <result property="licensePlate"    column="license_plate"    />
+        <result property="oils"    column="oils"    />
+        <result property="carType"    column="car_type"    />
+        <result property="stationName"    column="station_name"    />
+    </resultMap>
+
+    <sql id="selectMPersonalDataVo">
+        select data_id, pet_name, name, birth, sex, occupation, id_card, phone, work_unit, address, integral_balance, wallet_balance, car_brand, license_plate, oils, car_type, station_name from m_personal_data
+    </sql>
+
+    <select id="selectMPersonalDataList" parameterType="MPersonalData" resultMap="MPersonalDataResult">
+        <include refid="selectMPersonalDataVo"/>
+        <where>  
+            <if test="petName != null  and petName != ''"> and pet_name like concat('%', #{petName}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="birth != null "> and birth = #{birth}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="occupation != null  and occupation != ''"> and occupation = #{occupation}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="workUnit != null  and workUnit != ''"> and work_unit = #{workUnit}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="integralBalance != null "> and integral_balance = #{integralBalance}</if>
+            <if test="walletBalance != null "> and wallet_balance = #{walletBalance}</if>
+            <if test="carBrand != null  and carBrand != ''"> and car_brand = #{carBrand}</if>
+            <if test="licensePlate != null  and licensePlate != ''"> and license_plate = #{licensePlate}</if>
+            <if test="oils != null  and oils != ''"> and oils = #{oils}</if>
+            <if test="carType != null  and carType != ''"> and car_type = #{carType}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectMPersonalDataById" parameterType="Long" resultMap="MPersonalDataResult">
+        <include refid="selectMPersonalDataVo"/>
+        where data_id = #{dataId}
+    </select>
+        
+    <insert id="insertMPersonalData" parameterType="MPersonalData" useGeneratedKeys="true" keyProperty="dataId">
+        insert into m_personal_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="petName != null  and petName != ''">pet_name,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="birth != null ">birth,</if>
+            <if test="sex != null  and sex != ''">sex,</if>
+            <if test="occupation != null  and occupation != ''">occupation,</if>
+            <if test="idCard != null  and idCard != ''">id_card,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="workUnit != null  and workUnit != ''">work_unit,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="integralBalance != null ">integral_balance,</if>
+            <if test="walletBalance != null ">wallet_balance,</if>
+            <if test="carBrand != null  and carBrand != ''">car_brand,</if>
+            <if test="licensePlate != null  and licensePlate != ''">license_plate,</if>
+            <if test="oils != null  and oils != ''">oils,</if>
+            <if test="carType != null  and carType != ''">car_type,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="petName != null  and petName != ''">#{petName},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="birth != null ">#{birth},</if>
+            <if test="sex != null  and sex != ''">#{sex},</if>
+            <if test="occupation != null  and occupation != ''">#{occupation},</if>
+            <if test="idCard != null  and idCard != ''">#{idCard},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="workUnit != null  and workUnit != ''">#{workUnit},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="integralBalance != null ">#{integralBalance},</if>
+            <if test="walletBalance != null ">#{walletBalance},</if>
+            <if test="carBrand != null  and carBrand != ''">#{carBrand},</if>
+            <if test="licensePlate != null  and licensePlate != ''">#{licensePlate},</if>
+            <if test="oils != null  and oils != ''">#{oils},</if>
+            <if test="carType != null  and carType != ''">#{carType},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMPersonalData" parameterType="MPersonalData">
+        update m_personal_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="petName != null  and petName != ''">pet_name = #{petName},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="birth != null ">birth = #{birth},</if>
+            <if test="sex != null  and sex != ''">sex = #{sex},</if>
+            <if test="occupation != null  and occupation != ''">occupation = #{occupation},</if>
+            <if test="idCard != null  and idCard != ''">id_card = #{idCard},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="workUnit != null  and workUnit != ''">work_unit = #{workUnit},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="integralBalance != null ">integral_balance = #{integralBalance},</if>
+            <if test="walletBalance != null ">wallet_balance = #{walletBalance},</if>
+            <if test="carBrand != null  and carBrand != ''">car_brand = #{carBrand},</if>
+            <if test="licensePlate != null  and licensePlate != ''">license_plate = #{licensePlate},</if>
+            <if test="oils != null  and oils != ''">oils = #{oils},</if>
+            <if test="carType != null  and carType != ''">car_type = #{carType},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+        </trim>
+        where data_id = #{dataId}
+    </update>
+
+    <delete id="deleteMPersonalDataById" parameterType="Long">
+        delete from m_personal_data where data_id = #{dataId}
+    </delete>
+
+    <delete id="deleteMPersonalDataByIds" parameterType="String">
+        delete from m_personal_data where data_id in 
+        <foreach item="dataId" collection="array" open="(" separator="," close=")">
+            #{dataId}
+        </foreach>
+    </delete>
+    
+</mapper>

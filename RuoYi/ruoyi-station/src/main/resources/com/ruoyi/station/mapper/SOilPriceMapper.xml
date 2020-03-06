@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.station.mapper.SOilPriceMapper">
+    
+    <resultMap type="SOilPrice" id="SOilPriceResult">
+        <result property="oilId"    column="oil_id"    />
+        <result property="name"    column="name"    />
+        <result property="oils"    column="oils"    />
+        <result property="oilNumber"    column="oil_number"    />
+        <result property="price"    column="price"    />
+        <result property="week"    column="week"    />
+        <result property="oilStartTime"    column="oil_start_time"    />
+        <result property="oilEndTime"    column="oil_end_time"    />
+    </resultMap>
+
+    <sql id="selectSOilPriceVo">
+        select oil_id, name, oils, oil_number, price, week, oil_start_time, oil_end_time from s_oil_price
+    </sql>
+
+    <select id="selectSOilPriceList" parameterType="SOilPrice" resultMap="SOilPriceResult">
+        <include refid="selectSOilPriceVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="oils != null  and oils != ''"> and oils = #{oils}</if>
+            <if test="oilNumber != null  and oilNumber != ''"> and oil_number = #{oilNumber}</if>
+            <if test="price != null  and price != ''"> and price = #{price}</if>
+            <if test="week != null  and week != ''"> and week = #{week}</if>
+            <if test="oilStartTime != null "> and oil_start_time = #{oilStartTime}</if>
+            <if test="oilEndTime != null "> and oil_end_time = #{oilEndTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSOilPriceById" parameterType="Long" resultMap="SOilPriceResult">
+        <include refid="selectSOilPriceVo"/>
+        where oil_id = #{oilId}
+    </select>
+        
+    <insert id="insertSOilPrice" parameterType="SOilPrice" useGeneratedKeys="true" keyProperty="oilId">
+        insert into s_oil_price
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="oils != null  and oils != ''">oils,</if>
+            <if test="oilNumber != null  and oilNumber != ''">oil_number,</if>
+            <if test="price != null  and price != ''">price,</if>
+            <if test="week != null  and week != ''">week,</if>
+            <if test="oilStartTime != null ">oil_start_time,</if>
+            <if test="oilEndTime != null ">oil_end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="oils != null  and oils != ''">#{oils},</if>
+            <if test="oilNumber != null  and oilNumber != ''">#{oilNumber},</if>
+            <if test="price != null  and price != ''">#{price},</if>
+            <if test="week != null  and week != ''">#{week},</if>
+            <if test="oilStartTime != null ">#{oilStartTime},</if>
+            <if test="oilEndTime != null ">#{oilEndTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSOilPrice" parameterType="SOilPrice">
+        update s_oil_price
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="oilNumber != null  and oilNumber != ''">oil_number = #{oilNumber},</if>
+            <if test="price != null  and price != ''">price = #{price},</if>
+            <if test="oilStartTime != null ">oil_start_time = #{oilStartTime},</if>
+            <if test="oilEndTime != null ">oil_end_time = #{oilEndTime},</if>
+        </trim>
+        where oils = #{oils} and oil_number = #{oilNumber} and week = #{week} and name = #{name}
+    </update>
+
+    <delete id="deleteSOilPriceById" parameterType="Long">
+        delete from s_oil_price where oil_id = #{oilId}
+    </delete>
+
+    <delete id="deleteSOilPriceByIds" parameterType="String">
+        delete from s_oil_price where oil_id in 
+        <foreach item="oilId" collection="array" open="(" separator="," close=")">
+            #{oilId}
+        </foreach>
+    </delete>
+    
+</mapper>

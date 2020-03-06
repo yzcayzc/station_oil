@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CPerCapitaConsumptionMapper">
+    
+    <resultMap type="CPerCapitaConsumption" id="CPerCapitaConsumptionResult">
+        <result property="perId"    column="per_id"    />
+        <result property="number"    column="number"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="time"    column="time"    />
+        <result property="rechargeAmount"    column="recharge_amount"    />
+        <result property="totalConsumption"    column="total_consumption"    />
+        <result property="balance"    column="balance"    />
+        <result property="memberUse"    column="member_use"    />
+        <result property="transactionTime"    column="transaction_time"    />
+    </resultMap>
+
+    <sql id="selectCPerCapitaConsumptionVo">
+        select per_id, number, station_name, time, recharge_amount, total_consumption, balance, member_use, transaction_time from c_per_capita_consumption
+    </sql>
+
+    <select id="selectCPerCapitaConsumptionList" parameterType="CPerCapitaConsumption" resultMap="CPerCapitaConsumptionResult">
+        <include refid="selectCPerCapitaConsumptionVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="rechargeAmount != null "> and recharge_amount = #{rechargeAmount}</if>
+            <if test="totalConsumption != null "> and total_consumption = #{totalConsumption}</if>
+            <if test="balance != null "> and balance = #{balance}</if>
+            <if test="memberUse != null  and memberUse != ''"> and member_use = #{memberUse}</if>
+            <if test="transactionTime != null "> and transaction_time = #{transactionTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCPerCapitaConsumptionById" parameterType="Long" resultMap="CPerCapitaConsumptionResult">
+        <include refid="selectCPerCapitaConsumptionVo"/>
+        where per_id = #{perId}
+    </select>
+        
+    <insert id="insertCPerCapitaConsumption" parameterType="CPerCapitaConsumption" useGeneratedKeys="true" keyProperty="perId">
+        insert into c_per_capita_consumption
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="time != null ">time,</if>
+            <if test="rechargeAmount != null ">recharge_amount,</if>
+            <if test="totalConsumption != null ">total_consumption,</if>
+            <if test="balance != null ">balance,</if>
+            <if test="memberUse != null  and memberUse != ''">member_use,</if>
+            <if test="transactionTime != null ">transaction_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="time != null ">#{time},</if>
+            <if test="rechargeAmount != null ">#{rechargeAmount},</if>
+            <if test="totalConsumption != null ">#{totalConsumption},</if>
+            <if test="balance != null ">#{balance},</if>
+            <if test="memberUse != null  and memberUse != ''">#{memberUse},</if>
+            <if test="transactionTime != null ">#{transactionTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCPerCapitaConsumption" parameterType="CPerCapitaConsumption">
+        update c_per_capita_consumption
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="time != null ">time = #{time},</if>
+            <if test="rechargeAmount != null ">recharge_amount = #{rechargeAmount},</if>
+            <if test="totalConsumption != null ">total_consumption = #{totalConsumption},</if>
+            <if test="balance != null ">balance = #{balance},</if>
+            <if test="memberUse != null  and memberUse != ''">member_use = #{memberUse},</if>
+            <if test="transactionTime != null ">transaction_time = #{transactionTime},</if>
+        </trim>
+        where per_id = #{perId}
+    </update>
+
+    <delete id="deleteCPerCapitaConsumptionById" parameterType="Long">
+        delete from c_per_capita_consumption where per_id = #{perId}
+    </delete>
+
+    <delete id="deleteCPerCapitaConsumptionByIds" parameterType="String">
+        delete from c_per_capita_consumption where per_id in 
+        <foreach item="perId" collection="array" open="(" separator="," close=")">
+            #{perId}
+        </foreach>
+    </delete>
+    
+</mapper>

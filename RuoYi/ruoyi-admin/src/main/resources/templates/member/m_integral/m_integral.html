@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('积分列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>商品编号：</p>
+                                <input type="text" name="number"/>
+                            </li>
+                            <li class="select-time">
+                                <p>活动时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginActivityTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endActivityTime]"/>
+                            </li>
+                            <li>
+                                <p>积分明细：</p>
+                                <input type="text" name="integralDetails"/>
+                            </li>
+                            <li>
+                                <p>剩余积分：</p>
+                                <input type="text" name="residualIntegral"/>
+                            </li>
+                            <li>
+                                <p>积分状态：</p>
+                                <input type="text" name="integralState"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="member:m_integral:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="member:m_integral:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="member:m_integral:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="member:m_integral:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('member:m_integral:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('member:m_integral:remove')}]];
+        var prefix = ctx + "member/m_integral";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "积分",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'integral', 
+                    title : '积分id',
+                    visible: false
+                },
+                {
+                    field : 'number', 
+                    title : '商品编号'
+                },
+                {
+                    field : 'activityTime', 
+                    title : '活动时间'
+                },
+                {
+                    field : 'integralDetails', 
+                    title : '积分明细'
+                },
+                {
+                    field : 'residualIntegral', 
+                    title : '剩余积分'
+                },
+                {
+                    field : 'integralState', 
+                    title : '积分状态'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.integral + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.integral + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

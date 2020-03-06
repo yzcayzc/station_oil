@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.promotion.mapper.PActivityListMapper">
+    
+    <resultMap type="PActivityList" id="PActivityListResult">
+        <result property="activityDetailsId"    column="activity_details_id"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="address"    column="address"    />
+        <result property="commodityPictures"    column="commodity_pictures"    />
+        <result property="activityTheme"    column="activity_theme"    />
+        <result property="activityTitle"    column="activity_title"    />
+        <result property="activityContent"    column="activity_content"    />
+        <result property="activityRule"    column="activity_rule"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+    </resultMap>
+
+    <sql id="selectPActivityListVo">
+        select activity_details_id, station_name, address, commodity_pictures, activity_theme, activity_title, activity_content, activity_rule, start_time, end_time from p_activity_list
+    </sql>
+
+    <select id="selectPActivityListList" parameterType="PActivityList" resultMap="PActivityListResult">
+        <include refid="selectPActivityListVo"/>
+        <where>  
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="commodityPictures != null  and commodityPictures != ''"> and commodity_pictures = #{commodityPictures}</if>
+            <if test="activityTheme != null  and activityTheme != ''"> and activity_theme = #{activityTheme}</if>
+            <if test="activityTitle != null  and activityTitle != ''"> and activity_title = #{activityTitle}</if>
+            <if test="activityContent != null  and activityContent != ''"> and activity_content = #{activityContent}</if>
+            <if test="activityRule != null  and activityRule != ''"> and activity_rule = #{activityRule}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectPActivityListById" parameterType="Long" resultMap="PActivityListResult">
+        <include refid="selectPActivityListVo"/>
+        where activity_details_id = #{activityDetailsId}
+    </select>
+        
+    <insert id="insertPActivityList" parameterType="PActivityList">
+        insert into p_activity_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityDetailsId != null ">activity_details_id,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="commodityPictures != null  and commodityPictures != ''">commodity_pictures,</if>
+            <if test="activityTheme != null  and activityTheme != ''">activity_theme,</if>
+            <if test="activityTitle != null  and activityTitle != ''">activity_title,</if>
+            <if test="activityContent != null  and activityContent != ''">activity_content,</if>
+            <if test="activityRule != null  and activityRule != ''">activity_rule,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityDetailsId != null ">#{activityDetailsId},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="commodityPictures != null  and commodityPictures != ''">#{commodityPictures},</if>
+            <if test="activityTheme != null  and activityTheme != ''">#{activityTheme},</if>
+            <if test="activityTitle != null  and activityTitle != ''">#{activityTitle},</if>
+            <if test="activityContent != null  and activityContent != ''">#{activityContent},</if>
+            <if test="activityRule != null  and activityRule != ''">#{activityRule},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePActivityList" parameterType="PActivityList">
+        update p_activity_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="commodityPictures != null  and commodityPictures != ''">commodity_pictures = #{commodityPictures},</if>
+            <if test="activityTheme != null  and activityTheme != ''">activity_theme = #{activityTheme},</if>
+            <if test="activityTitle != null  and activityTitle != ''">activity_title = #{activityTitle},</if>
+            <if test="activityContent != null  and activityContent != ''">activity_content = #{activityContent},</if>
+            <if test="activityRule != null  and activityRule != ''">activity_rule = #{activityRule},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+        </trim>
+        where activity_details_id = #{activityDetailsId}
+    </update>
+
+    <delete id="deletePActivityListById" parameterType="Long">
+        delete from p_activity_list where activity_details_id = #{activityDetailsId}
+    </delete>
+
+    <delete id="deletePActivityListByIds" parameterType="String">
+        delete from p_activity_list where activity_details_id in 
+        <foreach item="activityDetailsId" collection="array" open="(" separator="," close=")">
+            #{activityDetailsId}
+        </foreach>
+    </delete>
+    
+</mapper>

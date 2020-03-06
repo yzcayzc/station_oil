@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.census.mapper.CIntegralStatisticsMapper">
+    
+    <resultMap type="CIntegralStatistics" id="CIntegralStatisticsResult">
+        <result property="integralId"    column="integral_id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="stationName"    column="station_name"    />
+        <result property="presentationOfPoints"    column="presentation_of_points"    />
+        <result property="integralDeduction"    column="integral_deduction"    />
+        <result property="residualIntegral"    column="residual_integral"    />
+        <result property="time"    column="time"    />
+        <result property="phone"    column="phone"    />
+    </resultMap>
+
+    <sql id="selectCIntegralStatisticsVo">
+        select integral_id, number, name, station_name, presentation_of_points, integral_deduction, residual_integral, time, phone from c_integral_statistics
+    </sql>
+
+    <select id="selectCIntegralStatisticsList" parameterType="CIntegralStatistics" resultMap="CIntegralStatisticsResult">
+        <include refid="selectCIntegralStatisticsVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
+            <if test="presentationOfPoints != null "> and presentation_of_points = #{presentationOfPoints}</if>
+            <if test="integralDeduction != null "> and integral_deduction = #{integralDeduction}</if>
+            <if test="residualIntegral != null "> and residual_integral = #{residualIntegral}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+        </where>
+    </select>
+    
+    <select id="selectCIntegralStatisticsById" parameterType="Long" resultMap="CIntegralStatisticsResult">
+        <include refid="selectCIntegralStatisticsVo"/>
+        where integral_id = #{integralId}
+    </select>
+        
+    <insert id="insertCIntegralStatistics" parameterType="CIntegralStatistics" useGeneratedKeys="true" keyProperty="integralId">
+        insert into c_integral_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null ">number,</if>
+            <if test="name != null  and name != ''">name,</if>
+            <if test="stationName != null  and stationName != ''">station_name,</if>
+            <if test="presentationOfPoints != null ">presentation_of_points,</if>
+            <if test="integralDeduction != null ">integral_deduction,</if>
+            <if test="residualIntegral != null ">residual_integral,</if>
+            <if test="time != null ">time,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null ">#{number},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="stationName != null  and stationName != ''">#{stationName},</if>
+            <if test="presentationOfPoints != null ">#{presentationOfPoints},</if>
+            <if test="integralDeduction != null ">#{integralDeduction},</if>
+            <if test="residualIntegral != null ">#{residualIntegral},</if>
+            <if test="time != null ">#{time},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCIntegralStatistics" parameterType="CIntegralStatistics">
+        update c_integral_statistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null ">number = #{number},</if>
+            <if test="name != null  and name != ''">name = #{name},</if>
+            <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
+            <if test="presentationOfPoints != null ">presentation_of_points = #{presentationOfPoints},</if>
+            <if test="integralDeduction != null ">integral_deduction = #{integralDeduction},</if>
+            <if test="residualIntegral != null ">residual_integral = #{residualIntegral},</if>
+            <if test="time != null ">time = #{time},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+        </trim>
+        where integral_id = #{integralId}
+    </update>
+
+    <delete id="deleteCIntegralStatisticsById" parameterType="Long">
+        delete from c_integral_statistics where integral_id = #{integralId}
+    </delete>
+
+    <delete id="deleteCIntegralStatisticsByIds" parameterType="String">
+        delete from c_integral_statistics where integral_id in 
+        <foreach item="integralId" collection="array" open="(" separator="," close=")">
+            #{integralId}
+        </foreach>
+    </delete>
+    
+</mapper>

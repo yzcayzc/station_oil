@@ -7,7 +7,7 @@ import java.util.List;
  * 商品兑换信息Mapper接口
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 public interface MCommodityExchangeMapper 
 {

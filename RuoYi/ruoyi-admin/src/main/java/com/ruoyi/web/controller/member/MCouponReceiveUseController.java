@@ -20,10 +20,10 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 优惠券领取使用信息Controller
+ * 优惠券的领取和使用Controller
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 @Controller
 @RequestMapping("/member/m_coupon_receive_use")
@@ -42,7 +42,7 @@ public class MCouponReceiveUseController extends BaseController
     }
 
     /**
-     * 查询优惠券领取使用信息列表
+     * 查询优惠券的领取和使用列表
      */
     @RequiresPermissions("member:m_coupon_receive_use:list")
     @PostMapping("/list")
@@ -55,10 +55,10 @@ public class MCouponReceiveUseController extends BaseController
     }
 
     /**
-     * 导出优惠券领取使用信息列表
+     * 导出优惠券的领取和使用列表
      */
     @RequiresPermissions("member:m_coupon_receive_use:export")
-    @Log(title = "优惠券领取使用信息", businessType = BusinessType.EXPORT)
+    @Log(title = "优惠券的领取和使用", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(MCouponReceiveUse mCouponReceiveUse)
@@ -69,7 +69,7 @@ public class MCouponReceiveUseController extends BaseController
     }
 
     /**
-     * 新增优惠券领取使用信息
+     * 新增优惠券的领取和使用
      */
     @GetMapping("/add")
     public String add()
@@ -78,10 +78,10 @@ public class MCouponReceiveUseController extends BaseController
     }
 
     /**
-     * 新增保存优惠券领取使用信息
+     * 新增保存优惠券的领取和使用
      */
     @RequiresPermissions("member:m_coupon_receive_use:add")
-    @Log(title = "优惠券领取使用信息", businessType = BusinessType.INSERT)
+    @Log(title = "优惠券的领取和使用", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(MCouponReceiveUse mCouponReceiveUse)
@@ -90,7 +90,7 @@ public class MCouponReceiveUseController extends BaseController
     }
 
     /**
-     * 修改优惠券领取使用信息
+     * 修改优惠券的领取和使用
      */
     @GetMapping("/edit/{couponReceiveUseId}")
     public String edit(@PathVariable("couponReceiveUseId") Long couponReceiveUseId, ModelMap mmap)
@@ -101,10 +101,10 @@ public class MCouponReceiveUseController extends BaseController
     }
 
     /**
-     * 修改保存优惠券领取使用信息
+     * 修改保存优惠券的领取和使用
      */
     @RequiresPermissions("member:m_coupon_receive_use:edit")
-    @Log(title = "优惠券领取使用信息", businessType = BusinessType.UPDATE)
+    @Log(title = "优惠券的领取和使用", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(MCouponReceiveUse mCouponReceiveUse)
@@ -113,10 +113,10 @@ public class MCouponReceiveUseController extends BaseController
     }
 
     /**
-     * 删除优惠券领取使用信息
+     * 删除优惠券的领取和使用
      */
     @RequiresPermissions("member:m_coupon_receive_use:remove")
-    @Log(title = "优惠券领取使用信息", businessType = BusinessType.DELETE)
+    @Log(title = "优惠券的领取和使用", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

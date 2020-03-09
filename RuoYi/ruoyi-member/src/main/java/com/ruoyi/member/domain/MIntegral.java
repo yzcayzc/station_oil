@@ -10,7 +10,7 @@ import java.util.Date;
  * 积分对象 m_integral
  * 
  * @author ruoyi
- * @date 2020-03-05
+ * @date 2020-03-09
  */
 public class MIntegral extends BaseEntity
 {
@@ -38,6 +38,10 @@ public class MIntegral extends BaseEntity
     /** 积分状态 */
     @Excel(name = "积分状态")
     private String integralState;
+
+    /** 联系方式 */
+    @Excel(name = "联系方式")
+    private String phone;
 
     public void setIntegral(Long integral) 
     {
@@ -93,6 +97,15 @@ public class MIntegral extends BaseEntity
     {
         return integralState;
     }
+    public void setPhone(String phone) 
+    {
+        this.phone = phone;
+    }
+
+    public String getPhone() 
+    {
+        return phone;
+    }
 
     @Override
     public String toString() {
@@ -103,6 +116,7 @@ public class MIntegral extends BaseEntity
             .append("integralDetails", getIntegralDetails())
             .append("residualIntegral", getResidualIntegral())
             .append("integralState", getIntegralState())
+            .append("phone", getPhone())
             .toString();
     }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
  * 商品兑换信息对象 m_commodity_exchange
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 public class MCommodityExchange extends BaseEntity
 {
@@ -42,6 +42,10 @@ public class MCommodityExchange extends BaseEntity
     /** 商品状态 */
     @Excel(name = "商品状态")
     private String status;
+
+    /** 联系方式 */
+    @Excel(name = "联系方式")
+    private String phone;
 
     public void setCommodityExchangeId(Long commodityExchangeId) 
     {
@@ -106,6 +110,15 @@ public class MCommodityExchange extends BaseEntity
     {
         return status;
     }
+    public void setPhone(String phone) 
+    {
+        this.phone = phone;
+    }
+
+    public String getPhone() 
+    {
+        return phone;
+    }
 
     @Override
     public String toString() {
@@ -117,6 +130,7 @@ public class MCommodityExchange extends BaseEntity
             .append("conditionT", getConditionT())
             .append("residualIntegral", getResidualIntegral())
             .append("status", getStatus())
+            .append("phone", getPhone())
             .toString();
     }
 }

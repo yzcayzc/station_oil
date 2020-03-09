@@ -7,7 +7,7 @@ import java.util.List;
  * 积分Mapper接口
  * 
  * @author ruoyi
- * @date 2020-03-05
+ * @date 2020-03-09
  */
 public interface MIntegralMapper 
 {

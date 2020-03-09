@@ -42,7 +42,13 @@
                             </li>
                             <li>
                                 <p>消费状态：</p>
-                                <input type="text" name="status"/>
+                                <select name="status">
+                                    <option value="">所有</option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>联系方式：</p>
+                                <input type="text" name="phone"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -125,6 +131,10 @@
                 {
                     field : 'status', 
                     title : '消费状态'
+                },
+                {
+                    field : 'phone', 
+                    title : '联系方式'
                 },
                 {
                     title: '操作',

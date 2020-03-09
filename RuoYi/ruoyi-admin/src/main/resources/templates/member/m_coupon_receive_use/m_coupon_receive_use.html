@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('优惠券领取使用信息列表')" />
+    <th:block th:include="include :: header('优惠券的领取和使用列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -49,6 +49,10 @@
                                 <input type="text" name="status"/>
                             </li>
                             <li>
+                                <p>联系方式：</p>
+                                <input type="text" name="phone"/>
+                            </li>
+                            <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>
@@ -89,7 +93,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "优惠券领取使用信息",
+                modalName: "优惠券的领取和使用",
                 columns: [{
                     checkbox: true
                 },
@@ -129,6 +133,10 @@
                 {
                     field : 'status', 
                     title : '使用状态'
+                },
+                {
+                    field : 'phone', 
+                    title : '联系方式'
                 },
                 {
                     title: '操作',

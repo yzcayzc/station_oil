@@ -23,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 商品兑换信息Controller
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 @Controller
 @RequestMapping("/member/m_commodity_exchange")

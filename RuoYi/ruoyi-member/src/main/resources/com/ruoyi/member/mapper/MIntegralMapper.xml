@@ -11,10 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="integralDetails"    column="integral_details"    />
         <result property="residualIntegral"    column="residual_integral"    />
         <result property="integralState"    column="integral_state"    />
+        <result property="phone"    column="phone"    />
     </resultMap>
 
     <sql id="selectMIntegralVo">
-        select integral, number, activity_time, integral_details, residual_integral, integral_state from m_integral
+        select integral, number, activity_time, integral_details, residual_integral, integral_state, phone from m_integral
     </sql>
 
     <select id="selectMIntegralList" parameterType="MIntegral" resultMap="MIntegralResult">
@@ -25,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="integralDetails != null  and integralDetails != ''"> and integral_details = #{integralDetails}</if>
             <if test="residualIntegral != null "> and residual_integral = #{residualIntegral}</if>
             <if test="integralState != null  and integralState != ''"> and integral_state = #{integralState}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
         </where>
     </select>
     
@@ -41,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="integralDetails != null  and integralDetails != ''">integral_details,</if>
             <if test="residualIntegral != null ">residual_integral,</if>
             <if test="integralState != null  and integralState != ''">integral_state,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="number != null ">#{number},</if>
@@ -48,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="integralDetails != null  and integralDetails != ''">#{integralDetails},</if>
             <if test="residualIntegral != null ">#{residualIntegral},</if>
             <if test="integralState != null  and integralState != ''">#{integralState},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
          </trim>
     </insert>
 
@@ -59,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="integralDetails != null  and integralDetails != ''">integral_details = #{integralDetails},</if>
             <if test="residualIntegral != null ">residual_integral = #{residualIntegral},</if>
             <if test="integralState != null  and integralState != ''">integral_state = #{integralState},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
         </trim>
         where integral = #{integral}
     </update>

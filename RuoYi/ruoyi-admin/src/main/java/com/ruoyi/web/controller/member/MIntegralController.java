@@ -23,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 积分Controller
  * 
  * @author ruoyi
- * @date 2020-03-05
+ * @date 2020-03-09
  */
 @Controller
 @RequestMapping("/member/m_integral")

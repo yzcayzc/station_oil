@@ -10,7 +10,7 @@ import java.util.Date;
  * 电子钱包对象 m_electronic_wallet
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 public class MElectronicWallet extends BaseEntity
 {
@@ -46,6 +46,10 @@ public class MElectronicWallet extends BaseEntity
     /** 状态（0正常，1关闭） */
     @Excel(name = "状态", readConverterExp = "0=正常，1关闭")
     private String status;
+
+    /** 联系方式 */
+    @Excel(name = "联系方式")
+    private String phone;
 
     public void setElectronicWalletId(Long electronicWalletId) 
     {
@@ -119,6 +123,15 @@ public class MElectronicWallet extends BaseEntity
     {
         return status;
     }
+    public void setPhone(String phone) 
+    {
+        this.phone = phone;
+    }
+
+    public String getPhone() 
+    {
+        return phone;
+    }
 
     @Override
     public String toString() {
@@ -131,6 +144,7 @@ public class MElectronicWallet extends BaseEntity
             .append("cardOpen", getCardOpen())
             .append("balance", getBalance())
             .append("status", getStatus())
+            .append("phone", getPhone())
             .toString();
     }
 }

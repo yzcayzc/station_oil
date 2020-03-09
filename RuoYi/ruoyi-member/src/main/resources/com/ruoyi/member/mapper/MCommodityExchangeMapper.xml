@@ -12,10 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="conditionT"    column="condition_t"    />
         <result property="residualIntegral"    column="residual_integral"    />
         <result property="status"    column="status"    />
+        <result property="phone"    column="phone"    />
     </resultMap>
 
     <sql id="selectMCommodityExchangeVo">
-        select commodity_exchange_id, commodity_number, trade_name, exchange_time, condition_t, residual_integral, status from m_commodity_exchange
+        select commodity_exchange_id, commodity_number, trade_name, exchange_time, condition_t, residual_integral, status, phone from m_commodity_exchange
     </sql>
 
     <select id="selectMCommodityExchangeList" parameterType="MCommodityExchange" resultMap="MCommodityExchangeResult">
@@ -27,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="conditionT != null  and conditionT != ''"> and condition_t = #{conditionT}</if>
             <if test="residualIntegral != null "> and residual_integral = #{residualIntegral}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
         </where>
     </select>
     
@@ -44,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="conditionT != null  and conditionT != ''">condition_t,</if>
             <if test="residualIntegral != null ">residual_integral,</if>
             <if test="status != null  and status != ''">status,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="commodityNumber != null ">#{commodityNumber},</if>
@@ -52,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="conditionT != null  and conditionT != ''">#{conditionT},</if>
             <if test="residualIntegral != null ">#{residualIntegral},</if>
             <if test="status != null  and status != ''">#{status},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
          </trim>
     </insert>
 
@@ -64,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="conditionT != null  and conditionT != ''">condition_t = #{conditionT},</if>
             <if test="residualIntegral != null ">residual_integral = #{residualIntegral},</if>
             <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
         </trim>
         where commodity_exchange_id = #{commodityExchangeId}
     </update>

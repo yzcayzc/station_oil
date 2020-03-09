@@ -7,10 +7,10 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import java.util.Date;
 
 /**
- * 优惠券领取使用信息对象 m_coupon_receive_use
+ * 优惠券的领取和使用对象 m_coupon_receive_use
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 public class MCouponReceiveUse extends BaseEntity
 {
@@ -50,6 +50,10 @@ public class MCouponReceiveUse extends BaseEntity
     /** 使用状态 */
     @Excel(name = "使用状态")
     private String status;
+
+    /** 联系方式 */
+    @Excel(name = "联系方式")
+    private String phone;
 
     public void setCouponReceiveUseId(Long couponReceiveUseId) 
     {
@@ -132,6 +136,15 @@ public class MCouponReceiveUse extends BaseEntity
     {
         return status;
     }
+    public void setPhone(String phone) 
+    {
+        this.phone = phone;
+    }
+
+    public String getPhone() 
+    {
+        return phone;
+    }
 
     @Override
     public String toString() {
@@ -145,6 +158,7 @@ public class MCouponReceiveUse extends BaseEntity
             .append("voucherValue", getVoucherValue())
             .append("requirement", getRequirement())
             .append("status", getStatus())
+            .append("phone", getPhone())
             .toString();
     }
 }

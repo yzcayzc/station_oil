@@ -10,7 +10,7 @@ import java.util.Date;
  * 充值流水对象 m_recharge_stream
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 public class MRechargeStream extends BaseEntity
 {
@@ -42,6 +42,10 @@ public class MRechargeStream extends BaseEntity
     /** 充值状态 */
     @Excel(name = "充值状态")
     private String status;
+
+    /** 联系方式 */
+    @Excel(name = "联系方式")
+    private String phone;
 
     public void setRechargeStreamId(Long rechargeStreamId) 
     {
@@ -106,6 +110,15 @@ public class MRechargeStream extends BaseEntity
     {
         return status;
     }
+    public void setPhone(String phone) 
+    {
+        this.phone = phone;
+    }
+
+    public String getPhone() 
+    {
+        return phone;
+    }
 
     @Override
     public String toString() {
@@ -117,6 +130,7 @@ public class MRechargeStream extends BaseEntity
             .append("operator", getOperator())
             .append("recharge", getRecharge())
             .append("status", getStatus())
+            .append("phone", getPhone())
             .toString();
     }
 }

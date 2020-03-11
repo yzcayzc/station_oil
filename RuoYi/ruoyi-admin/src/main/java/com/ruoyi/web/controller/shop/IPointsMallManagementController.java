@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.shop;
 
-import java.util.List;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.shop.domain.IPointsMallManagement;
+import com.ruoyi.shop.service.IIPointsMallManagementService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.shop.domain.IPointsMallManagement;
-import com.ruoyi.shop.service.IIPointsMallManagementService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 积分商城管理Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "积分商城管理")
 @Controller
 @RequestMapping("/shop/i_points_mall_management")
 public class IPointsMallManagementController extends BaseController
@@ -44,6 +44,7 @@ public class IPointsMallManagementController extends BaseController
     /**
      * 查询积分商城管理列表
      */
+    @ApiOperation("查询积分商城管理列表")
     @RequiresPermissions("shop:i_points_mall_management:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class IPointsMallManagementController extends BaseController
     /**
      * 导出积分商城管理列表
      */
+    @ApiOperation("导出积分商城管理列表")
     @RequiresPermissions("shop:i_points_mall_management:export")
     @Log(title = "积分商城管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class IPointsMallManagementController extends BaseController
     /**
      * 新增积分商城管理
      */
+    @ApiOperation("新增积分商城管理")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class IPointsMallManagementController extends BaseController
     /**
      * 新增保存积分商城管理
      */
+    @ApiOperation("新增保存积分商城管理")
     @RequiresPermissions("shop:i_points_mall_management:add")
     @Log(title = "积分商城管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class IPointsMallManagementController extends BaseController
     /**
      * 修改积分商城管理
      */
+    @ApiOperation("修改积分商城管理")
     @GetMapping("/edit/{goodsId}")
     public String edit(@PathVariable("goodsId") Long goodsId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class IPointsMallManagementController extends BaseController
     /**
      * 修改保存积分商城管理
      */
+    @ApiOperation("修改保存积分商城管理")
     @RequiresPermissions("shop:i_points_mall_management:edit")
     @Log(title = "积分商城管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class IPointsMallManagementController extends BaseController
     /**
      * 删除积分商城管理
      */
+    @ApiOperation("删除积分商城管理")
     @RequiresPermissions("shop:i_points_mall_management:remove")
     @Log(title = "积分商城管理", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

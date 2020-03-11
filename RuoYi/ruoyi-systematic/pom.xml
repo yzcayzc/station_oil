@@ -17,6 +17,11 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-station</artifactId>
+            <version>4.1.0</version>
+        </dependency>
     </dependencies>
 
 

@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,7 @@ import com.ruoyi.system.service.ISysMenuService;
  * 
  * @author ruoyi
  */
+@Api(tags = "菜单信息")
 @Controller
 @RequestMapping("/system/menu")
 public class SysMenuController extends BaseController
@@ -56,6 +60,7 @@ public class SysMenuController extends BaseController
     /**
      * 删除菜单
      */
+    @ApiOperation("删除菜单")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:menu:remove")
     @GetMapping("/remove/{menuId}")
@@ -77,6 +82,7 @@ public class SysMenuController extends BaseController
     /**
      * 新增
      */
+    @ApiOperation("新增")
     @GetMapping("/add/{parentId}")
     public String add(@PathVariable("parentId") Long parentId, ModelMap mmap)
     {
@@ -98,6 +104,7 @@ public class SysMenuController extends BaseController
     /**
      * 新增保存菜单
      */
+    @ApiOperation("新增保存菜单")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @RequiresPermissions("system:menu:add")
     @PostMapping("/add")
@@ -116,6 +123,7 @@ public class SysMenuController extends BaseController
     /**
      * 修改菜单
      */
+    @ApiOperation("修改菜单")
     @GetMapping("/edit/{menuId}")
     public String edit(@PathVariable("menuId") Long menuId, ModelMap mmap)
     {
@@ -126,6 +134,7 @@ public class SysMenuController extends BaseController
     /**
      * 修改保存菜单
      */
+    @ApiOperation("修改保存菜单")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @RequiresPermissions("system:menu:edit")
     @PostMapping("/edit")
@@ -144,6 +153,7 @@ public class SysMenuController extends BaseController
     /**
      * 选择菜单图标
      */
+    @ApiOperation("选择菜单图标")
     @GetMapping("/icon")
     public String icon()
     {
@@ -153,6 +163,7 @@ public class SysMenuController extends BaseController
     /**
      * 校验菜单名称
      */
+    @ApiOperation("校验菜单名称")
     @PostMapping("/checkMenuNameUnique")
     @ResponseBody
     public String checkMenuNameUnique(SysMenu menu)
@@ -163,6 +174,7 @@ public class SysMenuController extends BaseController
     /**
      * 加载角色菜单列表树
      */
+    @ApiOperation("加载角色菜单列表树")
     @GetMapping("/roleMenuTreeData")
     @ResponseBody
     public List<Ztree> roleMenuTreeData(SysRole role)
@@ -175,6 +187,7 @@ public class SysMenuController extends BaseController
     /**
      * 加载所有菜单列表树
      */
+    @ApiOperation("加载所有菜单列表树")
     @GetMapping("/menuTreeData")
     @ResponseBody
     public List<Ztree> menuTreeData()
@@ -187,6 +200,7 @@ public class SysMenuController extends BaseController
     /**
      * 选择菜单树
      */
+    @ApiOperation("选择菜单树")
     @GetMapping("/selectMenuTree/{menuId}")
     public String selectMenuTree(@PathVariable("menuId") Long menuId, ModelMap mmap)
     {

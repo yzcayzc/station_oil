@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.systematic;
 
-import java.util.List;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.systematic.domain.SyHistoryCard;
+import com.ruoyi.systematic.service.ISyHistoryCardService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.systematic.domain.SyHistoryCard;
-import com.ruoyi.systematic.service.ISyHistoryCardService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 历史信息Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "历史信息")
 @Controller
 @RequestMapping("/systematic/sy_history_card")
 public class SyHistoryCardController extends BaseController
@@ -44,6 +44,7 @@ public class SyHistoryCardController extends BaseController
     /**
      * 查询历史信息列表
      */
+    @ApiOperation("查询历史信息列表")
     @RequiresPermissions("systematic:sy_history_card:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class SyHistoryCardController extends BaseController
     /**
      * 导出历史信息列表
      */
+    @ApiOperation("导出历史信息列表")
     @RequiresPermissions("systematic:sy_history_card:export")
     @Log(title = "历史信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class SyHistoryCardController extends BaseController
     /**
      * 新增历史信息
      */
+    @ApiOperation("新增历史信息")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class SyHistoryCardController extends BaseController
     /**
      * 新增保存历史信息
      */
+    @ApiOperation("新增保存历史信息")
     @RequiresPermissions("systematic:sy_history_card:add")
     @Log(title = "历史信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class SyHistoryCardController extends BaseController
     /**
      * 修改历史信息
      */
+    @ApiOperation("修改历史信息")
     @GetMapping("/edit/{card}")
     public String edit(@PathVariable("card") Long card, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class SyHistoryCardController extends BaseController
     /**
      * 修改保存历史信息
      */
+    @ApiOperation("修改保存历史信息")
     @RequiresPermissions("systematic:sy_history_card:edit")
     @Log(title = "历史信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class SyHistoryCardController extends BaseController
     /**
      * 删除历史信息
      */
+    @ApiOperation("删除历史信息")
     @RequiresPermissions("systematic:sy_history_card:remove")
     @Log(title = "历史信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

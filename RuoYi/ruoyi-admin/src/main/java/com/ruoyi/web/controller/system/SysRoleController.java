@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +33,7 @@ import com.ruoyi.system.service.ISysUserService;
  * 
  * @author ruoyi
  */
+@Api(tags = "角色信息")
 @Controller
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController
@@ -73,6 +77,7 @@ public class SysRoleController extends BaseController
     /**
      * 新增角色
      */
+    @ApiOperation("新增角色")
     @GetMapping("/add")
     public String add()
     {
@@ -82,6 +87,7 @@ public class SysRoleController extends BaseController
     /**
      * 新增保存角色
      */
+    @ApiOperation("新增保存角色")
     @RequiresPermissions("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -105,6 +111,7 @@ public class SysRoleController extends BaseController
     /**
      * 修改角色
      */
+    @ApiOperation("修改角色")
     @GetMapping("/edit/{roleId}")
     public String edit(@PathVariable("roleId") Long roleId, ModelMap mmap)
     {
@@ -115,6 +122,7 @@ public class SysRoleController extends BaseController
     /**
      * 修改保存角色
      */
+    @ApiOperation("修改保存角色")
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -138,6 +146,7 @@ public class SysRoleController extends BaseController
     /**
      * 角色分配数据权限
      */
+    @ApiOperation("角色分配数据权限")
     @GetMapping("/authDataScope/{roleId}")
     public String authDataScope(@PathVariable("roleId") Long roleId, ModelMap mmap)
     {
@@ -148,6 +157,7 @@ public class SysRoleController extends BaseController
     /**
      * 保存角色分配数据权限
      */
+    @ApiOperation("保存角色分配数据权限")
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/authDataScope")
@@ -183,6 +193,7 @@ public class SysRoleController extends BaseController
     /**
      * 校验角色名称
      */
+    @ApiOperation("校验角色名称")
     @PostMapping("/checkRoleNameUnique")
     @ResponseBody
     public String checkRoleNameUnique(SysRole role)
@@ -193,6 +204,7 @@ public class SysRoleController extends BaseController
     /**
      * 校验角色权限
      */
+    @ApiOperation("校验角色权限")
     @PostMapping("/checkRoleKeyUnique")
     @ResponseBody
     public String checkRoleKeyUnique(SysRole role)
@@ -203,6 +215,7 @@ public class SysRoleController extends BaseController
     /**
      * 选择菜单树
      */
+    @ApiOperation("选择菜单树")
     @GetMapping("/selectMenuTree")
     public String selectMenuTree()
     {
@@ -212,6 +225,7 @@ public class SysRoleController extends BaseController
     /**
      * 角色状态修改
      */
+    @ApiOperation("角色状态修改")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @RequiresPermissions("system:role:edit")
     @PostMapping("/changeStatus")
@@ -225,6 +239,7 @@ public class SysRoleController extends BaseController
     /**
      * 分配用户
      */
+    @ApiOperation("分配用户")
     @RequiresPermissions("system:role:edit")
     @GetMapping("/authUser/{roleId}")
     public String authUser(@PathVariable("roleId") Long roleId, ModelMap mmap)
@@ -236,6 +251,7 @@ public class SysRoleController extends BaseController
     /**
      * 查询已分配用户角色列表
      */
+    @ApiOperation("查询已分配用户角色列表")
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/allocatedList")
     @ResponseBody
@@ -249,6 +265,7 @@ public class SysRoleController extends BaseController
     /**
      * 取消授权
      */
+    @ApiOperation("取消授权")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancel")
     @ResponseBody
@@ -260,6 +277,7 @@ public class SysRoleController extends BaseController
     /**
      * 批量取消授权
      */
+    @ApiOperation("批量取消授权")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancelAll")
     @ResponseBody
@@ -271,6 +289,7 @@ public class SysRoleController extends BaseController
     /**
      * 选择用户
      */
+    @ApiOperation("选择用户")
     @GetMapping("/authUser/selectUser/{roleId}")
     public String selectUser(@PathVariable("roleId") Long roleId, ModelMap mmap)
     {
@@ -281,6 +300,7 @@ public class SysRoleController extends BaseController
     /**
      * 查询未分配用户角色列表
      */
+    @ApiOperation("查询未分配用户角色列表")
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/unallocatedList")
     @ResponseBody
@@ -294,6 +314,7 @@ public class SysRoleController extends BaseController
     /**
      * 批量选择用户授权
      */
+    @ApiOperation("批量选择用户授权")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/selectAll")
     @ResponseBody

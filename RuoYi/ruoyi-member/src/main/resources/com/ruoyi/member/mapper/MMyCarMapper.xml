@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MMyCarMapper">
+    
+    <resultMap type="MMyCar" id="MMyCarResult">
+        <result property="myCarId"    column="my_car_id"    />
+        <result property="licensePlateNumber"    column="license_plate_number"    />
+        <result property="carBrand"    column="car_brand"    />
+        <result property="carType"    column="car_type"    />
+        <result property="vehicleSystem"    column="vehicle_system"    />
+        <result property="model"    column="model"    />
+        <result property="oils"    column="oils"    />
+        <result property="phone"    column="phone"    />
+        <result property="carNumber"    column="car_number"    />
+    </resultMap>
+
+    <sql id="selectMMyCarVo">
+        select my_car_id, license_plate_number, car_brand, car_type, vehicle_system, model, oils, phone, car_number from m_my_car
+    </sql>
+
+    <select id="selectMMyCarList" parameterType="MMyCar" resultMap="MMyCarResult">
+        <include refid="selectMMyCarVo"/>
+        <where>  
+            <if test="licensePlateNumber != null  and licensePlateNumber != ''"> and license_plate_number = #{licensePlateNumber}</if>
+            <if test="carBrand != null  and carBrand != ''"> and car_brand = #{carBrand}</if>
+            <if test="carType != null  and carType != ''"> and car_type = #{carType}</if>
+            <if test="vehicleSystem != null  and vehicleSystem != ''"> and vehicle_system = #{vehicleSystem}</if>
+            <if test="model != null  and model != ''"> and model = #{model}</if>
+            <if test="oils != null  and oils != ''"> and oils = #{oils}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="carNumber != null  and carNumber != ''"> and car_number = #{carNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectMMyCarById" parameterType="Long" resultMap="MMyCarResult">
+        <include refid="selectMMyCarVo"/>
+        where my_car_id = #{myCarId}
+    </select>
+        
+    <insert id="insertMMyCar" parameterType="MMyCar" useGeneratedKeys="true" keyProperty="myCarId">
+        insert into m_my_car
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="licensePlateNumber != null  and licensePlateNumber != ''">license_plate_number,</if>
+            <if test="carBrand != null  and carBrand != ''">car_brand,</if>
+            <if test="carType != null  and carType != ''">car_type,</if>
+            <if test="vehicleSystem != null  and vehicleSystem != ''">vehicle_system,</if>
+            <if test="model != null  and model != ''">model,</if>
+            <if test="oils != null  and oils != ''">oils,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="carNumber != null  and carNumber != ''">car_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="licensePlateNumber != null  and licensePlateNumber != ''">#{licensePlateNumber},</if>
+            <if test="carBrand != null  and carBrand != ''">#{carBrand},</if>
+            <if test="carType != null  and carType != ''">#{carType},</if>
+            <if test="vehicleSystem != null  and vehicleSystem != ''">#{vehicleSystem},</if>
+            <if test="model != null  and model != ''">#{model},</if>
+            <if test="oils != null  and oils != ''">#{oils},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="carNumber != null  and carNumber != ''">#{carNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMMyCar" parameterType="MMyCar">
+        update m_my_car
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="licensePlateNumber != null  and licensePlateNumber != ''">license_plate_number = #{licensePlateNumber},</if>
+            <if test="carBrand != null  and carBrand != ''">car_brand = #{carBrand},</if>
+            <if test="carType != null  and carType != ''">car_type = #{carType},</if>
+            <if test="vehicleSystem != null  and vehicleSystem != ''">vehicle_system = #{vehicleSystem},</if>
+            <if test="model != null  and model != ''">model = #{model},</if>
+            <if test="oils != null  and oils != ''">oils = #{oils},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="carNumber != null  and carNumber != ''">car_number = #{carNumber},</if>
+        </trim>
+        where my_car_id = #{myCarId}
+    </update>
+
+    <delete id="deleteMMyCarById" parameterType="Long">
+        delete from m_my_car where my_car_id = #{myCarId}
+    </delete>
+
+    <delete id="deleteMMyCarByIds" parameterType="String">
+        delete from m_my_car where my_car_id in 
+        <foreach item="myCarId" collection="array" open="(" separator="," close=")">
+            #{myCarId}
+        </foreach>
+    </delete>
+    
+</mapper>

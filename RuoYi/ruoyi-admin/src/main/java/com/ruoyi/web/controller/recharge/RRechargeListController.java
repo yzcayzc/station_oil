@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.recharge;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +26,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 充值列表Controller
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-10
  */
+@Api(tags = "充值列表")
 @Controller
 @RequestMapping("/recharge/r_recharge_list")
 public class RRechargeListController extends BaseController
@@ -44,6 +48,7 @@ public class RRechargeListController extends BaseController
     /**
      * 查询充值列表列表
      */
+    @ApiOperation("查询充值列表列表")
     @RequiresPermissions("recharge:r_recharge_list:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +62,7 @@ public class RRechargeListController extends BaseController
     /**
      * 导出充值列表列表
      */
+    @ApiOperation("导出充值列表列表")
     @RequiresPermissions("recharge:r_recharge_list:export")
     @Log(title = "充值列表", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +77,7 @@ public class RRechargeListController extends BaseController
     /**
      * 新增充值列表
      */
+    @ApiOperation("新增充值列表")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +87,7 @@ public class RRechargeListController extends BaseController
     /**
      * 新增保存充值列表
      */
+    @ApiOperation("新增保存充值列表")
     @RequiresPermissions("recharge:r_recharge_list:add")
     @Log(title = "充值列表", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +100,7 @@ public class RRechargeListController extends BaseController
     /**
      * 修改充值列表
      */
+    @ApiOperation("修改充值列表")
     @GetMapping("/edit/{rechargeId}")
     public String edit(@PathVariable("rechargeId") Long rechargeId, ModelMap mmap)
     {
@@ -103,6 +112,7 @@ public class RRechargeListController extends BaseController
     /**
      * 修改保存充值列表
      */
+    @ApiOperation("修改保存充值列表")
     @RequiresPermissions("recharge:r_recharge_list:edit")
     @Log(title = "充值列表", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +125,7 @@ public class RRechargeListController extends BaseController
     /**
      * 删除充值列表
      */
+    @ApiOperation("删除充值列表")
     @RequiresPermissions("recharge:r_recharge_list:remove")
     @Log(title = "充值列表", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

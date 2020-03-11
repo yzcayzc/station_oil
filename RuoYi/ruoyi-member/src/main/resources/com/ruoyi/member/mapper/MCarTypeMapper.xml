@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.MCarTypeMapper">
+    
+    <resultMap type="MCarType" id="MCarTypeResult">
+        <result property="carTypeId"    column="car_type_id"    />
+        <result property="carType"    column="car_type"    />
+        <result property="number"    column="number"    />
+    </resultMap>
+
+    <sql id="selectMCarTypeVo">
+        select car_type_id, car_type, number from m_car_type
+    </sql>
+
+    <select id="selectMCarTypeList" parameterType="MCarType" resultMap="MCarTypeResult">
+        <include refid="selectMCarTypeVo"/>
+        <where>  
+            <if test="carType != null  and carType != ''"> and car_type = #{carType}</if>
+            <if test="number != null "> and number = #{number}</if>
+        </where>
+    </select>
+    
+    <select id="selectMCarTypeById" parameterType="Long" resultMap="MCarTypeResult">
+        <include refid="selectMCarTypeVo"/>
+        where car_type_id = #{carTypeId}
+    </select>
+        
+    <insert id="insertMCarType" parameterType="MCarType" useGeneratedKeys="true" keyProperty="carTypeId">
+        insert into m_car_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="carType != null  and carType != ''">car_type,</if>
+            <if test="number != null ">number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="carType != null  and carType != ''">#{carType},</if>
+            <if test="number != null ">#{number},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMCarType" parameterType="MCarType">
+        update m_car_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="carType != null  and carType != ''">car_type = #{carType},</if>
+            <if test="number != null ">number = #{number},</if>
+        </trim>
+        where car_type_id = #{carTypeId}
+    </update>
+
+    <delete id="deleteMCarTypeById" parameterType="Long">
+        delete from m_car_type where car_type_id = #{carTypeId}
+    </delete>
+
+    <delete id="deleteMCarTypeByIds" parameterType="String">
+        delete from m_car_type where car_type_id in 
+        <foreach item="carTypeId" collection="array" open="(" separator="," close=")">
+            #{carTypeId}
+        </foreach>
+    </delete>
+    
+</mapper>

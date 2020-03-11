@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.member;
 
-import java.util.List;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.member.domain.MConsumptionFlow;
+import com.ruoyi.member.service.IMConsumptionFlowService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.member.domain.MConsumptionFlow;
-import com.ruoyi.member.service.IMConsumptionFlowService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 消费流水Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-03-09
  */
+@Api(tags = "消费流水")
 @Controller
 @RequestMapping("/member/m_consumption_flow")
 public class MConsumptionFlowController extends BaseController
@@ -44,6 +44,7 @@ public class MConsumptionFlowController extends BaseController
     /**
      * 查询消费流水列表
      */
+    @ApiOperation("查询消费流水列表")
     @RequiresPermissions("member:m_consumption_flow:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class MConsumptionFlowController extends BaseController
     /**
      * 导出消费流水列表
      */
+    @ApiOperation("出消费流水列表")
     @RequiresPermissions("member:m_consumption_flow:export")
     @Log(title = "消费流水", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class MConsumptionFlowController extends BaseController
     /**
      * 新增消费流水
      */
+    @ApiOperation("新增消费流水")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class MConsumptionFlowController extends BaseController
     /**
      * 新增保存消费流水
      */
+    @ApiOperation("新增保存消费流水")
     @RequiresPermissions("member:m_consumption_flow:add")
     @Log(title = "消费流水", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class MConsumptionFlowController extends BaseController
     /**
      * 修改消费流水
      */
+    @ApiOperation("修改消费流水")
     @GetMapping("/edit/{flowId}")
     public String edit(@PathVariable("flowId") Long flowId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class MConsumptionFlowController extends BaseController
     /**
      * 修改保存消费流水
      */
+    @ApiOperation("修改保存消费流水")
     @RequiresPermissions("member:m_consumption_flow:edit")
     @Log(title = "消费流水", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class MConsumptionFlowController extends BaseController
     /**
      * 删除消费流水
      */
+    @ApiOperation("删除消费流水")
     @RequiresPermissions("member:m_consumption_flow:remove")
     @Log(title = "消费流水", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

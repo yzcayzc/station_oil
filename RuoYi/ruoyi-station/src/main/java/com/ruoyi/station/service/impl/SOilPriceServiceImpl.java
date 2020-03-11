@@ -73,10 +73,14 @@ public class SOilPriceServiceImpl implements ISOilPriceService
     public int updateSOilPrice(SOilPrice sOilPrice)
     {
         SOldOilprice sOldOilprice = new SOldOilprice();
+        //获取有效时间
         Date oilStartTime = sOilPrice.getOilStartTime();
         Date oilEndTime = sOilPrice.getOilEndTime();
+        //得出间隔有几天
         long daysBetween=(oilEndTime.getTime()-oilStartTime.getTime())/(60*60*24*1000);
+        //一天所含的毫秒
         int h = 86400000;
+        //添加历史数据
         for (int i = 0;i<=daysBetween;i++){
             sOldOilprice.setPrice(sOilPrice.getPrice());
             sOldOilprice.setOils(sOilPrice.getOils());

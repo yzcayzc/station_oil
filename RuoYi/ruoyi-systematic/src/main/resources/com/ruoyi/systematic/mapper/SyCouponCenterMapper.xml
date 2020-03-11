@@ -14,10 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="endTime"    column="end_time"    />
         <result property="stationName"    column="station_name"    />
         <result property="activity"    column="activity"    />
+        <result property="couponNumber"    column="coupon_number"    />
+        <result property="couponType"    column="coupon_type"    />
     </resultMap>
 
     <sql id="selectSyCouponCenterVo">
-        select coupon_id, number, publishing_unit, title, content_description, start_time, end_time, station_name, activity from sy_coupon_center
+        select coupon_id, number, publishing_unit, title, content_description, start_time, end_time, station_name, activity, coupon_number, coupon_type from sy_coupon_center
     </sql>
 
     <select id="selectSyCouponCenterList" parameterType="SyCouponCenter" resultMap="SyCouponCenterResult">
@@ -31,6 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="endTime != null "> and end_time = #{endTime}</if>
             <if test="stationName != null  and stationName != ''"> and station_name like concat('%', #{stationName}, '%')</if>
             <if test="activity != null  and activity != ''"> and activity = #{activity}</if>
+            <if test="couponNumber != null  and couponNumber != ''"> and coupon_number = #{couponNumber}</if>
+            <if test="couponType != null  and couponType != ''"> and coupon_type = #{couponType}</if>
         </where>
     </select>
     
@@ -50,6 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="endTime != null ">end_time,</if>
             <if test="stationName != null  and stationName != ''">station_name,</if>
             <if test="activity != null  and activity != ''">activity,</if>
+            <if test="couponNumber != null  and couponNumber != ''">coupon_number,</if>
+            <if test="couponType != null  and couponType != ''">coupon_type,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="number != null ">#{number},</if>
@@ -60,6 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="endTime != null ">#{endTime},</if>
             <if test="stationName != null  and stationName != ''">#{stationName},</if>
             <if test="activity != null  and activity != ''">#{activity},</if>
+            <if test="couponNumber != null  and couponNumber != ''">#{couponNumber},</if>
+            <if test="couponType != null  and couponType != ''">#{couponType},</if>
          </trim>
     </insert>
 
@@ -74,6 +82,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="endTime != null ">end_time = #{endTime},</if>
             <if test="stationName != null  and stationName != ''">station_name = #{stationName},</if>
             <if test="activity != null  and activity != ''">activity = #{activity},</if>
+            <if test="couponNumber != null  and couponNumber != ''">coupon_number = #{couponNumber},</if>
+            <if test="couponType != null  and couponType != ''">coupon_type = #{couponType},</if>
         </trim>
         where coupon_id = #{couponId}
     </update>

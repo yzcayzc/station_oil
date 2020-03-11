@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.CarVehicleSystemMapper">
+    
+    <resultMap type="CarVehicleSystem" id="CarVehicleSystemResult">
+        <result property="vehicleSystemId"    column="vehicle_system_id"    />
+        <result property="vehicleSystem"    column="vehicle_system"    />
+        <result property="number"    column="number"    />
+    </resultMap>
+
+    <sql id="selectCarVehicleSystemVo">
+        select vehicle_system_id, vehicle_system, number from car_vehicle_system
+    </sql>
+
+    <select id="selectCarVehicleSystemList" parameterType="CarVehicleSystem" resultMap="CarVehicleSystemResult">
+        <include refid="selectCarVehicleSystemVo"/>
+        <where>  
+            <if test="vehicleSystem != null  and vehicleSystem != ''"> and vehicle_system = #{vehicleSystem}</if>
+            <if test="number != null "> and number = #{number}</if>
+        </where>
+    </select>
+    
+    <select id="selectCarVehicleSystemById" parameterType="Long" resultMap="CarVehicleSystemResult">
+        <include refid="selectCarVehicleSystemVo"/>
+        where vehicle_system_id = #{vehicleSystemId}
+    </select>
+        
+    <insert id="insertCarVehicleSystem" parameterType="CarVehicleSystem" useGeneratedKeys="true" keyProperty="vehicleSystemId">
+        insert into car_vehicle_system
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vehicleSystem != null  and vehicleSystem != ''">vehicle_system,</if>
+            <if test="number != null ">number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vehicleSystem != null  and vehicleSystem != ''">#{vehicleSystem},</if>
+            <if test="number != null ">#{number},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCarVehicleSystem" parameterType="CarVehicleSystem">
+        update car_vehicle_system
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="vehicleSystem != null  and vehicleSystem != ''">vehicle_system = #{vehicleSystem},</if>
+            <if test="number != null ">number = #{number},</if>
+        </trim>
+        where vehicle_system_id = #{vehicleSystemId}
+    </update>
+
+    <delete id="deleteCarVehicleSystemById" parameterType="Long">
+        delete from car_vehicle_system where vehicle_system_id = #{vehicleSystemId}
+    </delete>
+
+    <delete id="deleteCarVehicleSystemByIds" parameterType="String">
+        delete from car_vehicle_system where vehicle_system_id in 
+        <foreach item="vehicleSystemId" collection="array" open="(" separator="," close=")">
+            #{vehicleSystemId}
+        </foreach>
+    </delete>
+    
+</mapper>

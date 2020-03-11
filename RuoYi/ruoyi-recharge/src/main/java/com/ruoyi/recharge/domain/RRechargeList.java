@@ -10,7 +10,7 @@ import java.util.Date;
  * 充值列表对象 r_recharge_list
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-10
  */
 public class RRechargeList extends BaseEntity
 {
@@ -18,6 +18,10 @@ public class RRechargeList extends BaseEntity
 
     /** 充值id */
     private Long rechargeId;
+
+    /** 编号 */
+    @Excel(name = "编号")
+    private Long rechargeNumber;
 
     /** 加油站 */
     @Excel(name = "加油站")
@@ -75,6 +79,15 @@ public class RRechargeList extends BaseEntity
     public Long getRechargeId() 
     {
         return rechargeId;
+    }
+    public void setRechargeNumber(Long rechargeNumber) 
+    {
+        this.rechargeNumber = rechargeNumber;
+    }
+
+    public Long getRechargeNumber() 
+    {
+        return rechargeNumber;
     }
     public void setStationName(String stationName) 
     {
@@ -189,6 +202,7 @@ public class RRechargeList extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("rechargeId", getRechargeId())
+            .append("rechargeNumber", getRechargeNumber())
             .append("stationName", getStationName())
             .append("address", getAddress())
             .append("rechargeUser", getRechargeUser())

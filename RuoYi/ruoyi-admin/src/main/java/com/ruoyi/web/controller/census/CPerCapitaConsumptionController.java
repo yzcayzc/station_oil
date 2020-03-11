@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.census;
 
-import java.util.List;
+import com.ruoyi.census.domain.CPerCapitaConsumption;
+import com.ruoyi.census.service.ICPerCapitaConsumptionService;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.census.domain.CPerCapitaConsumption;
-import com.ruoyi.census.service.ICPerCapitaConsumptionService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 人均消费统计Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-03-02
  */
+@Api(tags = "人均消费统计")
 @Controller
 @RequestMapping("/census/c_per_capita_consumption")
 public class CPerCapitaConsumptionController extends BaseController
@@ -44,6 +44,7 @@ public class CPerCapitaConsumptionController extends BaseController
     /**
      * 查询人均消费统计列表
      */
+    @ApiOperation("查询人均消费统计列表")
     @RequiresPermissions("census:c_per_capita_consumption:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class CPerCapitaConsumptionController extends BaseController
     /**
      * 导出人均消费统计列表
      */
+    @ApiOperation("导出人均消费统计列表")
     @RequiresPermissions("census:c_per_capita_consumption:export")
     @Log(title = "人均消费统计", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class CPerCapitaConsumptionController extends BaseController
     /**
      * 新增人均消费统计
      */
+    @ApiOperation("新增人均消费统计")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class CPerCapitaConsumptionController extends BaseController
     /**
      * 新增保存人均消费统计
      */
+    @ApiOperation("新增保存人均消费统计")
     @RequiresPermissions("census:c_per_capita_consumption:add")
     @Log(title = "人均消费统计", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class CPerCapitaConsumptionController extends BaseController
     /**
      * 修改人均消费统计
      */
+    @ApiOperation("修改人均消费统计")
     @GetMapping("/edit/{perId}")
     public String edit(@PathVariable("perId") Long perId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class CPerCapitaConsumptionController extends BaseController
     /**
      * 修改保存人均消费统计
      */
+    @ApiOperation("修改保存人均消费统计")
     @RequiresPermissions("census:c_per_capita_consumption:edit")
     @Log(title = "人均消费统计", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class CPerCapitaConsumptionController extends BaseController
     /**
      * 删除人均消费统计
      */
+    @ApiOperation("删除人均消费统计")
     @RequiresPermissions("census:c_per_capita_consumption:remove")
     @Log(title = "人均消费统计", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

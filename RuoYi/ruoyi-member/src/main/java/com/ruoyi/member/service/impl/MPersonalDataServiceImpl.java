@@ -1,6 +1,9 @@
 package com.ruoyi.member.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.member.domain.MMyCar;
+import com.ruoyi.member.service.IMMyCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.member.mapper.MPersonalDataMapper;
@@ -19,6 +22,9 @@ public class MPersonalDataServiceImpl implements IMPersonalDataService
 {
     @Autowired
     private MPersonalDataMapper mPersonalDataMapper;
+
+    @Autowired
+    private IMMyCarService imMyCarService;
 
     /**
      * 查询会员基本信息
@@ -53,6 +59,25 @@ public class MPersonalDataServiceImpl implements IMPersonalDataService
     @Override
     public int insertMPersonalData(MPersonalData mPersonalData)
     {
+        String phone = mPersonalData.getPhone();
+        MMyCar mMyCar = new MMyCar();
+        mMyCar.setPhone(phone);
+        List<MMyCar> mMyCars = imMyCarService.selectMMyCarList(mMyCar);
+        String s = null;
+        String s1 = null;
+        String s2 = null;
+        String s3 = null;
+        for (MMyCar myCar : mMyCars) {
+           s = myCar.getCarNumber();
+           s1 = mMyCar.getCarBrand();
+           s2 = mMyCar.getCarType();
+           s3 = mMyCar.getOils();
+        }
+        mPersonalData.setLicensePlate(s);
+        mPersonalData.setCarBrand(s1);
+        mPersonalData.setCarType(s2);
+        mPersonalData.setOils(s3);
+
         return mPersonalDataMapper.insertMPersonalData(mPersonalData);
     }
 

@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.announcement;
 
-import java.util.List;
+import com.ruoyi.announcement.domain.AAnnouncementList;
+import com.ruoyi.announcement.service.IAAnnouncementListService;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.announcement.domain.AAnnouncementList;
-import com.ruoyi.announcement.service.IAAnnouncementListService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 公告列表Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "公告列表")
 @Controller
 @RequestMapping("/announcement/a_announcement_list")
 public class AAnnouncementListController extends BaseController
@@ -44,6 +44,7 @@ public class AAnnouncementListController extends BaseController
     /**
      * 查询公告列表列表
      */
+    @ApiOperation("查询公告列表列表")
     @RequiresPermissions("announcement:a_announcement_list:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class AAnnouncementListController extends BaseController
     /**
      * 导出公告列表列表
      */
+    @ApiOperation("导出公告列表列表")
     @RequiresPermissions("announcement:a_announcement_list:export")
     @Log(title = "公告列表", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class AAnnouncementListController extends BaseController
     /**
      * 新增公告列表
      */
+    @ApiOperation("新增公告列表")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class AAnnouncementListController extends BaseController
     /**
      * 新增保存公告列表
      */
+    @ApiOperation("新增保存公告列表")
     @RequiresPermissions("announcement:a_announcement_list:add")
     @Log(title = "公告列表", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class AAnnouncementListController extends BaseController
     /**
      * 修改公告列表
      */
+    @ApiOperation("修改公告列表")
     @GetMapping("/edit/{announcementId}")
     public String edit(@PathVariable("announcementId") Long announcementId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class AAnnouncementListController extends BaseController
     /**
      * 修改保存公告列表
      */
+    @ApiOperation("修改保存公告列表")
     @RequiresPermissions("announcement:a_announcement_list:edit")
     @Log(title = "公告列表", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class AAnnouncementListController extends BaseController
     /**
      * 删除公告列表
      */
+    @ApiOperation("删除公告列表")
     @RequiresPermissions("announcement:a_announcement_list:remove")
     @Log(title = "公告列表", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

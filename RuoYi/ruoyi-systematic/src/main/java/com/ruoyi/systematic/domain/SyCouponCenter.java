@@ -10,7 +10,7 @@ import java.util.Date;
  * 优惠券中心对象 sy_coupon_center
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
 public class SyCouponCenter extends BaseEntity
 {
@@ -50,6 +50,14 @@ public class SyCouponCenter extends BaseEntity
     /** 活动 */
     @Excel(name = "活动")
     private String activity;
+
+    /** 优惠券编号 */
+    @Excel(name = "优惠券编号")
+    private String couponNumber;
+
+    /** 优惠券类别 */
+    @Excel(name = "优惠券类别")
+    private String couponType;
 
     public void setCouponId(Long couponId) 
     {
@@ -132,6 +140,24 @@ public class SyCouponCenter extends BaseEntity
     {
         return activity;
     }
+    public void setCouponNumber(String couponNumber) 
+    {
+        this.couponNumber = couponNumber;
+    }
+
+    public String getCouponNumber() 
+    {
+        return couponNumber;
+    }
+    public void setCouponType(String couponType) 
+    {
+        this.couponType = couponType;
+    }
+
+    public String getCouponType() 
+    {
+        return couponType;
+    }
 
     @Override
     public String toString() {
@@ -145,6 +171,8 @@ public class SyCouponCenter extends BaseEntity
             .append("endTime", getEndTime())
             .append("stationName", getStationName())
             .append("activity", getActivity())
+            .append("couponNumber", getCouponNumber())
+            .append("couponType", getCouponType())
             .toString();
     }
 }

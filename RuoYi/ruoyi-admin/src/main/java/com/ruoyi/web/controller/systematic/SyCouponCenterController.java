@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.systematic;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +26,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 优惠券中心Controller
  * 
  * @author ruoyi
- * @date 2020-02-27
+ * @date 2020-03-09
  */
+@Api(tags = "优惠券中心")
 @Controller
 @RequestMapping("/systematic/sy_coupon_center")
 public class SyCouponCenterController extends BaseController
@@ -44,6 +48,7 @@ public class SyCouponCenterController extends BaseController
     /**
      * 查询优惠券中心列表
      */
+    @ApiOperation("查询优惠券中心列表")
     @RequiresPermissions("systematic:sy_coupon_center:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +62,7 @@ public class SyCouponCenterController extends BaseController
     /**
      * 导出优惠券中心列表
      */
+    @ApiOperation("导出优惠券中心列表")
     @RequiresPermissions("systematic:sy_coupon_center:export")
     @Log(title = "优惠券中心", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +77,7 @@ public class SyCouponCenterController extends BaseController
     /**
      * 新增优惠券中心
      */
+    @ApiOperation("新增优惠券中心")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +87,7 @@ public class SyCouponCenterController extends BaseController
     /**
      * 新增保存优惠券中心
      */
+    @ApiOperation("新增保存优惠券中心")
     @RequiresPermissions("systematic:sy_coupon_center:add")
     @Log(title = "优惠券中心", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +100,7 @@ public class SyCouponCenterController extends BaseController
     /**
      * 修改优惠券中心
      */
+    @ApiOperation("修改优惠券中心")
     @GetMapping("/edit/{couponId}")
     public String edit(@PathVariable("couponId") Long couponId, ModelMap mmap)
     {
@@ -103,6 +112,7 @@ public class SyCouponCenterController extends BaseController
     /**
      * 修改保存优惠券中心
      */
+    @ApiOperation("修改保存优惠券中心")
     @RequiresPermissions("systematic:sy_coupon_center:edit")
     @Log(title = "优惠券中心", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +125,7 @@ public class SyCouponCenterController extends BaseController
     /**
      * 删除优惠券中心
      */
+    @ApiOperation("删除优惠券中心")
     @RequiresPermissions("systematic:sy_coupon_center:remove")
     @Log(title = "优惠券中心", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

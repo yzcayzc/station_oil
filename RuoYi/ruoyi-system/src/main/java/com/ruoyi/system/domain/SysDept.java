@@ -29,6 +29,9 @@ public class SysDept extends BaseEntity
     /** 显示顺序 */
     private String orderNum;
 
+    /** 编号*/
+    private String deptNumber;
+
     /** 负责人 */
     private String leader;
 
@@ -37,6 +40,9 @@ public class SysDept extends BaseEntity
 
     /** 邮箱 */
     private String email;
+
+    /** 邮箱 */
+    private String commodityNumber;
 
     /** 部门状态:0正常,1停用 */
     private String status;
@@ -89,6 +95,14 @@ public class SysDept extends BaseEntity
         this.deptName = deptName;
     }
 
+    public String getDeptNumber() {
+        return deptNumber;
+    }
+
+    public void setDeptNumber(String deptNumber) {
+        this.deptNumber = deptNumber;
+    }
+
     @NotBlank(message = "显示顺序不能为空")
     public String getOrderNum()
     {
@@ -133,6 +147,14 @@ public class SysDept extends BaseEntity
         this.email = email;
     }
 
+    public String getCommodityNumber() {
+        return commodityNumber;
+    }
+
+    public void setCommodityNumber(String commodityNumber) {
+        this.commodityNumber = commodityNumber;
+    }
+
     public String getStatus()
     {
         return status;
@@ -170,10 +192,12 @@ public class SysDept extends BaseEntity
             .append("parentId", getParentId())
             .append("ancestors", getAncestors())
             .append("deptName", getDeptName())
+            .append("deptNumber", getDeptNumber())
             .append("orderNum", getOrderNum())
             .append("leader", getLeader())
             .append("phone", getPhone())
             .append("email", getEmail())
+            .append("commodityNumber", getCommodityNumber())
             .append("status", getStatus())
             .append("delFlag", getDelFlag())
             .append("createBy", getCreateBy())

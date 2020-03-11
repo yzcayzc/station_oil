@@ -168,6 +168,7 @@ public class SysDeptServiceImpl implements ISysDeptService
     @Override
     public int insertDept(SysDept dept)
     {
+
         SysDept info = deptMapper.selectDeptById(dept.getParentId());
         // 如果父节点不为"正常"状态,则不允许新增子节点
         if (!UserConstants.DEPT_NORMAL.equals(info.getStatus()))
@@ -175,6 +176,35 @@ public class SysDeptServiceImpl implements ISysDeptService
             throw new BusinessException("部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
+        String ancestors = dept.getAncestors();
+        String[] split = ancestors.split(",");
+        if (split.length==4){
+            String s = split[2];
+            Long aLong = Long.valueOf(s);
+            SysDept sysDept = deptMapper.selectDeptById(aLong);
+            String s2 = sysDept.getDeptNumber();
+            int length = s2.length();
+            int i = 2-length;
+            if (i>0){
+                for (int l = 0;l<i;l++){
+                    s2 = "0"+s2;
+                }
+            }
+            String s1 = split[3];
+            Long aLong1 = Long.valueOf(s1);
+            SysDept sysDept1 = deptMapper.selectDeptById(aLong1);
+            String s3 = sysDept1.getDeptNumber();
+            int length1 = s3.length();
+            int h = 2-length;
+            if (h>0){
+                for (int l = 0;l<h;l++){
+                    s3 = "0"+s3;
+                }
+            }
+            String s4  = dept.getDeptNumber();
+
+            dept.setCommodityNumber(s2+s3+s4);
+        }
         return deptMapper.insertDept(dept);
     }
 

@@ -1,6 +1,10 @@
 package com.ruoyi.web.controller.activity;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +25,11 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 电子优惠券设置Controller
- * 
+ *
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "电子优惠券设置")
 @Controller
 @RequestMapping("/activity/electronic_coupons")
 public class ElectronicCouponsController extends BaseController
@@ -44,6 +49,7 @@ public class ElectronicCouponsController extends BaseController
     /**
      * 查询电子优惠券设置列表
      */
+    @ApiOperation("查询电子优惠券设置列表")
     @RequiresPermissions("activity:electronic_coupons:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +63,7 @@ public class ElectronicCouponsController extends BaseController
     /**
      * 导出电子优惠券设置列表
      */
+    @ApiOperation("导出电子优惠券设置列表")
     @RequiresPermissions("activity:electronic_coupons:export")
     @Log(title = "电子优惠券设置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +78,7 @@ public class ElectronicCouponsController extends BaseController
     /**
      * 新增电子优惠券设置
      */
+    @ApiOperation("新增电子优惠券设置")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +88,7 @@ public class ElectronicCouponsController extends BaseController
     /**
      * 新增保存电子优惠券设置
      */
+    @ApiOperation("新增保存电子优惠券设置")
     @RequiresPermissions("activity:electronic_coupons:add")
     @Log(title = "电子优惠券设置", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +101,7 @@ public class ElectronicCouponsController extends BaseController
     /**
      * 修改电子优惠券设置
      */
+    @ApiOperation("修改电子优惠券设置")
     @GetMapping("/edit/{couponsId}")
     public String edit(@PathVariable("couponsId") Long couponsId, ModelMap mmap)
     {
@@ -103,6 +113,7 @@ public class ElectronicCouponsController extends BaseController
     /**
      * 修改保存电子优惠券设置
      */
+    @ApiOperation("修改保存电子优惠券设置")
     @RequiresPermissions("activity:electronic_coupons:edit")
     @Log(title = "电子优惠券设置", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +126,7 @@ public class ElectronicCouponsController extends BaseController
     /**
      * 删除电子优惠券设置
      */
+    @ApiOperation("删除电子优惠券设置")
     @RequiresPermissions("activity:electronic_coupons:remove")
     @Log(title = "电子优惠券设置", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

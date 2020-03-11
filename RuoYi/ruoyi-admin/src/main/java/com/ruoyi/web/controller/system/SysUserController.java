@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +34,7 @@ import com.ruoyi.system.service.ISysUserService;
  * 
  * @author ruoyi
  */
+@Api(tags = "用户信息")
 @Controller
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController
@@ -102,6 +106,7 @@ public class SysUserController extends BaseController
     /**
      * 新增用户
      */
+    @ApiOperation("新增用户")
     @GetMapping("/add")
     public String add(ModelMap mmap)
     {
@@ -113,6 +118,7 @@ public class SysUserController extends BaseController
     /**
      * 新增保存用户
      */
+    @ApiOperation("新增保存用户")
     @RequiresPermissions("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -140,6 +146,7 @@ public class SysUserController extends BaseController
     /**
      * 修改用户
      */
+    @ApiOperation("修改用户")
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") Long userId, ModelMap mmap)
     {
@@ -152,6 +159,7 @@ public class SysUserController extends BaseController
     /**
      * 修改保存用户
      */
+    @ApiOperation("修改保存用户")
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -219,6 +227,7 @@ public class SysUserController extends BaseController
     /**
      * 校验用户名
      */
+    @ApiOperation("校验用户名")
     @PostMapping("/checkLoginNameUnique")
     @ResponseBody
     public String checkLoginNameUnique(SysUser user)
@@ -229,6 +238,7 @@ public class SysUserController extends BaseController
     /**
      * 校验手机号码
      */
+    @ApiOperation("校验手机号码")
     @PostMapping("/checkPhoneUnique")
     @ResponseBody
     public String checkPhoneUnique(SysUser user)
@@ -239,6 +249,7 @@ public class SysUserController extends BaseController
     /**
      * 校验email邮箱
      */
+    @ApiOperation("校验email邮箱")
     @PostMapping("/checkEmailUnique")
     @ResponseBody
     public String checkEmailUnique(SysUser user)
@@ -249,6 +260,7 @@ public class SysUserController extends BaseController
     /**
      * 用户状态修改
      */
+    @ApiOperation("用户状态修改")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @RequiresPermissions("system:user:edit")
     @PostMapping("/changeStatus")

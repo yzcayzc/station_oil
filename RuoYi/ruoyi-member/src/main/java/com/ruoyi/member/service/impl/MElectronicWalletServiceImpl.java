@@ -1,6 +1,10 @@
 package com.ruoyi.member.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.member.domain.MMemberList;
+import com.ruoyi.station.domain.GasStation;
+import com.ruoyi.station.service.IGasStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.member.mapper.MElectronicWalletMapper;
@@ -19,6 +23,12 @@ public class MElectronicWalletServiceImpl implements IMElectronicWalletService
 {
     @Autowired
     private MElectronicWalletMapper mElectronicWalletMapper;
+
+    @Autowired
+    private IGasStationService iGasStationService;
+
+    @Autowired
+    private  MMemberListServiceImpl mMemberListService;
 
     /**
      * 查询电子钱包
@@ -52,7 +62,52 @@ public class MElectronicWalletServiceImpl implements IMElectronicWalletService
      */
     @Override
     public int insertMElectronicWallet(MElectronicWallet mElectronicWallet)
+
     {
+        //获取吉利数
+        String s = new String();
+        s = "88888";
+        //通过加油站名称获取加油站编号
+        String stationName = mElectronicWallet.getStationName();
+        GasStation gasStation = new GasStation();
+        gasStation.setName(stationName);
+        List<GasStation> gasStations = iGasStationService.selectGasStationList(gasStation);
+        Long stationId = null;
+        for (GasStation station : gasStations) {
+             stationId = station.getStationId();
+        }
+        //得出加油站编号
+        String s1 = stationId.toString();
+        int length = s1.length();
+        int i = 4-length;
+        if (i>0){
+            for (int l = 0;l<i;l++){
+                s1 = "0"+s1;
+            }
+        }
+        //通过会员联系电话得到会员编号
+        String phone = mElectronicWallet.getPhone();
+        MMemberList mMemberList = new MMemberList();
+        mMemberList.setPhone(phone);
+        List<MMemberList> mMemberLists = mMemberListService.selectMMemberListList(mMemberList);
+        Long memberNumber = null;
+        for (MMemberList memberList : mMemberLists) {
+             memberNumber = memberList.getMemberNumber();
+        }
+        //得到会员编号
+        String s2 = memberNumber.toString();
+        int length1 = s2.length();
+        int h = 7-length1;
+        if (h>0){
+            for (int l = 0;l<h;l++){
+                s2 = "0"+s2;
+            }
+        }
+        //通过三组数据得出电子钱包卡号
+        Long aDouble = Long.valueOf(s+s1+s2);
+            mElectronicWallet.setCard(aDouble);
+
+
         return mElectronicWalletMapper.insertMElectronicWallet(mElectronicWallet);
     }
 

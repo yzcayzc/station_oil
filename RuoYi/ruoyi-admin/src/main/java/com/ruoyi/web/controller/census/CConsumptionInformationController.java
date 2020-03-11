@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.census;
 
-import java.util.List;
+import com.ruoyi.census.domain.CConsumptionInformation;
+import com.ruoyi.census.service.ICConsumptionInformationService;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.census.domain.CConsumptionInformation;
-import com.ruoyi.census.service.ICConsumptionInformationService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 消费信息表Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-03-02
  */
+@Api(tags = "消费信息表")
 @Controller
 @RequestMapping("/census/c_consumption_information")
 public class CConsumptionInformationController extends BaseController
@@ -44,6 +44,7 @@ public class CConsumptionInformationController extends BaseController
     /**
      * 查询消费信息表列表
      */
+    @ApiOperation("查询消费信息表列表")
     @RequiresPermissions("census:c_consumption_information:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class CConsumptionInformationController extends BaseController
     /**
      * 导出消费信息表列表
      */
+    @ApiOperation("导出消费信息表列表")
     @RequiresPermissions("census:c_consumption_information:export")
     @Log(title = "消费信息表", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class CConsumptionInformationController extends BaseController
     /**
      * 新增消费信息表
      */
+    @ApiOperation("新增消费信息表")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class CConsumptionInformationController extends BaseController
     /**
      * 新增保存消费信息表
      */
+    @ApiOperation("新增保存消费信息表")
     @RequiresPermissions("census:c_consumption_information:add")
     @Log(title = "消费信息表", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class CConsumptionInformationController extends BaseController
     /**
      * 修改消费信息表
      */
+    @ApiOperation("修改消费信息表")
     @GetMapping("/edit/{consumption}")
     public String edit(@PathVariable("consumption") Long consumption, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class CConsumptionInformationController extends BaseController
     /**
      * 修改保存消费信息表
      */
+    @ApiOperation("修改保存消费信息表")
     @RequiresPermissions("census:c_consumption_information:edit")
     @Log(title = "消费信息表", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class CConsumptionInformationController extends BaseController
     /**
      * 删除消费信息表
      */
+    @ApiOperation("删除消费信息表")
     @RequiresPermissions("census:c_consumption_information:remove")
     @Log(title = "消费信息表", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

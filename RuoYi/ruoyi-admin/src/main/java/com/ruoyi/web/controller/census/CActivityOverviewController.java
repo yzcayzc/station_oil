@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.census;
 
-import java.util.List;
+import com.ruoyi.census.domain.CActivityOverview;
+import com.ruoyi.census.service.ICActivityOverviewService;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.census.domain.CActivityOverview;
-import com.ruoyi.census.service.ICActivityOverviewService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 活动总览Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-03-02
  */
+@Api(tags = "活动总览")
 @Controller
 @RequestMapping("/census/c_activity_overview")
 public class CActivityOverviewController extends BaseController
@@ -44,6 +44,7 @@ public class CActivityOverviewController extends BaseController
     /**
      * 查询活动总览列表
      */
+    @ApiOperation("查询活动总览列表")
     @RequiresPermissions("census:c_activity_overview:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class CActivityOverviewController extends BaseController
     /**
      * 导出活动总览列表
      */
+    @ApiOperation("导出活动总览列表")
     @RequiresPermissions("census:c_activity_overview:export")
     @Log(title = "活动总览", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class CActivityOverviewController extends BaseController
     /**
      * 新增活动总览
      */
+    @ApiOperation("新增活动总览")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class CActivityOverviewController extends BaseController
     /**
      * 新增保存活动总览
      */
+    @ApiOperation("新增保存活动总览")
     @RequiresPermissions("census:c_activity_overview:add")
     @Log(title = "活动总览", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class CActivityOverviewController extends BaseController
     /**
      * 修改活动总览
      */
+    @ApiOperation("修改活动总览")
     @GetMapping("/edit/{activity}")
     public String edit(@PathVariable("activity") Long activity, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class CActivityOverviewController extends BaseController
     /**
      * 修改保存活动总览
      */
+    @ApiOperation("修改保存活动总览")
     @RequiresPermissions("census:c_activity_overview:edit")
     @Log(title = "活动总览", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class CActivityOverviewController extends BaseController
     /**
      * 删除活动总览
      */
+    @ApiOperation("删除活动总览")
     @RequiresPermissions("census:c_activity_overview:remove")
     @Log(title = "活动总览", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

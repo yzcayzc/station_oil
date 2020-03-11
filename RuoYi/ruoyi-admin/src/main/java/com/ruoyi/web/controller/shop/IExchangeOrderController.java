@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.shop;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "兑换订单")
 @Controller
 @RequestMapping("/shop/i_exchange_order")
 public class IExchangeOrderController extends BaseController
@@ -44,6 +48,7 @@ public class IExchangeOrderController extends BaseController
     /**
      * 查询兑换订单列表
      */
+    @ApiOperation("查询兑换订单列表")
     @RequiresPermissions("shop:i_exchange_order:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +62,7 @@ public class IExchangeOrderController extends BaseController
     /**
      * 导出兑换订单列表
      */
+    @ApiOperation("导出兑换订单列表")
     @RequiresPermissions("shop:i_exchange_order:export")
     @Log(title = "兑换订单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +77,7 @@ public class IExchangeOrderController extends BaseController
     /**
      * 新增兑换订单
      */
+    @ApiOperation("新增兑换订单")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +87,7 @@ public class IExchangeOrderController extends BaseController
     /**
      * 新增保存兑换订单
      */
+    @ApiOperation("新增保存兑换订单")
     @RequiresPermissions("shop:i_exchange_order:add")
     @Log(title = "兑换订单", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +100,7 @@ public class IExchangeOrderController extends BaseController
     /**
      * 修改兑换订单
      */
+    @ApiOperation("修改兑换订单")
     @GetMapping("/edit/{exchangeOrderId}")
     public String edit(@PathVariable("exchangeOrderId") Long exchangeOrderId, ModelMap mmap)
     {
@@ -103,6 +112,7 @@ public class IExchangeOrderController extends BaseController
     /**
      * 修改保存兑换订单
      */
+    @ApiOperation("修改保存兑换订单")
     @RequiresPermissions("shop:i_exchange_order:edit")
     @Log(title = "兑换订单", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +125,7 @@ public class IExchangeOrderController extends BaseController
     /**
      * 删除兑换订单
      */
+    @ApiOperation("删除兑换订单")
     @RequiresPermissions("shop:i_exchange_order:remove")
     @Log(title = "兑换订单", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

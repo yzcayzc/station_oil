@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.member.mapper.CarModelMapper">
+    
+    <resultMap type="CarModel" id="CarModelResult">
+        <result property="modelId"    column="model_id"    />
+        <result property="model"    column="model"    />
+        <result property="number"    column="number"    />
+    </resultMap>
+
+    <sql id="selectCarModelVo">
+        select model_id, model, number from car_model
+    </sql>
+
+    <select id="selectCarModelList" parameterType="CarModel" resultMap="CarModelResult">
+        <include refid="selectCarModelVo"/>
+        <where>  
+            <if test="model != null  and model != ''"> and model = #{model}</if>
+            <if test="number != null "> and number = #{number}</if>
+        </where>
+    </select>
+    
+    <select id="selectCarModelById" parameterType="Long" resultMap="CarModelResult">
+        <include refid="selectCarModelVo"/>
+        where model_id = #{modelId}
+    </select>
+        
+    <insert id="insertCarModel" parameterType="CarModel" useGeneratedKeys="true" keyProperty="modelId">
+        insert into car_model
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="model != null  and model != ''">model,</if>
+            <if test="number != null ">number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="model != null  and model != ''">#{model},</if>
+            <if test="number != null ">#{number},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCarModel" parameterType="CarModel">
+        update car_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="model != null  and model != ''">model = #{model},</if>
+            <if test="number != null ">number = #{number},</if>
+        </trim>
+        where model_id = #{modelId}
+    </update>
+
+    <delete id="deleteCarModelById" parameterType="Long">
+        delete from car_model where model_id = #{modelId}
+    </delete>
+
+    <delete id="deleteCarModelByIds" parameterType="String">
+        delete from car_model where model_id in 
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+    
+</mapper>

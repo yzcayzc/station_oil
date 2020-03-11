@@ -1,6 +1,8 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ import com.ruoyi.system.service.ISysDeptService;
  * 
  * @author ruoyi
  */
+@Api(tags = "物品总览")
 @Controller
 @RequestMapping("/system/dept")
 public class SysDeptController extends BaseController

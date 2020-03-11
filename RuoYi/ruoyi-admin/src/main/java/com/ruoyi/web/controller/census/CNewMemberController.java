@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.census;
 
-import java.util.List;
+import com.ruoyi.census.domain.CNewMember;
+import com.ruoyi.census.service.ICNewMemberService;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.census.domain.CNewMember;
-import com.ruoyi.census.service.ICNewMemberService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 新会员成长率Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-03-02
  */
+@Api(tags = "新会员成长率")
 @Controller
 @RequestMapping("/census/c_new_member")
 public class CNewMemberController extends BaseController
@@ -44,6 +44,7 @@ public class CNewMemberController extends BaseController
     /**
      * 查询新会员成长率列表
      */
+    @ApiOperation("查询新会员成长率列表")
     @RequiresPermissions("census:c_new_member:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class CNewMemberController extends BaseController
     /**
      * 导出新会员成长率列表
      */
+    @ApiOperation("导出新会员成长率列表")
     @RequiresPermissions("census:c_new_member:export")
     @Log(title = "新会员成长率", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class CNewMemberController extends BaseController
     /**
      * 新增新会员成长率
      */
+    @ApiOperation("新增新会员成长率")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class CNewMemberController extends BaseController
     /**
      * 新增保存新会员成长率
      */
+    @ApiOperation("新增保存新会员成长率")
     @RequiresPermissions("census:c_new_member:add")
     @Log(title = "新会员成长率", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class CNewMemberController extends BaseController
     /**
      * 修改新会员成长率
      */
+    @ApiOperation("修改新会员成长率")
     @GetMapping("/edit/{memberId}")
     public String edit(@PathVariable("memberId") Long memberId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class CNewMemberController extends BaseController
     /**
      * 修改保存新会员成长率
      */
+    @ApiOperation("修改保存新会员成长率")
     @RequiresPermissions("census:c_new_member:edit")
     @Log(title = "新会员成长率", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class CNewMemberController extends BaseController
     /**
      * 删除新会员成长率
      */
+    @ApiOperation("删除新会员成长率")
     @RequiresPermissions("census:c_new_member:remove")
     @Log(title = "新会员成长率", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

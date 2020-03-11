@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.census;
 
-import java.util.List;
+import com.ruoyi.census.domain.CIntegralStatistics;
+import com.ruoyi.census.service.ICIntegralStatisticsService;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.census.domain.CIntegralStatistics;
-import com.ruoyi.census.service.ICIntegralStatisticsService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 积分统计Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-03-02
  */
+@Api(tags = "积分统计")
 @Controller
 @RequestMapping("/census/c_integral_statistics")
 public class CIntegralStatisticsController extends BaseController
@@ -44,6 +44,7 @@ public class CIntegralStatisticsController extends BaseController
     /**
      * 查询积分统计列表
      */
+    @ApiOperation("查询积分统计列表")
     @RequiresPermissions("census:c_integral_statistics:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class CIntegralStatisticsController extends BaseController
     /**
      * 导出积分统计列表
      */
+    @ApiOperation("导出积分统计列表")
     @RequiresPermissions("census:c_integral_statistics:export")
     @Log(title = "积分统计", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class CIntegralStatisticsController extends BaseController
     /**
      * 新增积分统计
      */
+    @ApiOperation("新增积分统计")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class CIntegralStatisticsController extends BaseController
     /**
      * 新增保存积分统计
      */
+    @ApiOperation("新增保存积分统计")
     @RequiresPermissions("census:c_integral_statistics:add")
     @Log(title = "积分统计", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class CIntegralStatisticsController extends BaseController
     /**
      * 修改积分统计
      */
+    @ApiOperation("修改积分统计")
     @GetMapping("/edit/{integralId}")
     public String edit(@PathVariable("integralId") Long integralId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class CIntegralStatisticsController extends BaseController
     /**
      * 修改保存积分统计
      */
+    @ApiOperation("修改保存积分统计")
     @RequiresPermissions("census:c_integral_statistics:edit")
     @Log(title = "积分统计", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class CIntegralStatisticsController extends BaseController
     /**
      * 删除积分统计
      */
+    @ApiOperation("删除积分统计")
     @RequiresPermissions("census:c_integral_statistics:remove")
     @Log(title = "积分统计", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.station;
 
-import java.util.List;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.station.domain.SEssentialInformation;
+import com.ruoyi.station.service.ISEssentialInformationService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.station.domain.SEssentialInformation;
-import com.ruoyi.station.service.ISEssentialInformationService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 基本信息Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "基本信息")
 @Controller
 @RequestMapping("/station/s_essential_information")
 public class SEssentialInformationController extends BaseController
@@ -44,6 +44,7 @@ public class SEssentialInformationController extends BaseController
     /**
      * 查询基本信息列表
      */
+    @ApiOperation("查询基本信息列表")
     @RequiresPermissions("station:s_essential_information:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class SEssentialInformationController extends BaseController
     /**
      * 导出基本信息列表
      */
+    @ApiOperation("导出基本信息列表")
     @RequiresPermissions("station:s_essential_information:export")
     @Log(title = "基本信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class SEssentialInformationController extends BaseController
     /**
      * 新增基本信息
      */
+    @ApiOperation("新增基本信息")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class SEssentialInformationController extends BaseController
     /**
      * 新增保存基本信息
      */
+    @ApiOperation("新增保存基本信息")
     @RequiresPermissions("station:s_essential_information:add")
     @Log(title = "基本信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class SEssentialInformationController extends BaseController
     /**
      * 修改基本信息
      */
+    @ApiOperation("修改基本信息")
     @GetMapping("/edit/{sEssentialInformationId}")
     public String edit(@PathVariable("sEssentialInformationId") Long sEssentialInformationId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class SEssentialInformationController extends BaseController
     /**
      * 修改保存基本信息
      */
+    @ApiOperation("修改保存基本信息")
     @RequiresPermissions("station:s_essential_information:edit")
     @Log(title = "基本信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class SEssentialInformationController extends BaseController
     /**
      * 删除基本信息
      */
+    @ApiOperation("删除基本信息")
     @RequiresPermissions("station:s_essential_information:remove")
     @Log(title = "基本信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

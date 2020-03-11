@@ -1,19 +1,22 @@
 package com.ruoyi.web.controller.station;
 
-import java.util.List;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.station.domain.GasStation;
+import com.ruoyi.station.service.IGasStationService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.station.domain.GasStation;
-import com.ruoyi.station.service.IGasStationService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+
+import java.util.List;
 
 /**
  * 油站列表Controller
@@ -21,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "油站列表")
 @Controller
 @RequestMapping("/station/gas_station")
 public class GasStationController extends BaseController
@@ -40,6 +44,7 @@ public class GasStationController extends BaseController
     /**
      * 查询油站列表列表
      */
+    @ApiOperation("查询油站列表列表")
     @RequiresPermissions("station:gas_station:list")
     @PostMapping("/list")
     @ResponseBody
@@ -53,6 +58,7 @@ public class GasStationController extends BaseController
     /**
      * 导出油站列表列表
      */
+    @ApiOperation("导出油站列表列表")
     @RequiresPermissions("station:gas_station:export")
     @Log(title = "油站列表", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -67,6 +73,7 @@ public class GasStationController extends BaseController
     /**
      * 新增油站列表
      */
+    @ApiOperation("新增油站列表")
     @GetMapping("/add")
     public String add()
     {
@@ -76,6 +83,7 @@ public class GasStationController extends BaseController
     /**
      * 新增保存油站列表
      */
+    @ApiOperation("新增保存油站列表")
     @RequiresPermissions("station:gas_station:add")
     @Log(title = "油站列表", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -89,6 +97,7 @@ public class GasStationController extends BaseController
     /**
      * 修改油站列表
      */
+    @ApiOperation("修改油站列表")
     @GetMapping("/edit/{stationId}")
     public String edit(@PathVariable("stationId") Long stationId, ModelMap mmap)
     {
@@ -100,6 +109,7 @@ public class GasStationController extends BaseController
     /**
      * 修改保存油站列表
      */
+    @ApiOperation("修改保存油站列表")
     @RequiresPermissions("station:gas_station:edit")
     @Log(title = "油站列表", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -112,6 +122,7 @@ public class GasStationController extends BaseController
     /**
      * 删除油站列表
      */
+    @ApiOperation("删除油站列表")
     @RequiresPermissions("station:gas_station:remove")
     @Log(title = "油站列表", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

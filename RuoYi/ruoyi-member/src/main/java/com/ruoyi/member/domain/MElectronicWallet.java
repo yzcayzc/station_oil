@@ -87,7 +87,7 @@ public class MElectronicWallet extends BaseEntity
     {
         return name;
     }
-    public void setCard(Long card) 
+    public void setCard(Long card)
     {
         this.card = card;
     }

@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.system;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -20,6 +22,7 @@ import com.ruoyi.common.utils.StringUtils;
  * 
  * @author ruoyi
  */
+@Api(tags = "登录验证")
 @Controller
 public class SysLoginController extends BaseController
 {

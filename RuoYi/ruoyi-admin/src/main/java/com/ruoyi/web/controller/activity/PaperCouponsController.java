@@ -1,23 +1,22 @@
 package com.ruoyi.web.controller.activity;
 
-import java.util.List;
+import com.ruoyi.activity.domain.PaperCoupons;
+import com.ruoyi.activity.service.IPaperCouponsService;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.activity.domain.PaperCoupons;
-import com.ruoyi.activity.service.IPaperCouponsService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 纸质优惠券设置Controller
@@ -25,6 +24,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2020-02-27
  */
+@Api(tags = "纸质优惠券设置")
 @Controller
 @RequestMapping("/activity/paper_coupons")
 public class PaperCouponsController extends BaseController
@@ -44,6 +44,7 @@ public class PaperCouponsController extends BaseController
     /**
      * 查询纸质优惠券设置列表
      */
+    @ApiOperation("查询纸质优惠券设置列表")
     @RequiresPermissions("activity:paper_coupons:list")
     @PostMapping("/list")
     @ResponseBody
@@ -57,6 +58,7 @@ public class PaperCouponsController extends BaseController
     /**
      * 导出纸质优惠券设置列表
      */
+    @ApiOperation("导出纸质优惠券设置列表")
     @RequiresPermissions("activity:paper_coupons:export")
     @Log(title = "纸质优惠券设置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -71,6 +73,7 @@ public class PaperCouponsController extends BaseController
     /**
      * 新增纸质优惠券设置
      */
+    @ApiOperation("新增纸质优惠券设置")
     @GetMapping("/add")
     public String add()
     {
@@ -80,6 +83,7 @@ public class PaperCouponsController extends BaseController
     /**
      * 新增保存纸质优惠券设置
      */
+    @ApiOperation("新增保存纸质优惠券设置")
     @RequiresPermissions("activity:paper_coupons:add")
     @Log(title = "纸质优惠券设置", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -92,6 +96,7 @@ public class PaperCouponsController extends BaseController
     /**
      * 修改纸质优惠券设置
      */
+    @ApiOperation("修改纸质优惠券设置")
     @GetMapping("/edit/{couponsId}")
     public String edit(@PathVariable("couponsId") Long couponsId, ModelMap mmap)
     {
@@ -103,6 +108,7 @@ public class PaperCouponsController extends BaseController
     /**
      * 修改保存纸质优惠券设置
      */
+    @ApiOperation("修改保存纸质优惠券设置")
     @RequiresPermissions("activity:paper_coupons:edit")
     @Log(title = "纸质优惠券设置", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,6 +121,7 @@ public class PaperCouponsController extends BaseController
     /**
      * 删除纸质优惠券设置
      */
+    @ApiOperation("删除纸质优惠券设置")
     @RequiresPermissions("activity:paper_coupons:remove")
     @Log(title = "纸质优惠券设置", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")

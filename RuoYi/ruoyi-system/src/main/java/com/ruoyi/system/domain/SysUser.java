@@ -31,6 +31,9 @@ public class SysUser extends BaseEntity
     /** 部门父ID */
     private Long parentId;
 
+    /** oppenid */
+    private String oppenid;
+
     /** 角色ID */
     private Long roleId;
 
@@ -121,6 +124,16 @@ public class SysUser extends BaseEntity
     /** 岗位组 */
     private Long[] postIds;
 
+    private String userType;
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     public SysUser()
     {
 
@@ -139,6 +152,14 @@ public class SysUser extends BaseEntity
     public void setUserId(Long userId)
     {
         this.userId = userId;
+    }
+
+    public String getOppenid() {
+        return oppenid;
+    }
+
+    public void setOppenid(String oppenid) {
+        this.oppenid = oppenid;
     }
 
     public boolean isAdmin()
@@ -411,6 +432,8 @@ public class SysUser extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("userId", getUserId())
+                .append("userType", getUserType())
+            .append("oppenid", getOppenid())
             .append("deptId", getDeptId())
             .append("loginName", getLoginName())
             .append("oilStation", getOilStation())

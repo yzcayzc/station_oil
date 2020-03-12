@@ -72,9 +72,14 @@ public class MElectronicWalletServiceImpl implements IMElectronicWalletService
         GasStation gasStation = new GasStation();
         gasStation.setName(stationName);
         List<GasStation> gasStations = iGasStationService.selectGasStationList(gasStation);
+
         Long stationId = null;
         for (GasStation station : gasStations) {
-             stationId = station.getStationId();
+            if (station.getStationId()!=null){
+                stationId = station.getStationId();
+            }else{
+                return 0;
+            }
         }
         //得出加油站编号
         String s1 = stationId.toString();
@@ -92,6 +97,9 @@ public class MElectronicWalletServiceImpl implements IMElectronicWalletService
         List<MMemberList> mMemberLists = mMemberListService.selectMMemberListList(mMemberList);
         Long memberNumber = null;
         for (MMemberList memberList : mMemberLists) {
+            if (memberList.getMemberId()==null){
+                return 0;
+            }
              memberNumber = memberList.getMemberNumber();
         }
         //得到会员编号

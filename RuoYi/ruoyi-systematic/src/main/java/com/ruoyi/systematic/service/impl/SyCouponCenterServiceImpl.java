@@ -75,7 +75,11 @@ public class SyCouponCenterServiceImpl implements ISyCouponCenterService
         List<SyCouponType> syCouponTypes = syCouponTypeService.selectSyCouponTypeList(syCouponType);
         String s1 = null;
         for (SyCouponType type : syCouponTypes) {
-             s1 = type.getNumber();
+            if (type.getNumber()!=null) {
+                s1 = type.getNumber();
+            }else{
+                return 0;
+            }
         }
         //通过加油站名称得出加油站编号
         String stationName = syCouponCenter.getStationName();
@@ -84,7 +88,11 @@ public class SyCouponCenterServiceImpl implements ISyCouponCenterService
         List<GasStation> gasStations = iGasStationService.selectGasStationList(gasStation);
         Long stationId = null;
         for (GasStation station : gasStations) {
-            stationId = station.getStationId();
+            if (station.getStationId()!=null) {
+                stationId = station.getStationId();
+            }else{
+                return 0;
+            }
         }
         //得出加油站编号
         String s2 = stationId.toString();

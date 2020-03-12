@@ -39,6 +39,8 @@ public class SysUserServiceImpl implements ISysUserService
     @Autowired
     private SysUserMapper userMapper;
 
+
+
     @Autowired
     private SysRoleMapper roleMapper;
 
@@ -101,6 +103,11 @@ public class SysUserServiceImpl implements ISysUserService
     public SysUser selectUserByLoginName(String userName)
     {
         return userMapper.selectUserByLoginName(userName);
+    }
+
+    @Override
+    public SysUser selectUserByOppenid(String oppenid) {
+        return userMapper.selectUserByOppenid(oppenid);
     }
 
     /**

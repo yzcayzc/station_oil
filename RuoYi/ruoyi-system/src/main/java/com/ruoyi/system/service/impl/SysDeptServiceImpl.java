@@ -176,9 +176,12 @@ public class SysDeptServiceImpl implements ISysDeptService
             throw new BusinessException("部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
+        //得到祖籍
         String ancestors = dept.getAncestors();
         String[] split = ancestors.split(",");
+        //判断是否是第三级别
         if (split.length==4){
+            //得出第一级别编号
             String s = split[2];
             Long aLong = Long.valueOf(s);
             SysDept sysDept = deptMapper.selectDeptById(aLong);
@@ -190,6 +193,7 @@ public class SysDeptServiceImpl implements ISysDeptService
                     s2 = "0"+s2;
                 }
             }
+            //得出第二级别编号
             String s1 = split[3];
             Long aLong1 = Long.valueOf(s1);
             SysDept sysDept1 = deptMapper.selectDeptById(aLong1);
@@ -201,6 +205,7 @@ public class SysDeptServiceImpl implements ISysDeptService
                     s3 = "0"+s3;
                 }
             }
+            //得出第三级别编号
             String s4  = dept.getDeptNumber();
 
             dept.setCommodityNumber(s2+s3+s4);

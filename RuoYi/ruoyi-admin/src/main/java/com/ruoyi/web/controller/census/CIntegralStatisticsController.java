@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.census;
 
+import com.alibaba.druid.proxy.jdbc.JdbcParameter;
 import com.ruoyi.census.domain.CIntegralStatistics;
 import com.ruoyi.census.service.ICIntegralStatisticsService;
 import com.ruoyi.common.annotation.Log;

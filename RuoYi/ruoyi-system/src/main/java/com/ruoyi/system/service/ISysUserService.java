@@ -41,6 +41,13 @@ public interface ISysUserService
      * @return 用户对象信息
      */
     public SysUser selectUserByLoginName(String userName);
+    /**
+     * 通过oppenid查询用户
+     *
+     * @param oppenid 用户名
+     * @return 用户对象信息
+     */
+    public SysUser selectUserByOppenid(String oppenid);
 
     /**
      * 通过手机号码查询用户

@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="SysUser" id="SysUserResult">
 		<id     property="userId"       column="user_id"      />
+		<id     property="oppenid"       column="oppenid"     />
 		<result property="deptId"       column="dept_id"      />
 		<result property="loginName"    column="login_name"   />
 		<result property="oilStation"   column="oil_station"  />
@@ -54,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<sql id="selectUserVo">
-        select  u.user_id, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
+        select  u.user_id, u.oppenid, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
        		    d.dept_id, d.parent_id, d.dept_name, d.order_num, d.leader, d.status as dept_status,
        		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
 		from sys_user u
@@ -64,11 +65,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 	
 	<select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
-		select u.user_id, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user u
+		select u.user_id, u.oppenid, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user u
 		left join sys_dept d on u.dept_id = d.dept_id
 		where u.del_flag = '0'
 		<if test="loginName != null and loginName != ''">
 			AND u.login_name like concat('%', #{loginName}, '%')
+		</if>
+		<if test="loginName != null and loginName != ''">
+			AND u.oppenid like concat('%', #{oppenid}, '%')
 		</if>
 		<if test="status != null and status != ''">
 			AND u.status = #{status}
@@ -90,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectAllocatedList" parameterType="SysUser" resultMap="SysUserResult">
-	    select distinct u.user_id, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.status, u.create_time
+	    select distinct u.user_id, u.oppenid, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.status, u.create_time
 	    from sys_user u
 			 left join sys_dept d on u.dept_id = d.dept_id
 			 left join sys_user_role ur on u.user_id = ur.user_id
@@ -107,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectUnallocatedList" parameterType="SysUser" resultMap="SysUserResult">
-	    select distinct u.user_id, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.status, u.create_time
+	    select distinct u.user_id, u.oppenid, u.dept_id, u.login_name, u.oil_station,u.id_number, u.home_address, u.oil_station_address, u.current_address, u.user_position, u.user_player, u.user_name, u.email, u.avatar, u.phonenumber, u.status, u.create_time
 	    from sys_user u
 			 left join sys_dept d on u.dept_id = d.dept_id
 			 left join sys_user_role ur on u.user_id = ur.user_id
@@ -126,7 +130,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectUserByLoginName" parameterType="String" resultMap="SysUserResult">
 	    <include refid="selectUserVo"/>
-		where u.login_name = #{userName}
+		where u.login_name = #{loginName}
+	</select>
+
+	<select id="selectUserByOppenid" parameterType="String" resultMap="SysUserResult">
+		<include refid="selectUserVo"/>
+		where u.oppenid = #{oppenid}
 	</select>
 	
 	<select id="selectUserByPhoneNumber" parameterType="String" resultMap="SysUserResult">
@@ -170,15 +179,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<update id="updateUser" parameterType="SysUser">
  		update sys_user
  		<set>
- 			<if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>
- 			<if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
-			<if test="loginName != null and loginName != ''">oil_station = #{oilStation},</if>
-			<if test="loginName != null and loginName != ''">id_number = #{idNumber},</if>
-			<if test="loginName != null and loginName != ''">home_address = #{homeAddress},</if>
-			<if test="loginName != null and loginName != ''">oil_station_address = #{oilStationAddress},</if>
-			<if test="loginName != null and loginName != ''">current_address = #{currentAddress},</if>
-			<if test="loginName != null and loginName != ''">user_position = #{userPosition},</if>
-			<if test="loginName != null and loginName != ''">user_player = #{userPlayer},</if>
+			<if test="userId != null and userId != 0">user_id = #{userId},</if>
+			<if test="oppenid != null and oppenid != 0">oppenid = #{oppenid},</if>
+			<if test="deptId != null and deptId != ''">dept_Id = #{deptId},</if>
+			<if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
+			<if test="oilStation != null and oilStation != ''">oil_station = #{oilStation},</if>
+			<if test="idNumber != null and idNumber != ''">id_number = #{idNumber},</if>
+			<if test="homeAddress != null and homeAddress != ''">home_address = #{homeAddress},</if>
+			<if test="oilStationAddress != null and oilStationAddress != ''">oil_station_address = #{oilStationAddress},</if>
+			<if test="currentAddress != null and currentAddress != ''">current_address = #{currentAddress},</if>
+			<if test="userPosition != null and userPosition != ''">user_position = #{userPosition},</if>
+			<if test="userPlayer != null and userPlayer != ''">user_player = #{userPlayer},</if>
  			<if test="userName != null and userName != ''">user_name = #{userName},</if>
  			<if test="email != null and email != ''">email = #{email},</if>
  			<if test="phonenumber != null and phonenumber != ''">phonenumber = #{phonenumber},</if>
@@ -195,53 +206,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		</set>
  		where user_id = #{userId}
 	</update>
- 	
- 	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
- 		insert into sys_user(
- 			<if test="userId != null and userId != 0">user_id,</if>
- 			<if test="deptId != null and deptId != 0">dept_id,</if>
- 			<if test="loginName != null and loginName != ''">login_name,</if>
-		    <if test="loginName != null and loginName != ''">oil_station = #{oilStation},</if>
-		    <if test="loginName != null and loginName != ''">id_number = #{idNumber},</if>
-		    <if test="loginName != null and loginName != ''">home_address = #{homeAddress},</if>
-			<if test="loginName != null and loginName != ''">oil_station_address = #{oilStationAddress},</if>
-			<if test="loginName != null and loginName != ''">current_address = #{currentAddress},</if>
-			<if test="loginName != null and loginName != ''">user_position = #{userPosition},</if>
-			<if test="loginName != null and loginName != ''">user_player = #{userPlayer},</if>
- 			<if test="userName != null and userName != ''">user_name,</if>
- 			<if test="email != null and email != ''">email,</if>
- 			<if test="avatar != null and avatar != ''">avatar,</if>
- 			<if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
- 			<if test="sex != null and sex != ''">sex,</if>
- 			<if test="password != null and password != ''">password,</if>
- 			<if test="salt != null and salt != ''">salt,</if>
- 			<if test="status != null and status != ''">status,</if>
- 			<if test="createBy != null and createBy != ''">create_by,</if>
- 			<if test="remark != null and remark != ''">remark,</if>
- 			create_time
- 		)values(
- 			<if test="userId != null and userId != ''">#{userId},</if>
- 			<if test="deptId != null and deptId != ''">#{deptId},</if>
- 			<if test="loginName != null and loginName != ''">#{loginName},</if>
-			<if test="loginName != null and loginName != ''">#{oilStation},</if>
-			<if test="loginName != null and loginName != ''">#{idNumber},</if>
-			<if test="loginName != null and loginName != ''">#{homeAddress},</if>
-			<if test="loginName != null and loginName != ''">#{oilStationAddress},</if>
-			<if test="loginName != null and loginName != ''">#{currentAddress},</if>
-			<if test="loginName != null and loginName != ''">#{userPosition},</if>
-			<if test="loginName != null and loginName != ''">#{userPlayer},</if>
- 			<if test="userName != null and userName != ''">#{userName},</if>
- 			<if test="email != null and email != ''">#{email},</if>
- 			<if test="avatar != null and avatar != ''">#{avatar},</if>
- 			<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
- 			<if test="sex != null and sex != ''">#{sex},</if>
- 			<if test="password != null and password != ''">#{password},</if>
- 			<if test="salt != null and salt != ''">#{salt},</if>
- 			<if test="status != null and status != ''">#{status},</if>
- 			<if test="createBy != null and createBy != ''">#{createBy},</if>
- 			<if test="remark != null and remark != ''">#{remark},</if>
- 			sysdate()
- 		)
+
+	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="oppenid != null  and oppenid != ''">oppenid,</if>
+			<if test="deptId != null ">dept_id,</if>
+			<if test="loginName != null  and loginName != ''">login_name,</if>
+			<if test="userName != null  and userName != ''">user_name,</if>
+			<if test="userType != null  and userType != ''">user_type,</if>
+			<if test="oilStation != null  and oilStation != ''">oil_station,</if>
+			<if test="idNumber != null  and idNumber != ''">id_number,</if>
+			<if test="homeAddress != null  and homeAddress != ''">home_address,</if>
+			<if test="oilStationAddress != null  and oilStationAddress != ''">oil_station_address,</if>
+			<if test="currentAddress != null  and currentAddress != ''">current_address,</if>
+			<if test="userPosition != null  and userPosition != ''">user_position,</if>
+			<if test="userPlayer != null  and userPlayer != ''">user_player,</if>
+			<if test="email != null  and email != ''">email,</if>
+			<if test="phonenumber != null  and phonenumber != ''">phonenumber,</if>
+			<if test="sex != null  and sex != ''">sex,</if>
+			<if test="avatar != null  and avatar != ''">avatar,</if>
+			<if test="password != null  and password != ''">password,</if>
+			<if test="salt != null  and salt != ''">salt,</if>
+			<if test="status != null  and status != ''">status,</if>
+			<if test="delFlag != null  and delFlag != ''">del_flag,</if>
+			<if test="loginIp != null  and loginIp != ''">login_ip,</if>
+			<if test="loginDate != null ">login_date,</if>
+			<if test="createBy != null  and createBy != ''">create_by,</if>
+			<if test="createTime != null ">create_time,</if>
+			<if test="updateBy != null  and updateBy != ''">update_by,</if>
+			<if test="updateTime != null ">update_time,</if>
+			<if test="remark != null  and remark != ''">remark,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="oppenid != null  and oppenid != ''">#{oppenid},</if>
+			<if test="deptId != null ">#{deptId},</if>
+			<if test="loginName != null  and loginName != ''">#{loginName},</if>
+			<if test="userName != null  and userName != ''">#{userName},</if>
+			<if test="userType != null  and userType != ''">#{userType},</if>
+			<if test="oilStation != null  and oilStation != ''">#{oilStation},</if>
+			<if test="idNumber != null  and idNumber != ''">#{idNumber},</if>
+			<if test="homeAddress != null  and homeAddress != ''">#{homeAddress},</if>
+			<if test="oilStationAddress != null  and oilStationAddress != ''">#{oilStationAddress},</if>
+			<if test="currentAddress != null  and currentAddress != ''">#{currentAddress},</if>
+			<if test="userPosition != null  and userPosition != ''">#{userPosition},</if>
+			<if test="userPlayer != null  and userPlayer != ''">#{userPlayer},</if>
+			<if test="email != null  and email != ''">#{email},</if>
+			<if test="phonenumber != null  and phonenumber != ''">#{phonenumber},</if>
+			<if test="sex != null  and sex != ''">#{sex},</if>
+			<if test="avatar != null  and avatar != ''">#{avatar},</if>
+			<if test="password != null  and password != ''">#{password},</if>
+			<if test="salt != null  and salt != ''">#{salt},</if>
+			<if test="status != null  and status != ''">#{status},</if>
+			<if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+			<if test="loginIp != null  and loginIp != ''">#{loginIp},</if>
+			<if test="loginDate != null ">#{loginDate},</if>
+			<if test="createBy != null  and createBy != ''">#{createBy},</if>
+			<if test="createTime != null ">#{createTime},</if>
+			<if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+			<if test="updateTime != null ">#{updateTime},</if>
+			<if test="remark != null  and remark != ''">#{remark},</if>
+		</trim>
+
 	</insert>
 	
 </mapper> 

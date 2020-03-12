@@ -55,46 +55,6 @@ public class MMyCarServiceImpl implements IMMyCarService
     @Override
     public List<MMyCar> selectMMyCarList(MMyCar mMyCar)
     {
-        /*//获取车类型
-        String carType = mMyCar.getCarType();
-        MCarType mCarType = new MCarType();
-        mCarType.setCarType(carType);
-        List<MCarType> mCarTypes = imCarTypeService.selectMCarTypeList(mCarType);
-        Long s = null;
-        for (MCarType type : mCarTypes) {
-            s = type.getNumber();
-        }
-        String carBrand = mMyCar.getCarBrand();
-        String vehicleSystem = mMyCar.getVehicleSystem();
-        String model = mMyCar.getModel();
-        //获取车品牌
-        MCarBrand mCarBrand = new MCarBrand();
-        mCarBrand.setBrandId(carBrand);
-        List<MCarBrand> mCarBrands = imCarBrandService.selectMCarBrandList(mCarBrand);
-        Long s1 = null;
-        for (MCarBrand brand : mCarBrands) {
-             s1 = brand.getNumber();
-        }
-        //获取车系
-        CarVehicleSystem carVehicleSystem = new CarVehicleSystem();
-        carVehicleSystem.setVehicleSystem(vehicleSystem);
-        List<CarVehicleSystem> carVehicleSystems = iCarVehicleSystemService.selectCarVehicleSystemList(carVehicleSystem);
-        Long s2 = null;
-        for (CarVehicleSystem system : carVehicleSystems) {
-            s2 = system.getNumber();
-        }
-        //获取型号
-        CarModel carModel = new CarModel();
-        carModel.setModel(model);
-        List<CarModel> carModels = iCarModelService.selectCarModelList(carModel);
-        Long s3 = null;
-        for (CarModel carModel1 : carModels) {
-            s3 = carModel.getNumber();
-        }
-        String s4 = null;
-         s4 = s.toString() + s1.toString() + s2.toString() + s3.toString();
-        mMyCar.setCarNumber(s4);*/
-
         return mMyCarMapper.selectMMyCarList(mMyCar);
     }
 
@@ -107,6 +67,56 @@ public class MMyCarServiceImpl implements IMMyCarService
     @Override
     public int insertMMyCar(MMyCar mMyCar)
     {
+       /* //获取车类型
+        String carType = mMyCar.getCarType();
+        MCarType mCarType = new MCarType();
+        mCarType.setCarType(carType);
+        List<MCarType> mCarTypes = imCarTypeService.selectMCarTypeList(mCarType);
+        if (mCarTypes==null){
+            return 0;
+        }
+        Long s = null;
+        for (MCarType type : mCarTypes) {
+            s = type.getNumber();
+        }
+        String carBrand = mMyCar.getCarBrand();
+        String vehicleSystem = mMyCar.getVehicleSystem();
+        String model = mMyCar.getModel();
+        //获取车品牌
+        MCarBrand mCarBrand = new MCarBrand();
+        mCarBrand.setBrandId(carBrand);
+        List<MCarBrand> mCarBrands = imCarBrandService.selectMCarBrandList(mCarBrand);
+        if (mCarBrands==null){
+            return 0;
+        }
+        Long s1 = null;
+        for (MCarBrand brand : mCarBrands) {
+            s1 = brand.getNumber();
+        }
+        //获取车系
+        CarVehicleSystem carVehicleSystem = new CarVehicleSystem();
+        carVehicleSystem.setVehicleSystem(vehicleSystem);
+        List<CarVehicleSystem> carVehicleSystems = iCarVehicleSystemService.selectCarVehicleSystemList(carVehicleSystem);
+        if (carVehicleSystems==null){
+            return 0;
+        }
+        Long s2 = null;
+        for (CarVehicleSystem system : carVehicleSystems) {
+            s2 = system.getNumber();
+        }
+        //获取型号
+        CarModel carModel = new CarModel();
+        carModel.setModel(model);
+        List<CarModel> carModels = iCarModelService.selectCarModelList(carModel);
+        if (carModels==null){
+            return 0;
+        }
+        Long s3 = null;
+        for (CarModel carModel1 : carModels) {
+            s3 = carModel.getNumber();
+        }
+
+        mMyCar.setCarNumber(s.toString() + s1.toString() + s2.toString() + s3.toString());*/
         return mMyCarMapper.insertMMyCar(mMyCar);
     }
 

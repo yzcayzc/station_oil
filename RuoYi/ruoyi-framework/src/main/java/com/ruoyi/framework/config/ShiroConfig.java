@@ -236,7 +236,7 @@ public class ShiroConfig
         // 身份认证失败，则跳转到登录页面的配置
         shiroFilterFactoryBean.setLoginUrl(loginUrl);
         // 权限认证失败，则跳转到指定页面
-        shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
+//        shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
         // Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 对静态资源设置匿名访问
@@ -254,6 +254,9 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/loginon", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/system/users/adds", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/system/user/**", "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
